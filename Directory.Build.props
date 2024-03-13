@@ -1,0 +1,19 @@
+<Project>
+  <PropertyGroup>
+    <SolutionDir>$(MSBuildThisFileDirectory)</SolutionDir>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <BaseOutputPath>$(MSBuildProjectDirectory)/.build/bin/</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(MSBuildProjectDirectory)/.build/obj/</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <UserSecretsId>16c4241b-3e2c-4b73-b356-d80c11c7fc45</UserSecretsId>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <WarningLevel>4</WarningLevel>
+    <AnalysisLevel>7</AnalysisLevel>
+  </PropertyGroup>
+</Project>
