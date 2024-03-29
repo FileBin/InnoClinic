@@ -7,14 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Commands/" />
     <Folder Include="Models/" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Application.Contracts\OfficesAPI.Application.Contracts.csproj" />
+    <ProjectReference Include="..\..\Shared\Domain.Abstractions\Shared.Domain.Abstractions.csproj" />
     <ProjectReference Include="..\Domain\OfficesAPI.Domain.csproj" />
-    <ProjectReference Include="..\..\Shared\Exceptions\Shared.Exceptions.csproj" />
+    <ProjectReference Include="..\..\Shared\Filebin.Common.Util\Filebin.Common.Util.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mapster" Version="7.4.0" />
   </ItemGroup>
 
 </Project>

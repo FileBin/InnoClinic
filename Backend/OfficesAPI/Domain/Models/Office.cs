@@ -1,10 +1,11 @@
-﻿using MongoDB.Bson;
+﻿using MongoDB.Bson.Serialization.Attributes;
 
 namespace OfficesAPI.Domain.Models;
 
 public class Office {
+    [BsonId]
     [Column("id")]
-    public ObjectId Id { get; set; }
+    public Guid Id { get; set; }
 
     [Column("address")]
     public required Address Address { get; set; }

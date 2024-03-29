@@ -12,6 +12,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\OfficesAPI.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\Filebin.Common.Util\Filebin.Common.Util.csproj" />
+    <ProjectReference Include="..\..\Shared\Misc\Shared.Misc.csproj" />
   </ItemGroup>
 
 </Project>
