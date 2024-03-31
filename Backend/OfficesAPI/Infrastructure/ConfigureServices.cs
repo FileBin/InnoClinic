@@ -1,10 +1,11 @@
-﻿using Filebin.Common.Util;
+﻿using System.Web;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OfficesAPI.Domain.Models;
 using OfficesAPI.Infrastructure.Database;
 using OfficesAPI.Infrastructure.Repository;
 using Shared.Domain.Abstractions;
+using Shared.Misc;
 
 namespace OfficesAPI.Infrastructure;
 
@@ -13,7 +14,7 @@ public static class ConfigureServices {
         var section = config.GetSection("OfficesDb");
         var connectionString = 
             $"{section.GetOrThrow("Prefix")}" +
-            $"{section.GetOrThrow("User")}:{section.GetOrThrow("Password")}@" + 
+            $"{HttpUtility.UrlEncode(section.GetOrThrow("User"))}:{HttpUtility.UrlEncode(section.GetOrThrow("Password"))}@" + 
             $"{section.GetOrThrow("Host")}:{section.GetOrThrow("Port")}";
 
         services.AddMongoDB<OfficeDbContext>(connectionString, section.GetOrThrow("Database"));

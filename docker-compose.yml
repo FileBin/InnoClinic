@@ -16,3 +16,12 @@ services:
       - mongoconfig:/data/configdb
     networks:
       - mongo_net
+
+networks:
+  mongo_net:
+    driver:
+      bridge
+
+volumes:
+  mongodb:
+  mongoconfig:

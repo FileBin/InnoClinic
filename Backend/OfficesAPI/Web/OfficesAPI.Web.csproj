@@ -1,5 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Misc\Shared.Misc.csproj" />
+    <ProjectReference Include="..\Application\OfficesAPI.Application.csproj" />
+    <ProjectReference Include="..\Infrastructure\OfficesAPI.Infrastructure.csproj" />
+    <ProjectReference Include="..\Presentation\OfficesAPI.Presentation.csproj" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
