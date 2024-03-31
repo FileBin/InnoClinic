@@ -17,14 +17,13 @@ public class OfficeRepository(OfficeDbContext dbContext) : IRepository<Office> {
 
     public async Task<Office?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) {
         return await dbContext.Offices
+            .AsNoTracking()
             .SingleOrDefaultAsync(office => office.Id == id);
     }
 
     public async Task<IEnumerable<Office>> GetPageAsync(IPageDesc pageDesc, CancellationToken cancellationToken = default) {
-        var skip = (pageDesc.PageNumber - 1) * pageDesc.PageSize;
-        var take = pageDesc.PageSize;
-
         return await dbContext.Offices
+            .AsNoTracking()
             .Paginate(pageDesc)
             .ToListAsync(cancellationToken);
     }
