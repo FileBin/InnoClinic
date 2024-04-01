@@ -20,12 +20,4 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="8.0.0" />
     </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference
-            Include="..\InnoShop.UserManagerAPI\InnoShop.Infrastructure.UserManagerAPI.csproj" />
-        <ProjectReference
-            Include="..\InnoShop.ProductManagerAPI\InnoShop.Infrastructure.ProductManagerAPI.csproj" />
-        <ProjectReference Include="..\InnoShop.Application\InnoShop.Application.csproj" />
-    </ItemGroup>
 </Project>
