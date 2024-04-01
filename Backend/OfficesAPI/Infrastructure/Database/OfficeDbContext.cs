@@ -3,7 +3,7 @@ using OfficesAPI.Domain.Models;
 
 namespace OfficesAPI.Infrastructure.Database;
 
-public class OfficeDbContext : DbContext {
+internal class OfficeDbContext : DbContext {
     public OfficeDbContext(DbContextOptions options) : base(options) {
     }
 

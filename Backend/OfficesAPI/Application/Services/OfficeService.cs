@@ -7,7 +7,7 @@ using Shared.Exceptions.Models;
 
 namespace OfficesAPI.Application.Services;
 
-public class OfficeService(IRepository<Office> officeRepository, IUnitOfWork unitOfWork) : IOfficeService {
+internal class OfficeService(IRepository<Office> officeRepository, IUnitOfWork unitOfWork) : IOfficeService {
     public async Task<OfficeDto> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) {
         var office = await officeRepository.GetByIdAsync(id, cancellationToken);
 

@@ -6,7 +6,7 @@ using Shared.Misc;
 
 namespace OfficesAPI.Infrastructure.Repository;
 
-public class OfficeRepository(OfficeDbContext dbContext) : IRepository<Office> {
+internal class OfficeRepository(OfficeDbContext dbContext) : IRepository<Office> {
     public void Create(Office entity) {
         dbContext.Offices.Add(entity);
     }
