@@ -64,9 +64,7 @@ public class OfficeService(IRepository<Office> officeRepository, IUnitOfWork uni
         if (updateDto.IsActive.HasValue) {
             office.IsActive = updateDto.IsActive.Value;
         }
-
-        officeRepository.Update(office);
-
+        
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }
