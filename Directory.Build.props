@@ -7,7 +7,11 @@
     <BaseOutputPath>$(MSBuildProjectDirectory)/.build/bin/</BaseOutputPath>
     <BaseIntermediateOutputPath>$(MSBuildProjectDirectory)/.build/obj/</BaseIntermediateOutputPath>
   </PropertyGroup>
-  
+
+  <PropertyGroup>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+  </PropertyGroup>
+
   <PropertyGroup>
     <UserSecretsId>1c6837c9-a327-43b0-9139-f864c65c0c95</UserSecretsId>
   </PropertyGroup>

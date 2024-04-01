@@ -32,7 +32,7 @@ public class OfficeController(IOfficeService officeService) : ControllerBase {
     /// </summary>
     /// <param name="pageDesc">Page descriptor</param>
     /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns></returns>
+    /// <returns>List of OfficeDto</returns>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OfficeDto>))]
     public async Task<IActionResult> GetPage([FromQuery] PageDesc pageDesc, CancellationToken cancellationToken) {

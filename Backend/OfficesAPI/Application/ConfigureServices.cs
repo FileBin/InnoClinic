@@ -1,6 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Runtime.CompilerServices;
+using Microsoft.Extensions.DependencyInjection;
 using OfficesAPI.Application.Contracts.Services;
 using OfficesAPI.Application.Services;
+
+[assembly: InternalsVisibleTo("OfficesAPI.Tests", AllInternalsVisible = true)]
 
 namespace OfficesAPI.Application;
 
