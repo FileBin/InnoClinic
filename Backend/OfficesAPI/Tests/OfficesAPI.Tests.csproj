@@ -25,5 +25,7 @@
       <ProjectReference Include="..\..\Shared\TestUtils\Shared.TestUtils.csproj" />
       <ProjectReference Include="..\Application\OfficesAPI.Application.csproj" />
       <ProjectReference Include="..\Application.Contracts\OfficesAPI.Application.Contracts.csproj" />
+      <ProjectReference Include="..\..\Shared\Domain.Models\Shared.Domain.Models.csproj" />
+      <ProjectReference Include="..\..\Shared\Misc\Shared.Misc.csproj" />
     </ItemGroup>
 </Project>

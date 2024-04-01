@@ -12,6 +12,14 @@ public static class Extensions {
             .Take(take);
     }
 
+    public static IEnumerable<T> Paginate<T>(this IEnumerable<T> collection, IPageDesc pageDesc) {
+        var skip = (pageDesc.PageNumber - 1) * pageDesc.PageSize;
+        var take = pageDesc.PageSize;
+        return collection
+            .Skip(skip)
+            .Take(take);
+    }
+
     public static string GetOrThrow<TConfiguration>(this TConfiguration config, string key)
     where TConfiguration : IConfiguration {
         var val = config[key];
