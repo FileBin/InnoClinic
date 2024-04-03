@@ -22,10 +22,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Shared\TestUtils\Shared.TestUtils.csproj" />
-      <ProjectReference Include="..\Application\OfficesAPI.Application.csproj" />
-      <ProjectReference Include="..\Application.Contracts\OfficesAPI.Application.Contracts.csproj" />
-      <ProjectReference Include="..\..\Shared\Domain.Models\Shared.Domain.Models.csproj" />
-      <ProjectReference Include="..\..\Shared\Misc\Shared.Misc.csproj" />
+        <ProjectReference Include="..\Application\OfficesAPI.Application.csproj" />
+        <ProjectReference Include="..\Application.Contracts\OfficesAPI.Application.Contracts.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Filebin.InnoClinic.Shared.Domain.Models" Version="1.0.0" />
+        <PackageReference Include="Filebin.InnoClinic.Shared.Misc" Version="1.0.0" />
+        <PackageReference Include="Filebin.InnoClinic.Shared.TestUtils" Version="1.0.0" />
     </ItemGroup>
 </Project>

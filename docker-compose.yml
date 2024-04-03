@@ -119,6 +119,19 @@ services:
           - sts.innoclinic.local
     restart: on-failure:5
 
+  officesAPI:
+    image: '${DOCKER_REGISTRY-}innoclinic-offices-api'
+    build:
+      context: Backend/OfficesAPI
+    container_name: innoclinic-offices-api
+    environment:
+      - OfficesDb__Password=${OFFICES_DB_PASSWORD}
+    depends_on:
+      - mongodb
+    volumes:
+      - './shared/nginx/certs/cacerts.crt:/usr/local/share/ca-certificates/cacerts.crt'
+
+
   db:
     image: 'mcr.microsoft.com/mssql/server:2022-CU12-ubuntu-22.04'
     ports:
@@ -143,9 +156,7 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=officesAPI
       - MONGO_INITDB_ROOT_PASSWORD=${OFFICES_DB_PASSWORD}
     volumes:
-      # seeding scripts
       - ./mongo-entrypoint:/docker-entrypoint-initdb.d
-      # named volumes
       - mongodb:/data/db
       - mongoconfig:/data/configdb
     networks:

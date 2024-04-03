@@ -12,7 +12,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application.Contracts\OfficesAPI.Application.Contracts.csproj" />
-    <ProjectReference Include="..\..\Shared\Domain.Models\Shared.Domain.Models.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Filebin.InnoClinic.Shared.Domain.Models" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

@@ -12,8 +12,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\OfficesAPI.Domain.csproj" />
-    <ProjectReference Include="..\..\Shared\Misc\Shared.Misc.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.0" /> 
   </ItemGroup>
+  
+  
+  <ItemGroup>
+    <PackageReference Include="Filebin.InnoClinic.Shared.Misc" Version="1.0.0" />
+  </ItemGroup>
+
 
 </Project>
