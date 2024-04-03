@@ -1,7 +1,10 @@
+using Mapster;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Moq;
 using NUnit.Framework;
 using OfficesAPI.Application.Contracts.Models;
+using OfficesAPI.Application.Contracts.Models.Requests;
+using OfficesAPI.Application.Contracts.Models.Responses;
 using OfficesAPI.Application.Contracts.Services;
 using OfficesAPI.Application.Services;
 using OfficesAPI.Domain.Models;
@@ -19,7 +22,7 @@ public class TestsCrud {
     Mock<IRepository<Office>> mockRepo;
     Mock<IUnitOfWork> mockUnitOfWork;
 
-    OfficeCreateDto GenValidDto() => new OfficeCreateDto() {
+    OfficeCreateRequest GenValidDto() => new OfficeCreateRequest() {
         Address = new AddressDto {
             City = "New York",
             HouseNumber = "146",
@@ -47,6 +50,12 @@ public class TestsCrud {
             .Setup(x => x.GetPageAsync(It.IsAny<IPageDesc>(), It.IsAny<CancellationToken>()))
             .Returns<IPageDesc, CancellationToken>((pageDesc, _) => {
                 return Task.Run(() => updatedRepo.Paginate(pageDesc).ToList().AsEnumerable());
+            });
+
+        mockRepo
+            .Setup(x => x.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            .Returns<Guid, CancellationToken>((id, _) => {
+                return Task.Run(() => updatedRepo.Find(x => x.Id == id));
             });
 
         mockUnitOfWork = new();
@@ -107,5 +116,25 @@ public class TestsCrud {
         mockUnitOfWork.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once());
 
         Assert.That(list.Any(), Is.True);
+    }
+
+    [Test]
+    [CancelAfter(5000)]
+    public async Task TestGetByIdValid(CancellationToken cancellationToken) {
+        var officeCreateDto = GenValidDto();
+        var officeDto = officeCreateDto.Adapt<OfficeResponse>();
+
+        var id = await officeService.CreateAsync(officeCreateDto, cancellationToken);
+
+        var officeDtoRet = await officeService.GetByIdAsync(id, cancellationToken);
+
+        mockRepo.Verify(x => x.GetPageAsync(It.IsAny<IPageDesc>(), It.IsAny<CancellationToken>()), Times.Once());
+        mockUnitOfWork.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once());
+
+        officeDto = officeDto with {
+            Id = officeDtoRet.Id,
+        };
+
+        Assert.That(officeDto, Is.EqualTo(officeDtoRet));
     }
 }

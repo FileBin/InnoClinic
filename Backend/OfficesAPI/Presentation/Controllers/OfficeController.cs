@@ -1,7 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OfficesAPI.Application.Contracts.Models;
+using OfficesAPI.Application.Contracts.Models.Requests;
+using OfficesAPI.Application.Contracts.Models.Responses;
 using OfficesAPI.Application.Contracts.Services;
 using Shared.Domain.Models;
 
@@ -21,7 +22,7 @@ public class OfficeController(IOfficeService officeService) : ControllerBase {
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Guid))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> Create([FromBody] OfficeCreateDto officeCreateDto, CancellationToken cancellationToken) {
+    public async Task<IActionResult> Create([FromBody] OfficeCreateRequest officeCreateDto, CancellationToken cancellationToken) {
         var id = await officeService.CreateAsync(officeCreateDto, cancellationToken);
         return Created(Url.Link(nameof(GetById), new { id }), id);
     }
@@ -34,7 +35,7 @@ public class OfficeController(IOfficeService officeService) : ControllerBase {
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>List of OfficeDto</returns>
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OfficeDto>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OfficeResponse>))]
     public async Task<IActionResult> GetPage([FromQuery] PageDesc pageDesc, CancellationToken cancellationToken) {
         var officeDtos = await officeService.GetPageAsync(pageDesc, cancellationToken);
         return Ok(officeDtos);
@@ -49,7 +50,7 @@ public class OfficeController(IOfficeService officeService) : ControllerBase {
     /// <returns>OfficeDto if result is Ok</returns>
     [HttpGet]
     [Route("{id:guid}", Name = nameof(GetById))]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OfficeDto))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OfficeResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken) {
         var officeDto = await officeService.GetByIdAsync(id, cancellationToken);
@@ -68,7 +69,7 @@ public class OfficeController(IOfficeService officeService) : ControllerBase {
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> Update(Guid id, [FromBody] OfficeUpdateDto officeUpdateDto, CancellationToken cancellationToken) {
+    public async Task<IActionResult> Update(Guid id, [FromBody] OfficeUpdateRequest officeUpdateDto, CancellationToken cancellationToken) {
         await officeService.UpdateAsync(id, officeUpdateDto, cancellationToken);
         return Ok();
     }

@@ -1,5 +1,7 @@
 ﻿using Mapster;
 using OfficesAPI.Application.Contracts.Models;
+using OfficesAPI.Application.Contracts.Models.Requests;
+using OfficesAPI.Application.Contracts.Models.Responses;
 using OfficesAPI.Application.Contracts.Services;
 using OfficesAPI.Domain.Models;
 using Shared.Domain.Abstractions;
@@ -8,23 +10,23 @@ using Shared.Exceptions.Models;
 namespace OfficesAPI.Application.Services;
 
 internal class OfficeService(IRepository<Office> officeRepository, IUnitOfWork unitOfWork) : IOfficeService {
-    public async Task<OfficeDto> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) {
+    public async Task<OfficeResponse> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) {
         var office = await officeRepository.GetByIdAsync(id, cancellationToken);
 
         if (office is null) {
             throw NotFoundException.NotFoundInDatabase(nameof(office));
         }
 
-        return office.Adapt<OfficeDto>();
+        return office.Adapt<OfficeResponse>();
     }
 
-    public async Task<IEnumerable<OfficeDto>> GetPageAsync(IPageDesc pageDesc, CancellationToken cancellationToken = default) {
+    public async Task<IEnumerable<OfficeResponse>> GetPageAsync(IPageDesc pageDesc, CancellationToken cancellationToken = default) {
         var offices = await officeRepository.GetPageAsync(pageDesc, cancellationToken);
 
-        return offices.Select(o => o.Adapt<OfficeDto>()).ToList();
+        return offices.Select(o => o.Adapt<OfficeResponse>()).ToList();
     }
 
-    public async Task<Guid> CreateAsync(OfficeCreateDto createDto, CancellationToken cancellationToken = default) {
+    public async Task<Guid> CreateAsync(OfficeCreateRequest createDto, CancellationToken cancellationToken = default) {
         var office = createDto.Adapt<Office>();
 
         officeRepository.Create(office);
@@ -46,7 +48,7 @@ internal class OfficeService(IRepository<Office> officeRepository, IUnitOfWork u
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task UpdateAsync(Guid id, OfficeUpdateDto updateDto, CancellationToken cancellationToken = default) {
+    public async Task UpdateAsync(Guid id, OfficeUpdateRequest updateDto, CancellationToken cancellationToken = default) {
         var office = await officeRepository.GetByIdAsync(id, cancellationToken);
 
         if (office is null) {

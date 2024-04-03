@@ -1,6 +1,7 @@
-namespace OfficesAPI.Application.Contracts.Models;
+namespace OfficesAPI.Application.Contracts.Models.Requests;
 
-public record OfficeCreateDto {
+public record OfficeCreateRequest
+{
     [Required]
     public required AddressDto Address { get; init; }
 

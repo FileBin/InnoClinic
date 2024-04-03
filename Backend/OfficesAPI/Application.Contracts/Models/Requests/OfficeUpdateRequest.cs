@@ -1,6 +1,6 @@
-namespace OfficesAPI.Application.Contracts.Models;
+namespace OfficesAPI.Application.Contracts.Models.Requests;
 
-public record OfficeUpdateDto {
+public record OfficeUpdateRequest {
     public AddressDto? Address { get; init; }
 
     [StringLength(32)]
