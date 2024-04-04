@@ -1,6 +1,6 @@
-namespace OfficesAPI.Application.Contracts.Models;
+namespace OfficesAPI.Application.Contracts.Models.Responses;
 
-public record AddressDto {
+public record AddressResponse {
     [Required]
     [StringLength(128)]
     public required string City { get; init; }

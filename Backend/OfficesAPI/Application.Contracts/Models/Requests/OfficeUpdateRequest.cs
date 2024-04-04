@@ -1,7 +1,7 @@
 namespace OfficesAPI.Application.Contracts.Models.Requests;
 
 public record OfficeUpdateRequest {
-    public AddressDto? Address { get; init; }
+    public AddressRequest? Address { get; init; }
 
     [StringLength(32)]
     [DataType(DataType.PhoneNumber)]
