@@ -11,6 +11,7 @@ public static class ConfigureServices {
     }
 
     public static void UsePresentation(this WebApplication app) {
+        app.UseRouting();
         app.MapControllers();
     }
 }

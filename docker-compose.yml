@@ -12,11 +12,12 @@ services:
       - './shared/nginx/certs:/etc/nginx/certs:ro'
     networks:
       innoclinic_proxy: null
-      innoclinic_identityserverui:
+      innoclinic_net:
         aliases:
           - sts.innoclinic.local
           - admin.innoclinic.local
           - admin-api.innoclinic.local
+          - offices-api.innoclinic.local
     restart: always
 
   authorizationapi.admin:
@@ -59,7 +60,7 @@ services:
       - './shared/serilog.json:/app/serilog.json'
       - './shared/nginx/certs/cacerts.crt:/usr/local/share/ca-certificates/cacerts.crt'
     networks:
-      innoclinic_identityserverui: null
+      innoclinic_net: null
     restart: on-failure:5
   
   authorizationapi.admin.api:
@@ -87,7 +88,7 @@ services:
       - './shared/serilog.json:/app/serilog.json'
       - './shared/nginx/certs/cacerts.crt:/usr/local/share/ca-certificates/cacerts.crt'
     networks:
-      innoclinic_identityserverui: null
+      innoclinic_net: null
     restart: on-failure:5
   
   authorizationapi.sts.identity:
@@ -114,7 +115,7 @@ services:
       - './shared/serilog.json:/app/serilog.json'
       - './shared/nginx/certs/cacerts.crt:/usr/local/share/ca-certificates/cacerts.crt'
     networks:
-      innoclinic_identityserverui:
+      innoclinic_net:
         aliases:
           - sts.innoclinic.local
     restart: on-failure:5
@@ -125,11 +126,19 @@ services:
       context: Backend/OfficesAPI
     container_name: innoclinic-offices-api
     environment:
+      - VIRTUAL_HOST=offices-api.innoclinic.local
       - OfficesDb__Password=${OFFICES_DB_PASSWORD}
+      - OfficesDb__Host=mongodb
+      - IdentityServer__OAuth__ClientSecret=${OFFICES_API_CLIENT_SECRET}
+      - ASPNETCORE_ENVIRONMENT=Staging
     depends_on:
       - mongodb
     volumes:
       - './shared/nginx/certs/cacerts.crt:/usr/local/share/ca-certificates/cacerts.crt'
+    networks:
+      innoclinic_net:
+        aliases:
+          - offices-api.innoclinic.local
 
 
   db:
@@ -143,7 +152,7 @@ services:
     volumes:
       - 'dbdata:/var/opt/mssql'
     networks:
-      innoclinic_identityserverui: null
+      innoclinic_net: null
     restart: 
       on-failure:5
 
@@ -160,7 +169,7 @@ services:
       - mongodb:/data/db
       - mongoconfig:/data/configdb
     networks:
-      - mongo_net
+      - innoclinic_net
 
 volumes:
   dbdata:
@@ -171,8 +180,5 @@ volumes:
 networks:
   innoclinic_proxy:
     driver: bridge
-  innoclinic_identityserverui:
+  innoclinic_net:
     driver: bridge
-  mongo_net:
-    driver:
-      bridge
