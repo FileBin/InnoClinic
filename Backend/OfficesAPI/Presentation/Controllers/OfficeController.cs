@@ -5,10 +5,12 @@ using OfficesAPI.Application.Contracts.Models.Requests;
 using OfficesAPI.Application.Contracts.Models.Responses;
 using OfficesAPI.Application.Contracts.Services;
 using InnoClinic.Shared.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OfficesAPI.Presentation.Controllers;
 
 [ApiController]
+[Authorize(Policy = Config.OfficePolicy)]
 [Route("api/offices")]
 [ExcludeFromCodeCoverage]
 public class OfficeController(IOfficeService officeService) : ControllerBase {
