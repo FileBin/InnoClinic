@@ -1,6 +1,6 @@
 ﻿using OfficesAPI.Application.Contracts.Models.Requests;
 using OfficesAPI.Application.Contracts.Models.Responses;
-using Shared.Domain.Abstractions;
+using InnoClinic.Shared.Domain.Abstractions;
 
 namespace OfficesAPI.Application.Contracts.Services;
 

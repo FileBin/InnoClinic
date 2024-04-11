@@ -1,10 +1,10 @@
-﻿using Mapster;
+﻿using InnoClinic.Shared.Domain.Abstractions;
+using InnoClinic.Shared.Exceptions.Models;
+using Mapster;
 using OfficesAPI.Application.Contracts.Models.Requests;
 using OfficesAPI.Application.Contracts.Models.Responses;
 using OfficesAPI.Application.Contracts.Services;
 using OfficesAPI.Domain.Models;
-using Shared.Domain.Abstractions;
-using Shared.Exceptions.Models;
 
 namespace OfficesAPI.Application.Services;
 

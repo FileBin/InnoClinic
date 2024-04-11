@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OfficesAPI.Domain.Models;
 using OfficesAPI.Infrastructure.Database;
-using Shared.Domain.Abstractions;
+using InnoClinic.Shared.Domain.Abstractions;
 using Shared.Misc;
 
 namespace OfficesAPI.Infrastructure.Repository;

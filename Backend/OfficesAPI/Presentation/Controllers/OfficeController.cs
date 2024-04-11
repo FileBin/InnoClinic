@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using OfficesAPI.Application.Contracts.Models.Requests;
 using OfficesAPI.Application.Contracts.Models.Responses;
 using OfficesAPI.Application.Contracts.Services;
-using Shared.Domain.Models;
+using InnoClinic.Shared.Domain.Models;
 
 namespace OfficesAPI.Presentation.Controllers;
 

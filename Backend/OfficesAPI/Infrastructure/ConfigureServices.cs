@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using OfficesAPI.Domain.Models;
 using OfficesAPI.Infrastructure.Database;
 using OfficesAPI.Infrastructure.Repository;
-using Shared.Domain.Abstractions;
+using InnoClinic.Shared.Domain.Abstractions;
 using Shared.Misc;
 
 namespace OfficesAPI.Infrastructure;

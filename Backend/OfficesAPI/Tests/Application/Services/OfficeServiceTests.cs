@@ -6,9 +6,9 @@ using OfficesAPI.Application.Contracts.Models.Responses;
 using OfficesAPI.Application.Contracts.Services;
 using OfficesAPI.Application.Services;
 using OfficesAPI.Domain.Models;
-using Shared.Domain.Abstractions;
-using Shared.Domain.Models;
-using Shared.Exceptions.Models;
+using InnoClinic.Shared.Domain.Abstractions;
+using InnoClinic.Shared.Domain.Models;
+using InnoClinic.Shared.Exceptions.Models;
 using Shared.Misc;
 
 namespace OfficesAPI.Tests;

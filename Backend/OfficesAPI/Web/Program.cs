@@ -23,7 +23,7 @@ var app = builder.Build();
 app.UseUtils();
 
 if (!app.Environment.IsProduction()) {
-    app.MapGet("/userinfo", [Authorize] (ClaimsPrincipal user) => user.Claims.Select(x => new { x.ValueType, x.Value }));
+    app.MapGet("/userinfo", [Authorize] (ClaimsPrincipal user) => user.Claims.Select(x => new { x.ValueType, x.Type, x.Value }));
 }
 app.MapControllers();
 

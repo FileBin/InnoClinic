@@ -1,5 +1,5 @@
 ﻿using OfficesAPI.Infrastructure.Database;
-using Shared.Domain.Abstractions;
+using InnoClinic.Shared.Domain.Abstractions;
 
 namespace OfficesAPI.Infrastructure.Repository;
 
