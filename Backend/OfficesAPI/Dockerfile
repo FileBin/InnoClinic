@@ -18,7 +18,7 @@ WORKDIR /src
 COPY --from=prepare /proj/src .
 RUN dotnet restore "./Web/OfficesAPI.Web.csproj"
 COPY --from=prepare /src .
-RUN dotnet build "./Web/OfficesAPI.Web.csproj" -c Release -o /app/build
+RUN dotnet build "./Web/OfficesAPI.Web.csproj" --no-restore -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "./Web/OfficesAPI.Web.csproj" -c Release -o /app/publish

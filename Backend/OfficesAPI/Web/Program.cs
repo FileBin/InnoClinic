@@ -13,10 +13,8 @@ builder.Services
     .AddUtils()
     .AddInfrastructure(builder.Configuration)
     .AddApplication()
-    .AddPresentation()
-    .AddIdentityServer(builder.Configuration, builder.Environment);
-
-IdentityModelEventSource.ShowPII = true;
+    .AddIdentityServer(builder.Configuration, builder.Environment)
+    .AddPresentation(builder.Configuration);
 
 var app = builder.Build();
 
