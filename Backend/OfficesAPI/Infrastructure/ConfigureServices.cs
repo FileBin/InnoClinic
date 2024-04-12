@@ -11,13 +11,13 @@ namespace OfficesAPI.Infrastructure;
 
 public static class ConfigureServices {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config) {
-        var section = config.GetSection("OfficesDb");
+        var dbSection = config.GetSection("OfficesDb");
         var connectionString = 
-            $"{section.GetOrThrow("Prefix")}" +
-            $"{HttpUtility.UrlEncode(section.GetOrThrow("User"))}:{HttpUtility.UrlEncode(section.GetOrThrow("Password"))}@" + 
-            $"{section.GetOrThrow("Host")}:{section.GetOrThrow("Port")}";
+            $"{dbSection.GetOrThrow("Prefix")}" +
+            $"{HttpUtility.UrlEncode(dbSection.GetOrThrow("User"))}:{HttpUtility.UrlEncode(dbSection.GetOrThrow("Password"))}@" + 
+            $"{dbSection.GetOrThrow("Host")}:{dbSection.GetOrThrow("Port")}";
 
-        services.AddMongoDB<OfficeDbContext>(connectionString, section.GetOrThrow("Database"));
+        services.AddMongoDB<OfficeDbContext>(connectionString, dbSection.GetOrThrow("Database"));
 
         services.AddScoped<IRepository<Office>, OfficeRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();

@@ -4,16 +4,18 @@ using OfficesAPI.Application;
 using OfficesAPI.Presentation;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.IdentityModel.Logging;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
+    .AddLogger(builder.Configuration);
+
+builder.Services
     .AddUtils()
+    .AddIdentityServer(builder.Configuration, builder.Environment)
     .AddInfrastructure(builder.Configuration)
     .AddApplication()
-    .AddIdentityServer(builder.Configuration, builder.Environment)
     .AddPresentation(builder.Configuration);
 
 var app = builder.Build();

@@ -18,6 +18,7 @@ services:
           - admin.innoclinic.local
           - admin-api.innoclinic.local
           - offices-api.innoclinic.local
+          - seq.innoclinic.local
     restart: always
 
   authorizationapi.admin:
@@ -130,9 +131,12 @@ services:
       - OfficesDb__Password=${OFFICES_DB_PASSWORD}
       - OfficesDb__Host=mongodb
       - IdentityServer__OAuth__ClientSecret=${OFFICES_API_CLIENT_SECRET}
+      - Seq__ServerUrl=http://seq:5341
+      - Seq__ApiKey=${OFFICES_API_LOG_APIKEY}
       - ASPNETCORE_ENVIRONMENT=Staging
     depends_on:
       - mongodb
+      - seq
     volumes:
       - './shared/nginx/certs/cacerts.crt:/usr/local/share/ca-certificates/cacerts.crt'
     networks:
@@ -171,11 +175,28 @@ services:
     networks:
       - innoclinic_net
 
+  seq:
+    image: datalust/seq
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST=seq.innoclinic.local
+      - ACCEPT_EULA=Y
+      - SEQ_FIRSTRUN_ADMINPASSWORDHASH=${SEQ_PASSWORDHASH}
+    volumes:
+      - seq_data:/data
+    ports:
+      - 5341:5341
+    networks:
+      innoclinic_net:
+        aliases:
+          - seq.innoclinic.local
+
 volumes:
   dbdata:
     driver: local
   mongodb:
   mongoconfig:
+  seq_data:
 
 networks:
   innoclinic_proxy:
