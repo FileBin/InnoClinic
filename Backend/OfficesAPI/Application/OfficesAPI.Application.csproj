@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands/" />
+    <Folder Include="Models/" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Application.Contracts\OfficesAPI.Application.Contracts.csproj" />
+    <ProjectReference Include="..\Domain\OfficesAPI.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Filebin.InnoClinic.Shared.Misc" Version="1.0.4-dev3" />
+  </ItemGroup>
+
+</Project>

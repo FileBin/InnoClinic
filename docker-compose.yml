@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.8'
 services:
   nginx-proxy:
     image: jwilder/nginx-proxy
@@ -12,11 +12,13 @@ services:
       - './shared/nginx/certs:/etc/nginx/certs:ro'
     networks:
       innoclinic_proxy: null
-      innoclinic_identityserverui:
+      innoclinic_net:
         aliases:
           - sts.innoclinic.local
           - admin.innoclinic.local
           - admin-api.innoclinic.local
+          - offices-api.innoclinic.local
+          - seq.innoclinic.local
     restart: always
 
   authorizationapi.admin:
@@ -59,7 +61,7 @@ services:
       - './shared/serilog.json:/app/serilog.json'
       - './shared/nginx/certs/cacerts.crt:/usr/local/share/ca-certificates/cacerts.crt'
     networks:
-      innoclinic_identityserverui: null
+      innoclinic_net: null
     restart: on-failure:5
   
   authorizationapi.admin.api:
@@ -87,7 +89,7 @@ services:
       - './shared/serilog.json:/app/serilog.json'
       - './shared/nginx/certs/cacerts.crt:/usr/local/share/ca-certificates/cacerts.crt'
     networks:
-      innoclinic_identityserverui: null
+      innoclinic_net: null
     restart: on-failure:5
   
   authorizationapi.sts.identity:
@@ -114,10 +116,36 @@ services:
       - './shared/serilog.json:/app/serilog.json'
       - './shared/nginx/certs/cacerts.crt:/usr/local/share/ca-certificates/cacerts.crt'
     networks:
-      innoclinic_identityserverui:
+      innoclinic_net:
         aliases:
           - sts.innoclinic.local
     restart: on-failure:5
+
+  officesAPI:
+    image: '${DOCKER_REGISTRY-}innoclinic-offices-api'
+    build:
+      context: Backend/OfficesAPI
+    container_name: innoclinic-offices-api
+    environment:
+      - VIRTUAL_HOST=offices-api.innoclinic.local
+      - OfficesDb__Password=${OFFICES_DB_PASSWORD}
+      - OfficesDb__Host=mongodb
+      - IdentityServer__OAuth__ClientSecret=${OFFICES_API_CLIENT_SECRET}
+      - Serilog__WriteTo__0__Args__serverUrl=http://seq:5341
+      - Serilog__WriteTo__0__Args__apiKey=${OFFICES_API_LOG_APIKEY}
+      - Seq__ServerUrl=http://seq:5341
+      - Seq__ApiKey=${OFFICES_API_LOG_APIKEY}
+      - ASPNETCORE_ENVIRONMENT=Staging
+    depends_on:
+      - mongodb
+      - seq
+    volumes:
+      - './shared/nginx/certs/cacerts.crt:/usr/local/share/ca-certificates/cacerts.crt'
+    networks:
+      innoclinic_net:
+        aliases:
+          - offices-api.innoclinic.local
+
 
   db:
     image: 'mcr.microsoft.com/mssql/server:2022-CU12-ubuntu-22.04'
@@ -130,15 +158,51 @@ services:
     volumes:
       - 'dbdata:/var/opt/mssql'
     networks:
-      innoclinic_identityserverui: null
+      innoclinic_net: null
     restart: 
       on-failure:5
+
+  mongodb:
+    image: mongo:4.2.3-bionic
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_DATABASE=offices
+      - MONGO_INITDB_ROOT_USERNAME=officesAPI
+      - MONGO_INITDB_ROOT_PASSWORD=${OFFICES_DB_PASSWORD}
+    volumes:
+      - ./mongo-entrypoint:/docker-entrypoint-initdb.d
+      - mongodb:/data/db
+      - mongoconfig:/data/configdb
+    networks:
+      - innoclinic_net
+
+  seq:
+    image: datalust/seq
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST=seq.innoclinic.local
+      - ACCEPT_EULA=Y
+      - SEQ_FIRSTRUN_ADMINPASSWORDHASH=${SEQ_PASSWORDHASH}
+    volumes:
+      - seq_data:/data
+      - './shared/nginx/certs/cacerts.crt:/usr/local/share/ca-certificates/cacerts.crt'
+    ports:
+      - 5341:5341
+    networks:
+      innoclinic_net:
+        aliases:
+          - seq.innoclinic.local
 
 volumes:
   dbdata:
     driver: local
+  mongodb:
+  mongoconfig:
+  seq_data:
+
 networks:
   innoclinic_proxy:
     driver: bridge
-  innoclinic_identityserverui:
+  innoclinic_net:
     driver: bridge
