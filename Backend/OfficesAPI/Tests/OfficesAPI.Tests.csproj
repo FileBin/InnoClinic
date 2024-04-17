@@ -28,7 +28,7 @@
 
     <ItemGroup>
         <PackageReference Include="Filebin.InnoClinic.Shared.Domain.Models" Version="1.0.1" />
-        <PackageReference Include="Filebin.InnoClinic.Shared.Misc" Version="1.0.4.1" />
+        <PackageReference Include="Filebin.InnoClinic.Shared.Misc" Version="1.0.4-dev3" />
         <PackageReference Include="Filebin.InnoClinic.Shared.TestUtils" Version="1.0.0" />
     </ItemGroup>
 </Project>

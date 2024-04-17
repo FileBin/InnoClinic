@@ -131,6 +131,8 @@ services:
       - OfficesDb__Password=${OFFICES_DB_PASSWORD}
       - OfficesDb__Host=mongodb
       - IdentityServer__OAuth__ClientSecret=${OFFICES_API_CLIENT_SECRET}
+      - Serilog__WriteTo__0__Args__serverUrl=http://seq:5341
+      - Serilog__WriteTo__0__Args__apiKey=${OFFICES_API_LOG_APIKEY}
       - Seq__ServerUrl=http://seq:5341
       - Seq__ApiKey=${OFFICES_API_LOG_APIKEY}
       - ASPNETCORE_ENVIRONMENT=Staging
@@ -184,6 +186,7 @@ services:
       - SEQ_FIRSTRUN_ADMINPASSWORDHASH=${SEQ_PASSWORDHASH}
     volumes:
       - seq_data:/data
+      - './shared/nginx/certs/cacerts.crt:/usr/local/share/ca-certificates/cacerts.crt'
     ports:
       - 5341:5341
     networks:

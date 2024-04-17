@@ -8,8 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services
-    .AddLogger(builder.Configuration);
+builder.AddLogger();
 
 builder.Services
     .AddUtils()
@@ -22,7 +21,7 @@ var app = builder.Build();
 
 app.UseUtils();
 
-if (!app.Environment.IsProduction()) {
+if (! app.Environment.IsProduction()) {
     app.MapGet("/userinfo", [Authorize] (ClaimsPrincipal user) => user.Claims.Select(x => new { x.ValueType, x.Type, x.Value }));
 }
 app.MapControllers();
