@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ServicesAPI.Application;
 using ServicesAPI.Application.Contracts.Services;
 
-[assembly: InternalsVisibleTo("OfficesAPI.Tests", AllInternalsVisible = true)]
+[assembly: InternalsVisibleTo("ServicesAPI.Tests", AllInternalsVisible = true)]
 
 namespace OfficesAPI.Application;
 
