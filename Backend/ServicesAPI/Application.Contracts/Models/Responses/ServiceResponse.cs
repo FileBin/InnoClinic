@@ -1,0 +1,15 @@
+﻿namespace ServicesAPI.Application.Contracts.Models.Responses;
+
+public record ServiceResponse {
+    public Guid Id { get; init; }
+
+    public Guid SpecializationId { get; init; }
+
+    public Guid CategoryId { get; init; }
+
+    public required string Name { get; init; }
+
+    public required decimal Price { get; init; }
+
+    public required bool IsActive { get; init; }
+}
