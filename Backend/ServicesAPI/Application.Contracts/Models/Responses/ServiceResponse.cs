@@ -3,9 +3,9 @@
 public record ServiceResponse {
     public Guid Id { get; init; }
 
-    public Guid SpecializationId { get; init; }
+    public required SpecializationResponse Specialization { get; init; }
 
-    public Guid CategoryId { get; init; }
+    public required ServiceCategoryResponse Category { get; set; }
 
     public required string Name { get; init; }
 
