@@ -13,17 +13,12 @@ internal class ServiceRepository(ServicesDbContext dbContext) : IRepository<Serv
         dbContext.Services.Remove(entity);
     }
 
-    public async Task<Service?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) {
-        return await dbContext.Services
-            .AsNoTracking()
-            .SingleOrDefaultAsync(office => office.Id == id, cancellationToken);
+    public IQueryable<Service> GetAll() {
+        return dbContext.Services.AsNoTracking();
     }
 
-    public async Task<IEnumerable<Service>> GetPageAsync(IPageDesc pageDesc, CancellationToken cancellationToken = default) {
-        return await dbContext.Services
-            .AsNoTracking()
-            .Paginate(pageDesc)
-            .ToListAsync(cancellationToken);
+    public async Task<Service?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) {
+        return await GetAll().SingleOrDefaultAsync(office => office.Id == id, cancellationToken);
     }
 
     public void Update(Service entity) {

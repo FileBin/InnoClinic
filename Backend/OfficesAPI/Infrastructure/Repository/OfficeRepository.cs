@@ -2,7 +2,6 @@
 using OfficesAPI.Domain.Models;
 using OfficesAPI.Infrastructure.Database;
 using InnoClinic.Shared.Domain.Abstractions;
-using Shared.Misc;
 
 namespace OfficesAPI.Infrastructure.Repository;
 
@@ -15,17 +14,12 @@ internal class OfficeRepository(OfficeDbContext dbContext) : IRepository<Office>
         dbContext.Offices.Remove(entity);
     }
 
-    public async Task<Office?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) {
-        return await dbContext.Offices
-            .AsNoTracking()
-            .SingleOrDefaultAsync(office => office.Id == id, cancellationToken);
+    public IQueryable<Office> GetAll() {
+        return dbContext.Offices.AsNoTracking();
     }
 
-    public async Task<IEnumerable<Office>> GetPageAsync(IPageDesc pageDesc, CancellationToken cancellationToken = default) {
-        return await dbContext.Offices
-            .AsNoTracking()
-            .Paginate(pageDesc)
-            .ToListAsync(cancellationToken);
+    public async Task<Office?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) {
+        return await GetAll().SingleOrDefaultAsync(office => office.Id == id, cancellationToken);
     }
 
     public void Update(Office entity) {

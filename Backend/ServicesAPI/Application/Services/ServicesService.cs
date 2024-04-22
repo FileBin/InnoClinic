@@ -4,7 +4,9 @@ using Mapster;
 using ServicesAPI.Application.Contracts.Models.Requests;
 using ServicesAPI.Application.Contracts.Models.Responses;
 using ServicesAPI.Application.Contracts.Services;
+using ServicesAPI.Application.Helpers;
 using ServicesAPI.Domain;
+using Shared.Misc;
 
 namespace ServicesAPI.Application;
 
@@ -14,7 +16,7 @@ internal class ServicesService(
     IRepository<Specialization> specializationRepository,
     IUnitOfWork unitOfWork) : IServicesService {
 
-    public async Task<ServiceResponse> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) {
+    public async Task<ServiceResponse> GetByIdAsync(Guid id, IUserDescriptor userDesc, CancellationToken cancellationToken = default) {
         var service = await servicesRepository.GetByIdAsync(id, cancellationToken);
 
         if (service is null) {
@@ -24,8 +26,8 @@ internal class ServicesService(
         return service.Adapt<ServiceResponse>();
     }
 
-    public async Task<IEnumerable<ServiceResponse>> GetPageAsync(IPageDesc pageDesc, CancellationToken cancellationToken = default) {
-        var services = await servicesRepository.GetPageAsync(pageDesc, cancellationToken);
+    public async Task<IEnumerable<ServiceResponse>> GetPageAsync(IPageDesc pageDesc, IUserDescriptor userDesc, CancellationToken cancellationToken = default) {
+        var services = await servicesRepository.GetAuthorizedPage(pageDesc, userDesc, cancellationToken);
 
         return services.Select(o => o.Adapt<ServiceResponse>()).ToList();
     }
