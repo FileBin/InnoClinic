@@ -1,3 +1,4 @@
+using FluentValidation;
 using InnoClinic.Shared.Domain.Abstractions;
 using InnoClinic.Shared.Exceptions.Models;
 using Mapster;
@@ -11,15 +12,16 @@ namespace ServicesAPI.Application;
 
 internal class ServiceCategoriesService(
     IRepository<ServiceCategory> categoryRepository,
+    IValidator<ServiceCategory> categoryValidator,
     IUnitOfWork unitOfWork) : IServiceCategoriesService {
     public async Task<ServiceCategoryResponse> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) {
-        var specialization = await categoryRepository.GetByIdAsync(id, cancellationToken);
+        var category = await categoryRepository.GetByIdAsync(id, cancellationToken);
 
-        if (specialization is null) {
-            throw NotFoundException.NotFoundInDatabase(nameof(specialization));
+        if (category is null) {
+            throw NotFoundException.NotFoundInDatabase(nameof(category));
         }
 
-        return specialization.Adapt<ServiceCategoryResponse>();
+        return category.Adapt<ServiceCategoryResponse>();
     }
 
     public async Task<IEnumerable<ServiceCategoryResponse>> GetPageAsync(IPageDesc pageDesc, CancellationToken cancellationToken = default) {
@@ -29,41 +31,50 @@ internal class ServiceCategoriesService(
     }
 
     public async Task<Guid> CreateAsync(ServiceCategoryCreateRequest createRequest, CancellationToken cancellationToken = default) {
-        var specialization = createRequest.Adapt<ServiceCategory>();
+        var category = createRequest.Adapt<ServiceCategory>();
 
-        categoryRepository.Create(specialization);
+        await categoryValidator.ValidateAndThrowAsync(category, cancellationToken);
+
+
+        categoryRepository.Create(category);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return specialization.Id;
+        return category.Id;
     }
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default) {
-        var specialization = await categoryRepository.GetByIdAsync(id, cancellationToken);
+        var category = await categoryRepository.GetByIdAsync(id, cancellationToken);
 
-        if (specialization is null) {
-            throw NotFoundException.NotFoundInDatabase(nameof(specialization));
+        if (category is null) {
+            throw NotFoundException.NotFoundInDatabase(nameof(category));
         }
 
-        categoryRepository.Delete(specialization);
+        categoryRepository.Delete(category);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }
 
 
     public async Task UpdateAsync(Guid id, ServiceCategoryUpdateRequest updateRequest, CancellationToken cancellationToken = default) {
-        var specialization = await categoryRepository.GetByIdAsync(id, cancellationToken);
+        var category = await categoryRepository.GetByIdAsync(id, cancellationToken);
 
-        if (specialization is null) {
-            throw NotFoundException.NotFoundInDatabase(nameof(specialization));
+        if (category is null) {
+            throw NotFoundException.NotFoundInDatabase(nameof(category));
         }
 
         if (updateRequest.TimeSlotSize.HasValue) {
-            specialization.TimeSlotSize = updateRequest.TimeSlotSize.Value;
+            category.TimeSlotSize = updateRequest.TimeSlotSize.Value;
         }
 
         if (updateRequest.Name is not null) {
-            specialization.Name = updateRequest.Name;
+            category.Name = updateRequest.Name;
+        }
+
+        try {
+            await categoryValidator.ValidateAndThrowAsync(category, cancellationToken);
+        } finally {
+            //TODO add discard changes
         }
 
         await unitOfWork.SaveChangesAsync(cancellationToken);

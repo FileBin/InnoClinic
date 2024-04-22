@@ -1,3 +1,4 @@
+using FluentValidation;
 using InnoClinic.Shared.Domain.Abstractions;
 using InnoClinic.Shared.Exceptions.Models;
 using Mapster;
@@ -11,6 +12,7 @@ namespace ServicesAPI.Application;
 
 internal class SpecializationsService(
     IRepository<Specialization> specializationRepository,
+    IValidator<Specialization> specializationValidator,
     IUnitOfWork unitOfWork) : ISpecializationsService {
     public async Task<SpecializationResponse> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) {
         var specialization = await specializationRepository.GetByIdAsync(id, cancellationToken);
@@ -30,6 +32,8 @@ internal class SpecializationsService(
 
     public async Task<Guid> CreateAsync(SpecializationCreateRequest createRequest, CancellationToken cancellationToken = default) {
         var specialization = createRequest.Adapt<Specialization>();
+
+        await specializationValidator.ValidateAndThrowAsync(specialization, cancellationToken);
 
         specializationRepository.Create(specialization);
 
@@ -65,6 +69,14 @@ internal class SpecializationsService(
         if (updateRequest.Name is not null) {
             specialization.Name = updateRequest.Name;
         }
+
+        try {
+            await specializationValidator.ValidateAndThrowAsync(specialization, cancellationToken);
+        } finally {
+            //TODO add discard changes
+        }
+
+
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }

@@ -32,7 +32,7 @@ internal class ServicesService(
 
         return services.Select(o => o.Adapt<ServiceResponse>()).ToList();
     }
-    public async Task<Guid> CreateAsync(ServiceCreateRequest createRequest, CancellationToken cancellationToken = default) {      
+    public async Task<Guid> CreateAsync(ServiceCreateRequest createRequest, CancellationToken cancellationToken = default) {
         var service = createRequest.Adapt<Service>();
 
         await serviceValidator.ValidateAndThrowAsync(service, cancellationToken);
@@ -98,8 +98,12 @@ internal class ServicesService(
         if (updateRequest.Name is not null) {
             service.Name = updateRequest.Name;
         }
-
-        await serviceValidator.ValidateAndThrowAsync(service, cancellationToken);
+        
+        try {
+            await serviceValidator.ValidateAndThrowAsync(service, cancellationToken);
+        } finally {
+            //TODO add discard changes
+        }
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }
