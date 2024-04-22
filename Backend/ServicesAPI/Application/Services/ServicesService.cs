@@ -1,4 +1,5 @@
-﻿using InnoClinic.Shared.Domain.Abstractions;
+﻿using FluentValidation;
+using InnoClinic.Shared.Domain.Abstractions;
 using InnoClinic.Shared.Exceptions.Models;
 using Mapster;
 using ServicesAPI.Application.Contracts.Models.Requests;
@@ -6,7 +7,6 @@ using ServicesAPI.Application.Contracts.Models.Responses;
 using ServicesAPI.Application.Contracts.Services;
 using ServicesAPI.Application.Helpers;
 using ServicesAPI.Domain;
-using Shared.Misc;
 
 namespace ServicesAPI.Application;
 
@@ -14,6 +14,7 @@ internal class ServicesService(
     IRepository<Service> servicesRepository,
     IRepository<ServiceCategory> categoryRepository,
     IRepository<Specialization> specializationRepository,
+    IValidator<Service> serviceValidator,
     IUnitOfWork unitOfWork) : IServicesService {
 
     public async Task<ServiceResponse> GetByIdAsync(Guid id, IUserDescriptor userDesc, CancellationToken cancellationToken = default) {
@@ -31,8 +32,10 @@ internal class ServicesService(
 
         return services.Select(o => o.Adapt<ServiceResponse>()).ToList();
     }
-    public async Task<Guid> CreateAsync(ServiceCreateRequest createRequest, CancellationToken cancellationToken = default) {
+    public async Task<Guid> CreateAsync(ServiceCreateRequest createRequest, CancellationToken cancellationToken = default) {      
         var service = createRequest.Adapt<Service>();
+
+        await serviceValidator.ValidateAndThrowAsync(service, cancellationToken);
 
         var category = await categoryRepository.GetByIdAsync(service.CategoryId, cancellationToken);
 
@@ -95,6 +98,8 @@ internal class ServicesService(
         if (updateRequest.Name is not null) {
             service.Name = updateRequest.Name;
         }
+
+        await serviceValidator.ValidateAndThrowAsync(service, cancellationToken);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }
