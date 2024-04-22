@@ -3,10 +3,7 @@ using OfficesAPI.Domain.Models;
 
 namespace OfficesAPI.Infrastructure.Database;
 
-internal class OfficeDbContext : DbContext {
-    public OfficeDbContext(DbContextOptions options) : base(options) {
-    }
-
+internal class OfficeDbContext(DbContextOptions options) : DbContext(options) {
     public DbSet<Office> Offices => Set<Office>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
