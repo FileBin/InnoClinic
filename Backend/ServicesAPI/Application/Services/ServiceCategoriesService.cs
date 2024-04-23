@@ -59,6 +59,8 @@ internal class ServiceCategoriesService(
     public async Task UpdateAsync(Guid id, ServiceCategoryUpdateRequest updateRequest, CancellationToken cancellationToken = default) {
         var category = await categoryRepository.GetByIdAsync(id, cancellationToken);
 
+        using var transaction = await unitOfWork.BeginTransactionAsync(cancellationToken);
+
         if (category is null) {
             throw NotFoundException.NotFoundInDatabase(nameof(category));
         }
@@ -73,10 +75,11 @@ internal class ServiceCategoriesService(
 
         try {
             await categoryValidator.ValidateAndThrowAsync(category, cancellationToken);
-        } finally {
-            //TODO add discard changes
+        } catch (ValidationException) {
+            await transaction.RollbackAsync(cancellationToken);
         }
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
     }
 }

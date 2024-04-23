@@ -58,6 +58,7 @@ internal class SpecializationsService(
     public async Task UpdateAsync(Guid id, SpecializationUpdateRequest updateRequest, CancellationToken cancellationToken = default) {
         var specialization = await specializationRepository.GetByIdAsync(id, cancellationToken);
 
+        var transaction = await unitOfWork.BeginTransactionAsync(cancellationToken);
         if (specialization is null) {
             throw NotFoundException.NotFoundInDatabase(nameof(specialization));
         }
@@ -72,12 +73,12 @@ internal class SpecializationsService(
 
         try {
             await specializationValidator.ValidateAndThrowAsync(specialization, cancellationToken);
-        } finally {
-            //TODO add discard changes
+        } catch (ValidationException) {
+            await transaction.RollbackAsync(cancellationToken);
         }
 
-
-
         await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        await transaction.CommitAsync(cancellationToken);
     }
 }

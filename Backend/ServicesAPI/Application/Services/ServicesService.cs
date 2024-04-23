@@ -72,6 +72,8 @@ internal class ServicesService(
     public async Task UpdateAsync(Guid id, ServiceUpdateRequest updateRequest, CancellationToken cancellationToken = default) {
         var service = await servicesRepository.GetByIdAsync(id, cancellationToken);
 
+        using var transaction = await unitOfWork.BeginTransactionAsync(cancellationToken);
+
         if (service is null) {
             throw NotFoundException.NotFoundInDatabase(nameof(service));
         }
@@ -98,13 +100,15 @@ internal class ServicesService(
         if (updateRequest.Name is not null) {
             service.Name = updateRequest.Name;
         }
-        
+
         try {
             await serviceValidator.ValidateAndThrowAsync(service, cancellationToken);
-        } finally {
-            //TODO add discard changes
+        } catch (ValidationException) {
+            await transaction.RollbackAsync(cancellationToken); 
         }
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        await transaction.CommitAsync(cancellationToken);
     }
 }
