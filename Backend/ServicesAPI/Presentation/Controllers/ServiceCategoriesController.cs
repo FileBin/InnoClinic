@@ -21,7 +21,7 @@ public class ServiceCategoriesController(IServiceCategoriesService categoriesSer
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> Create([FromBody] ServiceCategoryCreateRequest createRequest, CancellationToken cancellationToken) {
         var id = await categoriesService.CreateAsync(createRequest, cancellationToken);
-        return Created(Url.Link(nameof(GetById), new { id }), id);
+        return Created(Url.Link($"{nameof(ServiceCategoriesController)}.{nameof(GetById)}", new { id }), id);
     }
 
 
@@ -46,7 +46,7 @@ public class ServiceCategoriesController(IServiceCategoriesService categoriesSer
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>CategoryDto if result is Ok</returns>
     [HttpGet]
-    [Route("{id:guid}", Name = nameof(GetById))]
+    [Route("{id:guid}", Name = $"{nameof(ServiceCategoriesController)}.{nameof(GetById)}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ServiceCategoryResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken) {
@@ -64,7 +64,7 @@ public class ServiceCategoriesController(IServiceCategoriesService categoriesSer
     [HttpPut]
     [HttpPatch]
     [Authorize(Policy = Config.ServicesPolicy)]
-    [Route("{id:guid}", Name = nameof(Update))]
+    [Route("{id:guid}", Name = $"{nameof(ServiceCategoriesController)}.{nameof(Update)}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
@@ -82,7 +82,7 @@ public class ServiceCategoriesController(IServiceCategoriesService categoriesSer
     /// <returns>Ok if Category is deleted</returns>
     [HttpDelete]
     [Authorize(Policy = Config.ServicesPolicy)]
-    [Route("{id:guid}", Name = nameof(Delete))]
+    [Route("{id:guid}", Name = $"{nameof(ServiceCategoriesController)}.{nameof(Delete)}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken) {

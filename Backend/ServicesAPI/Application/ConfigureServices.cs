@@ -1,11 +1,10 @@
 ﻿using System.Runtime.CompilerServices;
 using Microsoft.Extensions.DependencyInjection;
-using ServicesAPI.Application;
 using ServicesAPI.Application.Contracts.Services;
 
 [assembly: InternalsVisibleTo("ServicesAPI.Tests", AllInternalsVisible = true)]
 
-namespace OfficesAPI.Application;
+namespace ServicesAPI.Application;
 
 public static class ConfigureServices {
     public static IServiceCollection AddApplication(this IServiceCollection services) {

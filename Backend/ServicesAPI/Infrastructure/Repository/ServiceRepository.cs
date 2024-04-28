@@ -1,6 +1,5 @@
 ﻿using InnoClinic.Shared.Domain.Abstractions;
 using ServicesAPI.Domain;
-using Shared.Misc;
 
 namespace ServicesAPI.Infrastructure.Repository;
 
@@ -18,7 +17,7 @@ internal class ServiceRepository(ServicesDbContext dbContext) : IRepository<Serv
     }
 
     public async Task<Service?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) {
-        return await GetAll().SingleOrDefaultAsync(office => office.Id == id, cancellationToken);
+        return await GetAll().SingleOrDefaultAsync(service => service.Id == id, cancellationToken);
     }
 
     public void Update(Service entity) {

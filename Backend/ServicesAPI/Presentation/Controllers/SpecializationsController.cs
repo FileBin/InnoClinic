@@ -7,7 +7,7 @@ namespace ServicesAPI.Presentation.Controllers;
 
 [ApiController]
 [Authorize]
-[Route("api/categories")]
+[Route("api/specializations")]
 [ExcludeFromCodeCoverage]
 public class SpecializationsController(ISpecializationsService categoriesService) : ControllerBase {
     /// <summary>
@@ -22,7 +22,7 @@ public class SpecializationsController(ISpecializationsService categoriesService
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> Create([FromBody] SpecializationCreateRequest createRequest, CancellationToken cancellationToken) {
         var id = await categoriesService.CreateAsync(createRequest, cancellationToken);
-        return Created(Url.Link(nameof(GetById), new { id }), id);
+        return Created(Url.Link($"{nameof(SpecializationsController)}.{nameof(GetById)}", new { id }), id);
     }
 
 
@@ -47,7 +47,7 @@ public class SpecializationsController(ISpecializationsService categoriesService
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>SpecializationDto if result is Ok</returns>
     [HttpGet]
-    [Route("{id:guid}", Name = nameof(GetById))]
+    [Route("{id:guid}", Name = $"{nameof(SpecializationsController)}.{nameof(GetById)}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SpecializationResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken) {
@@ -65,7 +65,7 @@ public class SpecializationsController(ISpecializationsService categoriesService
     [HttpPut]
     [HttpPatch]
     [Authorize(Policy = Config.ServicesPolicy)]
-    [Route("{id:guid}", Name = nameof(Update))]
+    [Route("{id:guid}", Name = $"{nameof(SpecializationsController)}.{nameof(Update)}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
@@ -83,7 +83,7 @@ public class SpecializationsController(ISpecializationsService categoriesService
     /// <returns>Ok if Specialization is deleted</returns>
     [HttpDelete]
     [Authorize(Policy = Config.ServicesPolicy)]
-    [Route("{id:guid}", Name = nameof(Delete))]
+    [Route("{id:guid}", Name = $"{nameof(SpecializationsController)}.{nameof(Delete)}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken) {

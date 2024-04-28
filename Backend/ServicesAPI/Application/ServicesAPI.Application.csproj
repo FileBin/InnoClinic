@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Filebin.InnoClinic.Shared.Misc" Version="1.0.7" />
+    <PackageReference Include="Filebin.InnoClinic.Shared.Misc" Version="1.0.7-fix1" />
     <PackageReference Include="FluentValidation" Version="11.9.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.0" />
     <PackageReference Include="Mapster" Version="7.4.0" />

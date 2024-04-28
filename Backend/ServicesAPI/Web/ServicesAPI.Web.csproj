@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <ItemGroup>
-    <ProjectReference Include="..\Application\OfficesAPI.Application.csproj" />
-    <ProjectReference Include="..\Infrastructure\OfficesAPI.Infrastructure.csproj" />
-    <ProjectReference Include="..\Presentation\OfficesAPI.Presentation.csproj" />
+    <ProjectReference Include="..\Application\ServicesAPI.Application.csproj" />
+    <ProjectReference Include="..\Infrastructure\ServicesAPI.Infrastructure.csproj" />
+    <ProjectReference Include="..\Presentation\ServicesAPI.Presentation.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
