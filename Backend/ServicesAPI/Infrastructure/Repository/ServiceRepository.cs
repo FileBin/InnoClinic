@@ -1,26 +1,9 @@
 ﻿using InnoClinic.Shared.Domain.Abstractions;
+using InnoClinic.Shared.Misc.Repository;
 using ServicesAPI.Domain;
 
 namespace ServicesAPI.Infrastructure.Repository;
 
-internal class ServiceRepository(ServicesDbContext dbContext) : IRepository<Service> {
-    public void Create(Service entity) {
-        dbContext.Services.Add(entity);
-    }
-
-    public void Delete(Service entity) {
-        dbContext.Services.Remove(entity);
-    }
-
-    public IQueryable<Service> GetAll() {
-        return dbContext.Services.AsNoTracking();
-    }
-
-    public async Task<Service?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) {
-        return await GetAll().SingleOrDefaultAsync(service => service.Id == id, cancellationToken);
-    }
-
-    public void Update(Service entity) {
-        dbContext.Services.Entry(entity).State = EntityState.Modified;
-    }
+internal class ServiceRepository(ServicesDbContext dbContext) : CrudRepositoryBase<Service> {
+    protected override DbSet<Service> GetDbSet() => dbContext.Services;
 }
