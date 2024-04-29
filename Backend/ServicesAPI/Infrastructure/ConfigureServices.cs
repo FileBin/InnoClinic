@@ -3,8 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using InnoClinic.Shared.Domain.Abstractions;
 using ServicesAPI.Domain;
 using ServicesAPI.Infrastructure.Repository;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Logging;
 
 namespace ServicesAPI.Infrastructure;
 
@@ -26,8 +27,12 @@ public static class ConfigureServices {
     public static void EnsureDatabaseCreated(this WebApplication app) {
         using var serviceScope = app.Services.GetService<IServiceScopeFactory>()?.CreateScope();
         ArgumentNullException.ThrowIfNull(serviceScope);
-        
+
         var context = serviceScope.ServiceProvider.GetRequiredService<ServicesDbContext>();
-        context.Database.EnsureCreated();
+        try {
+            context.Database.EnsureCreated();
+        } catch (SqlException e) {
+            app.Logger.LogWarning(e, "Database creating exited with errors");
+        }
     }
 }

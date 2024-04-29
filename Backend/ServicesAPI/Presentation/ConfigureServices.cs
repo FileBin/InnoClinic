@@ -1,9 +1,9 @@
-﻿using InnoClinic.Shared.Misc.Auth;
+﻿using InnoClinic.Shared.Misc;
+using InnoClinic.Shared.Misc.Auth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ServicesAPI.Presentation.Controllers;
-using Shared.Misc;
 
 namespace ServicesAPI.Presentation;
 

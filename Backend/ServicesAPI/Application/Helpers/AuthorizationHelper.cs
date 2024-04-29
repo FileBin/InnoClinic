@@ -1,8 +1,8 @@
-﻿using System.Data.Entity;
-using InnoClinic.Shared.Domain.Abstractions;
+﻿using InnoClinic.Shared.Domain.Abstractions;
 using InnoClinic.Shared.Exceptions.Models;
+using InnoClinic.Shared.Misc;
+using Microsoft.EntityFrameworkCore;
 using ServicesAPI.Domain;
-using Shared.Misc;
 
 namespace ServicesAPI.Application.Helpers;
 

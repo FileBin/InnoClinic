@@ -2,6 +2,7 @@
 using InnoClinic.Shared.Domain.Abstractions;
 using InnoClinic.Shared.Exceptions.Models;
 using Mapster;
+using InnoClinic.Shared.Misc.Repository;
 using ServicesAPI.Application.Contracts.Models.Requests;
 using ServicesAPI.Application.Contracts.Models.Responses;
 using ServicesAPI.Application.Contracts.Services;
@@ -24,6 +25,8 @@ internal class ServicesService(
             throw NotFoundException.NotFoundInDatabase(nameof(service));
         }
 
+        service.ValidateVisibility(userDesc);
+
         return service.Adapt<ServiceResponse>();
     }
 
@@ -32,22 +35,14 @@ internal class ServicesService(
 
         return services.Select(o => o.Adapt<ServiceResponse>()).ToList();
     }
+
     public async Task<Guid> CreateAsync(ServiceCreateRequest createRequest, CancellationToken cancellationToken = default) {
         var service = createRequest.Adapt<Service>();
 
         await serviceValidator.ValidateAndThrowAsync(service, cancellationToken);
 
-        var category = await categoryRepository.GetByIdAsync(service.CategoryId, cancellationToken);
-
-        if (category is null) {
-            throw new NotFoundException($"Category with id {service.CategoryId} not found");
-        }
-
-        var specialization = await specializationRepository.GetByIdAsync(service.SpecializationId, cancellationToken);
-
-        if (specialization is null) {
-            throw new NotFoundException($"Specialization with id {service.SpecializationId} not found");
-        }
+        await categoryRepository.EnsureExistsAsync(service.CategoryId, cancellationToken);
+        await specializationRepository.EnsureExistsAsync(service.SpecializationId, cancellationToken);
 
         servicesRepository.Create(service);
 
@@ -78,33 +73,17 @@ internal class ServicesService(
             throw NotFoundException.NotFoundInDatabase(nameof(service));
         }
 
-        if (updateRequest.CategoryId.HasValue) {
-            var category = await categoryRepository.GetByIdAsync(updateRequest.CategoryId.Value, cancellationToken)
-                ?? throw new NotFoundException($"Category with id {updateRequest.CategoryId} not found");
-            service.Category = category;
-        }
+        if (updateRequest.CategoryId.HasValue)
+            await categoryRepository.EnsureExistsAsync(updateRequest.CategoryId.Value, cancellationToken);
+        if (updateRequest.SpecializationId.HasValue)
+            await specializationRepository.EnsureExistsAsync(updateRequest.SpecializationId.Value, cancellationToken);
 
-        if (updateRequest.SpecializationId.HasValue) {
-            var specialization = await specializationRepository.GetByIdAsync(updateRequest.SpecializationId.Value, cancellationToken) ?? throw new NotFoundException($"Specialization with id {service.SpecializationId} not found");
-            service.Specialization = specialization;
-        }
-
-        if (updateRequest.Price.HasValue) {
-            service.Price = updateRequest.Price.Value;
-        }
-
-        if (updateRequest.IsActive.HasValue) {
-            service.IsActive = updateRequest.IsActive.Value;
-        }
-
-        if (updateRequest.Name is not null) {
-            service.Name = updateRequest.Name;
-        }
+        updateRequest.Adapt(service);
 
         try {
             await serviceValidator.ValidateAndThrowAsync(service, cancellationToken);
         } catch (ValidationException) {
-            await transaction.RollbackAsync(cancellationToken); 
+            await transaction.RollbackAsync(cancellationToken);
         }
 
         await unitOfWork.SaveChangesAsync(cancellationToken);

@@ -1,7 +1,7 @@
 ﻿namespace ServicesAPI.Domain;
 
 [Table("service_categories")]
-public class ServiceCategory {
+public class ServiceCategory : IEntity {
     [Column("id")]
     public Guid Id { get; set; } = Guid.NewGuid();
 

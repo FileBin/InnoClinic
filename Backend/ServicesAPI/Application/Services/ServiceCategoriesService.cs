@@ -1,12 +1,12 @@
 using FluentValidation;
 using InnoClinic.Shared.Domain.Abstractions;
 using InnoClinic.Shared.Exceptions.Models;
+using InnoClinic.Shared.Misc;
 using Mapster;
 using ServicesAPI.Application.Contracts.Models.Requests;
 using ServicesAPI.Application.Contracts.Models.Responses;
 using ServicesAPI.Application.Contracts.Services;
 using ServicesAPI.Domain;
-using Shared.Misc;
 
 namespace ServicesAPI.Application;
 

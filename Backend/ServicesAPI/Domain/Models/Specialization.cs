@@ -1,7 +1,7 @@
 ﻿namespace ServicesAPI.Domain;
 
 [Table("specializations")]
-public class Specialization {
+public class Specialization : IEntity {
     [Column("id")]
     public Guid Id { get; set; } = Guid.NewGuid();
 

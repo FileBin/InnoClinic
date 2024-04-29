@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Filebin.InnoClinic.Shared.Misc" Version="1.0.7-fix1" />
+    <PackageReference Include="Filebin.InnoClinic.Shared.Misc" Version="1.0.9" />
   </ItemGroup>
 
 </Project>
