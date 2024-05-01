@@ -1,5 +1,6 @@
 ﻿using InnoClinic.Shared.Domain.Abstractions;
 using InnoClinic.Shared.Exceptions.Models;
+using InnoClinic.Shared.Misc;
 using Mapster;
 using OfficesAPI.Application.Contracts.Models.Requests;
 using OfficesAPI.Application.Contracts.Models.Responses;

@@ -1,4 +1,4 @@
-using Shared.Misc;
+using InnoClinic.Shared.Misc;
 using OfficesAPI.Infrastructure;
 using OfficesAPI.Application;
 using OfficesAPI.Presentation;

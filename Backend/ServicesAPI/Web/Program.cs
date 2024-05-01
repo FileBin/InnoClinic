@@ -1,4 +1,4 @@
-using Shared.Misc;
+using InnoClinic.Shared.Misc;
 using ServicesAPI.Domain;
 using ServicesAPI.Application;
 using ServicesAPI.Infrastructure;
@@ -27,7 +27,7 @@ if (!app.Environment.IsProduction()) {
     app.MapGet("/userinfo", [Authorize] (ClaimsPrincipal user) => user.Claims.Select(x => new { x.ValueType, x.Type, x.Value }));
 }
 
-app.MapControllers();
+app.UsePresentation();
 
 app.UseIdentityServer();
 

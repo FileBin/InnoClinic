@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OfficesAPI.Presentation.Controllers;
-using Shared.Misc;
+using InnoClinic.Shared.Misc;
 
 namespace OfficesAPI.Presentation;
 

@@ -9,7 +9,7 @@ using OfficesAPI.Domain.Models;
 using InnoClinic.Shared.Domain.Abstractions;
 using InnoClinic.Shared.Domain.Models;
 using InnoClinic.Shared.Exceptions.Models;
-using Shared.Misc;
+using InnoClinic.Shared.Misc;
 
 namespace OfficesAPI.Tests;
 

@@ -7,7 +7,7 @@ using ServicesAPI.Application.Contracts.Models.Requests;
 using ServicesAPI.Application.Contracts.Models.Responses;
 using ServicesAPI.Application.Contracts.Services;
 using ServicesAPI.Domain;
-using Shared.Misc;
+using InnoClinic.Shared.Misc;
 
 namespace ServicesAPI.Application;
 
