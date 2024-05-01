@@ -18,8 +18,9 @@ public class SpecializationsController(ISpecializationsService categoriesService
     /// <returns>Guid of created Specialization</returns>
     [HttpPost]
     [Authorize(Policy = Config.ServicesPolicy)]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Guid))]
-    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    // BUG: I can't use ProducesResponseTypeAttribute because it breaks my exception handler 
+    // [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Guid))]
+    // [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> Create([FromBody] SpecializationCreateRequest createRequest, CancellationToken cancellationToken) {
         var id = await categoriesService.CreateAsync(createRequest, cancellationToken);
         return Created(Url.Link($"{nameof(SpecializationsController)}.{nameof(GetById)}", new { id }), id);
@@ -33,7 +34,7 @@ public class SpecializationsController(ISpecializationsService categoriesService
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>List of SpecializationDto</returns>
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SpecializationResponse>))]
+    // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SpecializationResponse>))]
     public async Task<IActionResult> GetPage([FromQuery] PageDesc pageDesc, CancellationToken cancellationToken) {
         var specializationsResponse = await categoriesService.GetPageAsync(pageDesc, cancellationToken);
         return Ok(specializationsResponse);
@@ -48,8 +49,8 @@ public class SpecializationsController(ISpecializationsService categoriesService
     /// <returns>SpecializationDto if result is Ok</returns>
     [HttpGet]
     [Route("{id:guid}", Name = $"{nameof(SpecializationsController)}.{nameof(GetById)}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SpecializationResponse))]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SpecializationResponse))]
+    // [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken) {
         var specializationResponse = await categoriesService.GetByIdAsync(id, cancellationToken);
         return Ok(specializationResponse);
@@ -66,9 +67,9 @@ public class SpecializationsController(ISpecializationsService categoriesService
     [HttpPatch]
     [Authorize(Policy = Config.ServicesPolicy)]
     [Route("{id:guid}", Name = $"{nameof(SpecializationsController)}.{nameof(Update)}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    // [ProducesResponseType(StatusCodes.Status200OK)]
+    // [ProducesResponseType(StatusCodes.Status404NotFound)]
+    // [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> Update(Guid id, [FromBody] SpecializationUpdateRequest updateRequest, CancellationToken cancellationToken) {
         await categoriesService.UpdateAsync(id, updateRequest, cancellationToken);
         return Ok();
@@ -84,8 +85,8 @@ public class SpecializationsController(ISpecializationsService categoriesService
     [HttpDelete]
     [Authorize(Policy = Config.ServicesPolicy)]
     [Route("{id:guid}", Name = $"{nameof(SpecializationsController)}.{nameof(Delete)}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    // [ProducesResponseType(StatusCodes.Status200OK)]
+    // [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken) {
         await categoriesService.DeleteAsync(id, cancellationToken);
         return Ok();

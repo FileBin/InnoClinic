@@ -18,8 +18,9 @@ public class ServicesController(IServicesService servicesService, ClaimUserDescr
     /// <returns>Guid of created Service</returns>
     [HttpPost]
     [Authorize(Policy = Config.ServicesPolicy)]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Guid))]
-    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    // BUG: I can't use ProducesResponseTypeAttribute because it breaks my exception handler 
+    // [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Guid))]
+    // [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> Create([FromBody] ServiceCreateRequest createRequest, CancellationToken cancellationToken) {
         var id = await servicesService.CreateAsync(createRequest, cancellationToken);
         return Created(Url.Link($"{nameof(ServicesController)}.{nameof(GetById)}", new { id }), id);
@@ -33,7 +34,7 @@ public class ServicesController(IServicesService servicesService, ClaimUserDescr
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>List of ServiceDto</returns>
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ServiceResponse>))]
+    // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ServiceResponse>))]
     public async Task<IActionResult> GetPage([FromQuery] PageDesc pageDesc, CancellationToken cancellationToken) {
         var user = userDescriptorFactory.CreateFrom(User);
         var servicesResponse = await servicesService.GetPageAsync(pageDesc, user, cancellationToken);
@@ -49,8 +50,8 @@ public class ServicesController(IServicesService servicesService, ClaimUserDescr
     /// <returns>ServiceDto if result is Ok</returns>
     [HttpGet]
     [Route("{id:guid}", Name = $"{nameof(ServicesController)}.{nameof(GetById)}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ServiceResponse))]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ServiceResponse))]
+    // [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken) {
         var user = userDescriptorFactory.CreateFrom(User);
         var serviceResponse = await servicesService.GetByIdAsync(id, user, cancellationToken);
@@ -68,9 +69,9 @@ public class ServicesController(IServicesService servicesService, ClaimUserDescr
     [HttpPatch]
     [Authorize(Policy = Config.ServicesPolicy)]
     [Route("{id:guid}", Name = $"{nameof(ServicesController)}.{nameof(Update)}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    // [ProducesResponseType(StatusCodes.Status200OK)]
+    // [ProducesResponseType(StatusCodes.Status404NotFound)]
+    // [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> Update(Guid id, [FromBody] ServiceUpdateRequest updateRequest, CancellationToken cancellationToken) {
         await servicesService.UpdateAsync(id, updateRequest, cancellationToken);
         return Ok();
@@ -86,8 +87,8 @@ public class ServicesController(IServicesService servicesService, ClaimUserDescr
     [HttpDelete]
     [Authorize(Policy = Config.ServicesPolicy)]
     [Route("{id:guid}", Name = $"{nameof(ServicesController)}.{nameof(Delete)}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    // [ProducesResponseType(StatusCodes.Status200OK)]
+    // [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken) {
         await servicesService.DeleteAsync(id, cancellationToken);
         return Ok();
