@@ -14,6 +14,7 @@ services:
       innoclinic_proxy: null
       innoclinic_net:
         aliases:
+          - services-api.innoclinic.local
           - sts.innoclinic.local
           - admin.innoclinic.local
           - admin-api.innoclinic.local
@@ -146,6 +147,28 @@ services:
         aliases:
           - offices-api.innoclinic.local
 
+  servicesAPI:
+    image: '${DOCKER_REGISTRY-}innoclinic-services-api'
+    build:
+      context: Backend/ServicesAPI
+    container_name: innoclinic-services-api
+    environment:
+      - 'ConnectionStrings__DefaultConnection=Server=db;Database=ServicesAPI;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true;Trust Server Certificate=True;'
+      - VIRTUAL_HOST=services-api.innoclinic.local
+      - OfficesDb__Password=${OFFICES_DB_PASSWORD}
+      - IdentityServer__OAuth__ClientSecret=${SERVICES_API_CLIENT_SECRET}
+      - Serilog__WriteTo__0__Args__serverUrl=http://seq:5341
+      - Serilog__WriteTo__0__Args__apiKey=${SERVICES_API_LOG_APIKEY}
+      - ASPNETCORE_ENVIRONMENT=Staging
+    depends_on:
+      - db
+      - seq
+    volumes:
+      - './shared/nginx/certs/cacerts.crt:/usr/local/share/ca-certificates/cacerts.crt'
+    networks:
+      innoclinic_net:
+        aliases:
+          - services-api.innoclinic.local
 
   db:
     image: 'mcr.microsoft.com/mssql/server:2022-CU12-ubuntu-22.04'

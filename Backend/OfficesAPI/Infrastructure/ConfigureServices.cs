@@ -5,7 +5,7 @@ using OfficesAPI.Domain.Models;
 using OfficesAPI.Infrastructure.Database;
 using OfficesAPI.Infrastructure.Repository;
 using InnoClinic.Shared.Domain.Abstractions;
-using Shared.Misc;
+using InnoClinic.Shared.Misc;
 
 namespace OfficesAPI.Infrastructure;
 

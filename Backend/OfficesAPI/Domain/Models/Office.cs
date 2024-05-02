@@ -1,8 +1,9 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using InnoClinic.Shared.Domain.Abstractions;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace OfficesAPI.Domain.Models;
 
-public class Office {
+public class Office : IEntity {
     [BsonId]
     [Column("id")]
     public Guid Id { get; set; }
