@@ -1,10 +1,9 @@
 ﻿using OfficesAPI.Infrastructure.Database;
-using InnoClinic.Shared.Domain.Abstractions;
+using InnoClinic.Shared.Misc;
+using Microsoft.EntityFrameworkCore;
 
 namespace OfficesAPI.Infrastructure.Repository;
 
-internal class UnitOfWork(OfficeDbContext dbContext) : IUnitOfWork {
-    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) {
-        return await dbContext.SaveChangesAsync(cancellationToken);
-    }
+internal class UnitOfWork(OfficeDbContext dbContext) : UnitOfWorkBase {
+    public override DbContext GetDbContext() => dbContext;
 }
