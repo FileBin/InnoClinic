@@ -3,6 +3,6 @@ using AppointmentsAPI.Application.Contracts.Models.Responses;
 
 namespace AppointmentsAPI.Application.Queries;
 
-public record AppointmentGetCommand : ICommand<AppointmentResponse> {
+public record AppointmentGetQuery : ICommand<AppointmentResponse> {
     public Guid AppointmentId { get; init; }
 }

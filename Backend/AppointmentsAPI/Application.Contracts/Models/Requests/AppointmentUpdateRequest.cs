@@ -10,7 +10,5 @@ public record AppointmentUpdateRequest {
     public DateOnly? Date { get; init; }
 
     public TimeOnly? Time { get; init; }
-
-    public bool? IsApproved { get; init; }
 }
 

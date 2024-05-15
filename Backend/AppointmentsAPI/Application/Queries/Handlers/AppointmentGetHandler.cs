@@ -7,9 +7,9 @@ using Mapster;
 
 namespace AppointmentsAPI.Application.Queries.Handlers;
 
-public class AppointmentGetHandler(IRepository<Appointment> repository) : ICommandHandler<AppointmentGetCommand, AppointmentResponse>
+public class AppointmentGetHandler(IRepository<Appointment> repository) : ICommandHandler<AppointmentGetQuery, AppointmentResponse>
 {
-    public async Task<AppointmentResponse> Handle(AppointmentGetCommand request, CancellationToken cancellationToken)
+    public async Task<AppointmentResponse> Handle(AppointmentGetQuery request, CancellationToken cancellationToken)
     {
         var appointment = await repository.GetByIdOrThrow(request.AppointmentId, cancellationToken);
         return appointment.Adapt<AppointmentResponse>();
