@@ -5,8 +5,8 @@ using Mapster;
 
 namespace AppointmentsAPI.Application.Commands.Handlers;
 
-public class AppointmentCreateHandler(IRepository<Appointment> repository, IUnitOfWork unitOfWork) : ICommandHandler<AppointmentCreateCommand, Guid> {
-    public async Task<Guid> Handle(AppointmentCreateCommand request, CancellationToken cancellationToken) {
+public class CreateAppointmentHandler(IRepository<Appointment> repository, IUnitOfWork unitOfWork) : ICommandHandler<CreateAppointmentCommand, Guid> {
+    public async Task<Guid> Handle(CreateAppointmentCommand request, CancellationToken cancellationToken) {
         var appointment = request.Adapt<Appointment>();
         repository.Create(appointment);
 

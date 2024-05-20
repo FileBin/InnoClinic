@@ -13,7 +13,7 @@ public class ViewAppointmentScheduleHandler(IRepository<Appointment> repository)
         var appointments = await repository.GetAll()
             .Where(a => a.DoctorId.ToString() == request.DoctorDescriptor.Id)
             .Where(a => a.Date == request.Date)
-            .OrderBy(a => a.Time)
+            .OrderBy(a => a.BeginTime)
             .ToListAsync(cancellationToken);
 
         return appointments.Adapt<List<AppointmentResponse>>();

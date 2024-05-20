@@ -3,4 +3,4 @@ using AppointmentsAPI.Application.Contracts.Models.Requests;
 
 namespace AppointmentsAPI.Application.Commands;
 
-public record AppointmentCreateCommand : AppointmentCreateRequest, ICommand<Guid> { }
+public record CreateAppointmentCommand : CreateAppointmentRequest, ICommand<Guid> { }

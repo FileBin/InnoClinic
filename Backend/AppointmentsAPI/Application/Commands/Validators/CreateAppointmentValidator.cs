@@ -5,15 +5,13 @@ using Mapster;
 
 namespace AppointmentsAPI.Application.Commands.Validators;
 
-public class AppointmentCreateValidator : AbstractValidator<AppointmentCreateCommand> {
-    public AppointmentCreateValidator(ITimeSlotService timeSlotService) {
+public class CreateAppointmentValidator : AbstractValidator<CreateAppointmentCommand> {
+    public CreateAppointmentValidator(ITimeSlotService timeSlotService) {
         RuleFor(x => x.DoctorId).NotEmpty();
         RuleFor(x => x.ServiceId).NotEmpty();
         RuleFor(x => x.PatientId).NotEmpty();
 
-        RuleFor(x => x.Adapt<TimeSlotRequest>())
-            .MustAsync(timeSlotService.VerifyTimeSlot)
-            .WithMessage(x => $"Given TimeSlot ({x}) is invalid");
+        RuleFor(x => x.Adapt<TimeSlotRequest>()).ValidateTimeSlot(timeSlotService);
 
     }
 }

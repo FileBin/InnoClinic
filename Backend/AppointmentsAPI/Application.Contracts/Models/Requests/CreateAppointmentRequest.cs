@@ -1,6 +1,6 @@
 namespace AppointmentsAPI.Application.Contracts.Models.Requests;
 
-public record AppointmentCreateRequest {
+public record CreateAppointmentRequest {
     public Guid PatientId { get; init; }
 
     public Guid DoctorId { get; init; }

@@ -2,8 +2,8 @@ using FluentValidation;
 
 namespace AppointmentsAPI.Application.Commands.Validators;
 
-public class AppointmentDeleteValidator : AbstractValidator<AppointmentDeleteCommand> {
-    public AppointmentDeleteValidator() {
+public class ApproveAppointmentValidator : AbstractValidator<ApproveAppointmentCommand> {
+    public ApproveAppointmentValidator() {
         RuleFor(x => x.AppointmentId).NotEmpty();
     }
 }

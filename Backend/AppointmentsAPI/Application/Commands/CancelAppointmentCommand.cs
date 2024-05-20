@@ -2,6 +2,6 @@
 
 namespace AppointmentsAPI.Application.Commands;
 
-public record AppointmentDeleteCommand : ICommand {
+public record CancelAppointmentCommand : ICommand {
     public required Guid AppointmentId { get; init; }
 }
