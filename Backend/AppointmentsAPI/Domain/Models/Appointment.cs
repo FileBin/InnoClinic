@@ -29,8 +29,11 @@ public class Appointment : IEntity {
     [Column("date")]
     public required DateOnly Date { get; set; }
 
-    [Column("time")]
-    public required TimeOnly Time { get; set; }
+    [Column("begin_time")]
+    public required TimeOnly BeginTime { get; set; }
+
+    [Column("end_time")]
+    public required TimeOnly EndTime { get; set; }
 
     [Column("is_active")]
     public required bool IsApproved { get; set; }

@@ -9,6 +9,8 @@ public record AppointmentUpdateRequest {
 
     public DateOnly? Date { get; init; }
 
-    public TimeOnly? Time { get; init; }
+    public required TimeOnly? BeginTime { get; set; }
+
+    public required TimeOnly? EndTime { get; set; }
 }
 

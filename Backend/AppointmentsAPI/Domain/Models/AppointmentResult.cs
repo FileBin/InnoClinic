@@ -21,4 +21,7 @@ public class AppointmentResult : IEntity {
 
     [Column("recommendations")]
     public required string Recommendations { get; set; }
+
+    [Column("is_finished")]
+    public bool IsFinished { get; set; }
 }

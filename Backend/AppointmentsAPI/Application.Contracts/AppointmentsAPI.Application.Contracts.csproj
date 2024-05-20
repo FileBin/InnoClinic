@@ -14,5 +14,9 @@
     <PackageReference Include="Filebin.InnoClinic.Shared.Domain.Abstractions" Version="1.0.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\AppointmentsAPI.Domain.csproj" />
+  </ItemGroup>
+
 
 </Project>

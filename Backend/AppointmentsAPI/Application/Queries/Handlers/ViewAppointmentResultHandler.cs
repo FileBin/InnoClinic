@@ -13,6 +13,7 @@ public class ViewAppointmentResultHandler(IRepository<Appointment> repository)
     public async Task<AppointmentResultResponse> Handle(ViewAppointmentResultQuery request, CancellationToken cancellationToken) {
         var appointmentEntity = await repository.GetByIdOrThrow(request.AppointmentId, cancellationToken);
 
+
         var appointmentResultEntity = appointmentEntity.AppointmentResult
             ?? throw new BadRequestException("This appointment hasn't result yet!");
 
