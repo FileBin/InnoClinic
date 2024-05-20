@@ -1,3 +1,4 @@
+using AppointmentsAPI.Application.Contracts.Models.Requests.Commands;
 using FluentValidation;
 
 namespace AppointmentsAPI.Application.Commands.Validators;

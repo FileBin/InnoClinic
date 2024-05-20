@@ -1,5 +1,4 @@
-﻿using AppointmentsAPI.Application.Contracts.Handlers;
-using AppointmentsAPI.Application.Contracts.Models.Responses;
+﻿using AppointmentsAPI.Application.Contracts.Models.Responses;
 using AppointmentsAPI.Domain.Models;
 using InnoClinic.Shared.Domain.Abstractions;
 using InnoClinic.Shared.Exceptions.Models;
@@ -9,7 +8,7 @@ using Mapster;
 namespace AppointmentsAPI.Application.Queries.Handlers;
 
 public class ViewAppointmentResultHandler(IRepository<Appointment> repository)
-    : ICommandHandler<ViewAppointmentResultQuery, AppointmentResultResponse> {
+    : IRequestHandler<ViewAppointmentResultQuery, AppointmentResultResponse> {
     public async Task<AppointmentResultResponse> Handle(ViewAppointmentResultQuery request, CancellationToken cancellationToken) {
         var appointmentEntity = await repository.GetByIdOrThrow(request.AppointmentId, cancellationToken);
 

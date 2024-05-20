@@ -1,11 +1,9 @@
-﻿using AppointmentsAPI.Application.Contracts.Commands;
-using FluentValidation;
-using MediatR;
+﻿using FluentValidation;
 
 namespace AppointmentsAPI.Application.Behaviours;
 
 internal sealed class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators)
-    : IPipelineBehavior<TRequest, TResponse> where TRequest : class, IBaseCommand {
+    : IPipelineBehavior<TRequest, TResponse> where TRequest : class, IRequest {
 
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken) {
         if (!validators.Any()) {

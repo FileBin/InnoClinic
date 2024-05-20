@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography;
-using AppointmentsAPI.Application.Contracts.Models.Requests;
+﻿using AppointmentsAPI.Application.Contracts.Models.Requests;
 using AppointmentsAPI.Application.Contracts.Services;
 using AppointmentsAPI.Domain.Models;
 using FluentValidation;

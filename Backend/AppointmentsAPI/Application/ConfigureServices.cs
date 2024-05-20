@@ -1,7 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using AppointmentsAPI.Application.Behaviours;
 using FluentValidation;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly: InternalsVisibleTo("AppointmentsAPI.Tests", AllInternalsVisible = true)]
