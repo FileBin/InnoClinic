@@ -1,8 +1,8 @@
 using InnoClinic.Shared.Domain.Abstractions;
 
-namespace AppointmentsAPI.Application.Contracts.Models.Requests.Commands;
+namespace AppointmentsAPI.Application.Contracts.Models.Requests.Commands.Common;
 
-public record UpdateAppointmentResultCommand : IRequest {
+public record UpdateAppointmentResultRequest {
 
     public required IUserDescriptor UserDescriptor { get; init; }
 

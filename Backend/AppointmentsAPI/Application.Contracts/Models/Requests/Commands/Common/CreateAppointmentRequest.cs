@@ -1,8 +1,6 @@
-﻿using AppointmentsAPI.Application.Contracts.Models.Requests;
+﻿namespace AppointmentsAPI.Application.Contracts.Models.Requests.Commands.Common;
 
-namespace AppointmentsAPI.Application.Contracts.Models.Requests.Commands;
-
-public record CreateAppointmentCommand : IRequest<Guid> {
+public record CreateAppointmentRequest {
     public Guid PatientId { get; init; }
 
     public Guid DoctorId { get; init; }

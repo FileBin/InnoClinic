@@ -1,6 +1,5 @@
 ﻿using AppointmentsAPI.Application.Contracts.Models.Requests;
 using AppointmentsAPI.Application.Contracts.Models.Responses;
-using AppointmentsAPI.Domain.Models;
 
 namespace AppointmentsAPI.Application.Contracts.Services;
 
