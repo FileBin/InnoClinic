@@ -1,7 +1,7 @@
 ﻿using AppointmentsAPI.Domain.Models;
 using InnoClinic.Shared.Domain.Abstractions;
 
-namespace AppointmentsAPI.Domain;
+namespace AppointmentsAPI.Domain.Models;
 
 [Table("services")]
 public class Service : IEntity {
