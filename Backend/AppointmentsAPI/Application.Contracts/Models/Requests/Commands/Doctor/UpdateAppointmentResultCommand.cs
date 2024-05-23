@@ -3,6 +3,6 @@ using InnoClinic.Shared.Domain.Abstractions;
 
 namespace AppointmentsAPI.Application.Contracts.Models.Requests.Commands.Doctor;
 
-public record UpdateAppointmentResultCommand : Common.UpdateAppointmentResultRequest, IDoctorRequest, IRequest<Guid> {
+public record UpdateAppointmentResultCommand : Common.UpdateAppointmentResultRequest, IDoctorRequest, IRequest {
     public required IUserDescriptor DoctorDescriptor { get; init; }
 }

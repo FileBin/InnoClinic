@@ -1,5 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
-using AppointmentsAPI.Application.Behaviours;
+using AppointmentsAPI.Application.Behaviors;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 

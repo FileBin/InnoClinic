@@ -1,7 +1,6 @@
 ﻿namespace AppointmentsAPI.Application.Contracts.Models.Requests.Commands.Common;
 
 public record CreateAppointmentRequest {
-    public Guid PatientId { get; init; }
 
     public Guid DoctorId { get; init; }
 

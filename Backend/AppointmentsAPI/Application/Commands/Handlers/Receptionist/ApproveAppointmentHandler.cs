@@ -1,9 +1,9 @@
-using AppointmentsAPI.Application.Contracts.Models.Requests.Commands;
+using AppointmentsAPI.Application.Contracts.Models.Requests.Commands.Receptionist;
 using AppointmentsAPI.Domain.Models;
 using InnoClinic.Shared.Domain.Abstractions;
 using InnoClinic.Shared.Misc.Repository;
 
-namespace AppointmentsAPI.Application.Commands.Handlers;
+namespace AppointmentsAPI.Application.Commands.Handlers.Receptionist;
 
 public class ApproveAppointmentHandler(IRepository<Appointment> repository, IUnitOfWork unitOfWork) : IRequestHandler<ApproveAppointmentCommand> {
     public async Task Handle(ApproveAppointmentCommand request, CancellationToken cancellationToken) {

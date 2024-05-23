@@ -19,5 +19,10 @@
     <ProjectReference Include="..\Domain\AppointmentsAPI.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Queries/Handlers/Doctor/" />
+    <Folder Include="Queries/Handlers/Patient/" />
+  </ItemGroup>
+
 
 </Project>

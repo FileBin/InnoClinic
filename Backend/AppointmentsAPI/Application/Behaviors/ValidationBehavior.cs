@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace AppointmentsAPI.Application.Behaviours;
+namespace AppointmentsAPI.Application.Behaviors;
 
 internal sealed class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators)
     : IPipelineBehavior<TRequest, TResponse> where TRequest : class, IRequest {

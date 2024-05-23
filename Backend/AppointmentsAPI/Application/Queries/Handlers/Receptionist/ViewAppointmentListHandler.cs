@@ -1,21 +1,24 @@
-﻿using AppointmentsAPI.Application.Contracts.Models.Responses;
+﻿using AppointmentsAPI.Application.Contracts.Models.Requests.Queries.Receptionist;
+using AppointmentsAPI.Application.Contracts.Models.Responses;
 using AppointmentsAPI.Domain.Models;
 using InnoClinic.Shared.Domain.Abstractions;
 using InnoClinic.Shared.Misc;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 
-namespace AppointmentsAPI.Application.Queries.Handlers;
+namespace AppointmentsAPI.Application.Queries.Handlers.Receptionist;
 
 public class ViewAppointmentListHandler(IRepository<Appointment> repository)
     : IRequestHandler<ViewAppointmentsListQuery, IEnumerable<AppointmentResponse>> {
     public async Task<IEnumerable<AppointmentResponse>> Handle(ViewAppointmentsListQuery request, CancellationToken cancellationToken) {
         var date = request.Date;
-        var doctorFullName = request.DoctorFullName?.Trim()?.ToLower();
+        var doctorFullName = request.DoctorFullName?.Trim().ToLower();
         var officeId = request.OfficeId;
         var IsApproved = request.IsApproved;
 
-        var appointmentsQuery = repository.GetAll();
+        var appointmentsQuery = repository.GetAll()
+            .Include(x => x.DoctorProfile)
+            .AsNoTracking();
 
         if (date.HasValue) {
             appointmentsQuery = appointmentsQuery
