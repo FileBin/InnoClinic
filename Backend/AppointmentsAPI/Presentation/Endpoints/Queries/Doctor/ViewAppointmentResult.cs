@@ -1,15 +1,7 @@
-using System.Security.Claims;
 using AppointmentsAPI.Application.Contracts.Models.Requests.Queries.Doctor;
-using InnoClinic.Shared.Misc.Auth;
-using InnoClinic.Shared.Misc.Services;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace AppointmentsAPI.Presentation.Endpoints.Queries.Doctor;
 
-using HttpMethods = InnoClinic.Shared.Domain.Models.EndpointHttpMethods;
 
 public class ViewAppointmentResult(IMediator mediator, ClaimUserDescriptorFactory descriptorFactory) : AbstractEndpoint {
 

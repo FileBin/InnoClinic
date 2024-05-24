@@ -1,17 +1,8 @@
-using System.Security.Claims;
 using AppointmentsAPI.Application.Contracts.Models.Requests.Commands.Common;
 using AppointmentsAPI.Application.Contracts.Models.Requests.Commands.Doctor;
-using InnoClinic.Shared.Misc.Auth;
-using InnoClinic.Shared.Misc.Services;
-using Mapster;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace AppointmentsAPI.Presentation.Endpoints.Commands.Doctor;
 
-using HttpMethods = InnoClinic.Shared.Domain.Models.EndpointHttpMethods;
 
 public class UpdateAppointmentResult(IMediator mediator, ClaimUserDescriptorFactory descriptorFactory) : AbstractEndpoint {
 

@@ -1,20 +1,10 @@
-using System.Security.Claims;
 using AppointmentsAPI.Application.Contracts.Models.Requests;
 using AppointmentsAPI.Application.Contracts.Models.Requests.Commands.Patient;
-using InnoClinic.Shared.Misc.Auth;
-using InnoClinic.Shared.Misc.Services;
-using Mapster;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-using HttpMethods = InnoClinic.Shared.Domain.Models.EndpointHttpMethods;
 
 namespace AppointmentsAPI.Presentation.Endpoints.Commands.Patient;
 
 public class RescheduleAppointment(IMediator mediator, ClaimUserDescriptorFactory descriptorFactory) : AbstractEndpoint {
-    public override string Pattern => "/api/appointment/{appointmentId:guid}";
+    public override string Pattern => "/api/me/appointment/{appointmentId:guid}";
 
     public override HttpMethods Method => HttpMethods.Put;
 
