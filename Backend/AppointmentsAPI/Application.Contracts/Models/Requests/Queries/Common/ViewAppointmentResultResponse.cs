@@ -4,6 +4,6 @@ using InnoClinic.Shared.Domain.Abstractions;
 
 namespace AppointmentsAPI.Application.Contracts.Models.Requests.Queries.Common;
 
-public record ViewAppointmentResultResponse {
+public record ViewAppointmentResultRequest {
     public Guid AppointmentId { get; init; }
 }

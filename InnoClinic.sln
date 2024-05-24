@@ -51,6 +51,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServicesAPI.Domain", "Backe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentsAPI.Infrastructure", "Backend\AppointmentsAPI\Infrastructure\AppointmentsAPI.Infrastructure.csproj", "{8F19E376-366E-4F11-A5EE-9905D01522D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentsAPI.Presentation", "Backend\AppointmentsAPI\Presentation\AppointmentsAPI.Presentation.csproj", "{D3B06D6E-F8C3-4875-9254-359B245823C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,6 +127,10 @@ Global
 		{8F19E376-366E-4F11-A5EE-9905D01522D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F19E376-366E-4F11-A5EE-9905D01522D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F19E376-366E-4F11-A5EE-9905D01522D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3B06D6E-F8C3-4875-9254-359B245823C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3B06D6E-F8C3-4875-9254-359B245823C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3B06D6E-F8C3-4875-9254-359B245823C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3B06D6E-F8C3-4875-9254-359B245823C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -148,5 +154,6 @@ Global
 		{89DAC22F-45D9-4DE2-AA8C-00B0840B93C1} = {81053971-901B-4E20-B9A2-410579671B01}
 		{92E4C140-E785-4C85-A13E-632C37BB5AE8} = {68DE1F76-3364-4502-9572-ED18E3A8E874}
 		{8F19E376-366E-4F11-A5EE-9905D01522D4} = {C016DA98-A805-4AA5-AC43-2838B5548C64}
+		{D3B06D6E-F8C3-4875-9254-359B245823C1} = {CB28AD36-091B-41FD-A8C9-600003FED5D2}
 	EndGlobalSection
 EndGlobal
