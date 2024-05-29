@@ -39,7 +39,11 @@ public class UpdateAppointmentResultTest {
 
     [Test]
     [TestCase("Complaints", "Conclusion", true)]
-    [Parallelizable(ParallelScope.All)]
+    [TestCase(
+        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cra",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec pulvinar nibh. Donec commodo varius nibh. Duis purus diam, pulvinar id enim ac, fringilla dapibus lorem. Morbi hendrerit eget lacus et auctor. Donec facilisis ligula id metus bibendum, ut tempus magna imperdiet. Ut non nunc sed ante auctor tincidunt at vitae tellus. Sed maximus, orci eget dictum sollicitudin, urna justo accumsan tellus, vel posuere justo elit non ipsum.",
+        true)]
+    [Parallelizable(ParallelScope.Self)]
     [CancelAfter(5000)]
     public async Task TestUpdateAppointmentResultNormal(string complaints, string conclusion, bool isFinished, CancellationToken cancellationToken) {
         var descriptor = Helpers.Mocks.GenUserDescriptor(new() {
@@ -69,7 +73,7 @@ public class UpdateAppointmentResultTest {
     [TestCase("d61562c4-fce7-4cf1-b742-d8bb1ec2d616", Config.AppointmentUUID)]
     [TestCase(Config.DoctorUserUUID, "9caed93b-1145-411c-97f1-472a6f1a160c")]
     [TestCase("bb5f3481-e77e-4dbb-a95a-7a8ba96d73a9", "672f8958-9731-4372-b641-f61835e36cb7")]
-    [Parallelizable(ParallelScope.All)]
+    [Parallelizable(ParallelScope.Self)]
     [CancelAfter(5000)]
     public void TestUpdateAppointmentResultThrowsNotFound(string userId, string appointmentId, CancellationToken cancellationToken) {
         var descriptor = new Mock<IUserDescriptor>();
