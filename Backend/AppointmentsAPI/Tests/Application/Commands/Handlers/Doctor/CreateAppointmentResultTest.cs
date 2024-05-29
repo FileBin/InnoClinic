@@ -50,7 +50,7 @@ public class CreateAppointmentResultTest {
     public void TestCreateAppointmentResultThrowsNotFound(string userId, string appointmentId, CancellationToken cancellationToken) {
         var descriptor = Helpers.Mocks.GenUserDescriptor(new() {
             IsAdmin = false,
-            UserId = Config.DoctorUserUUID,
+            UserId = userId,
             UserName = "doctor",
         });
 
