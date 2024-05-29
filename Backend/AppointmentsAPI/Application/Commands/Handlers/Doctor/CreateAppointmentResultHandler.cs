@@ -4,13 +4,14 @@ using AppointmentsAPI.Domain.Models;
 using InnoClinic.Shared.Domain.Abstractions;
 using InnoClinic.Shared.Misc.Repository;
 
-namespace AppointmentsAPI.Application.Commands.Handlers;
+namespace AppointmentsAPI.Application.Commands.Handlers.Doctor;
 
-public class CreateAppointmentResultHandler(IRepository<Appointment> appointmentRepo, IRepository<Doctor> doctorRepo, IUnitOfWork unitOfWork)
+using Doctor = Domain.Models.Doctor;
+
+internal class CreateAppointmentResultHandler(IRepository<Appointment> appointmentRepo, IRepository<Doctor> doctorRepo, IUnitOfWork unitOfWork)
     : IRequestHandler<CreateAppointmentResultCommand, Guid> {
     public async Task<Guid> Handle(CreateAppointmentResultCommand request, CancellationToken cancellationToken) {
         var appointmentEntity = await appointmentRepo.GetByIdOrThrow(request.AppointmentId, cancellationToken);
-
         await appointmentEntity.ValidateAppointmentEditAccessAsync(request, doctorRepo, cancellationToken);
 
         appointmentEntity.AppointmentResult = new AppointmentResult {

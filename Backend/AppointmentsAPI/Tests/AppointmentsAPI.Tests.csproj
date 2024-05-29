@@ -17,14 +17,10 @@
         <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
         <PackageReference Include="NUnit.Analyzers" Version="4.0.0" />
         <PackageReference Include="coverlet.collector" Version="6.0.0" />
-
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Application\OfficesAPI.Application.csproj" />
-        <ProjectReference Include="..\Application.Contracts\OfficesAPI.Application.Contracts.csproj" />
+        <ProjectReference Include="..\Application\AppointmentsAPI.Application.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -6,7 +6,9 @@ using InnoClinic.Shared.Exceptions.Models;
 using InnoClinic.Shared.Misc.Repository;
 using Mapster;
 
-namespace AppointmentsAPI.Application.Commands.Handlers;
+namespace AppointmentsAPI.Application.Commands.Handlers.Doctor;
+
+using Doctor = Domain.Models.Doctor;
 
 public class UpdateAppointmentResultHandler(IRepository<Appointment> appointmentRepo, IRepository<Doctor> doctorRepo, IUnitOfWork unitOfWork)
     : IRequestHandler<UpdateAppointmentResultCommand> {
@@ -18,7 +20,7 @@ public class UpdateAppointmentResultHandler(IRepository<Appointment> appointment
         var appointmentResultEntity = appointmentEntity.AppointmentResult
             ?? throw new BadRequestException("This appointment hasn't result yet!");
 
-        if (!request.UserDescriptor.IsAdmin() && appointmentResultEntity.IsFinished)
+        if (!request.DoctorDescriptor.IsAdmin() && appointmentResultEntity.IsFinished)
             throw new BadRequestException("Result can't be edited after it finished!");
 
         request.Adapt(appointmentResultEntity);

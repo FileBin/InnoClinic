@@ -10,6 +10,7 @@ using InnoClinic.Shared.Domain.Abstractions;
 using InnoClinic.Shared.Domain.Models;
 using InnoClinic.Shared.Exceptions.Models;
 using InnoClinic.Shared.Misc;
+using MockQueryable.Moq;
 
 namespace OfficesAPI.Tests;
 
@@ -48,6 +49,8 @@ public class OfficeServiceTests {
         dictionaryRepo = [];
         updatedRepo = [];
 
+        var queryableMock = dictionaryRepo.Values.BuildMock();
+
         mockRepo = new();
         mockRepo
             .Setup(repo => repo.Create(It.IsAny<Office>()))
@@ -57,10 +60,8 @@ public class OfficeServiceTests {
             });
 
         mockRepo
-            .Setup(x => x.GetPageAsync(It.IsAny<IPageDesc>(), It.IsAny<CancellationToken>()))
-            .Returns<IPageDesc, CancellationToken>((pageDesc, _) => {
-                return Task.Run(() => updatedRepo.Paginate(pageDesc).ToList().AsEnumerable());
-            });
+            .Setup(x => x.GetAll())
+            .Returns(queryableMock);
 
         mockRepo
             .Setup(x => x.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
@@ -110,7 +111,7 @@ public class OfficeServiceTests {
 
         var list = await officeService.GetPageAsync(pageDesc, cancellationToken);
 
-        mockRepo.Verify(x => x.GetPageAsync(It.IsAny<IPageDesc>(), It.IsAny<CancellationToken>()), Times.Once());
+        mockRepo.Verify(x => x.GetAll(), Times.Once());
         mockUnitOfWork.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never());
 
         Assert.That(list.Any(), Is.False);
@@ -128,7 +129,7 @@ public class OfficeServiceTests {
 
         var list = await officeService.GetPageAsync(pageDesc, cancellationToken);
 
-        mockRepo.Verify(x => x.GetPageAsync(It.IsAny<IPageDesc>(), It.IsAny<CancellationToken>()), Times.Once());
+        mockRepo.Verify(x => x.GetAll(), Times.Once());
         mockUnitOfWork.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once());
 
         Assert.That(list.Any(), Is.True);
