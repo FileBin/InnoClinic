@@ -25,10 +25,11 @@ public class CreateAppointmentResultTest {
     [Test]
     [CancelAfter(5000)]
     public async Task TestCreateAppointmentResultNormal(CancellationToken cancellationToken) {
-        var descriptor = new Mock<IUserDescriptor>();
-        descriptor.Setup(x => x.IsAdmin()).Returns(false);
-        descriptor.Setup(x => x.Id).Returns(Config.DoctorUserUUID);
-        descriptor.Setup(x => x.Name).Returns("doctor");
+        var descriptor = Helpers.Mocks.GenUserDescriptor(new() {
+            IsAdmin = false,
+            UserId = Config.DoctorUserUUID,
+            UserName = "doctor",
+        });
 
         var result = await handler.Handle(new CreateAppointmentResultCommand {
             DoctorDescriptor = descriptor.Object,
@@ -47,10 +48,11 @@ public class CreateAppointmentResultTest {
     [TestCase("bb5f3481-e77e-4dbb-a95a-7a8ba96d73a9", "672f8958-9731-4372-b641-f61835e36cb7")]
     [CancelAfter(5000)]
     public void TestCreateAppointmentResultThrowsNotFound(string userId, string appointmentId, CancellationToken cancellationToken) {
-        var descriptor = new Mock<IUserDescriptor>();
-        descriptor.Setup(x => x.IsAdmin()).Returns(false);
-        descriptor.Setup(x => x.Id).Returns(userId);
-        descriptor.Setup(x => x.Name).Returns("doctor");
+        var descriptor = Helpers.Mocks.GenUserDescriptor(new() {
+            IsAdmin = false,
+            UserId = Config.DoctorUserUUID,
+            UserName = "doctor",
+        });
 
         Assert.ThrowsAsync<NotFoundException>(async () =>
         _ = await handler.Handle(new CreateAppointmentResultCommand {

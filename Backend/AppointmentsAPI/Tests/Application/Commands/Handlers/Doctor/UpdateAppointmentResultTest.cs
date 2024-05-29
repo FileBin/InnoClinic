@@ -20,10 +20,11 @@ public class UpdateAppointmentResultTest {
             mocks.MockDoctorRepo.Object,
             mocks.MockUnitOfWork.Object);
 
-        var descriptor = Helpers.Mocks.GenUserDescriptor(
-            isAdmin: false,
-            userId: Config.DoctorUserUUID,
-            userName: "doctor");
+        var descriptor = Helpers.Mocks.GenUserDescriptor(new() {
+            IsAdmin = false,
+            UserId = Config.DoctorUserUUID,
+            UserName = "doctor",
+        });
 
         _ = await createAppointmentResultHandler.Handle(new CreateAppointmentResultCommand {
             DoctorDescriptor = descriptor.Object,
@@ -41,10 +42,11 @@ public class UpdateAppointmentResultTest {
     [Parallelizable(ParallelScope.All)]
     [CancelAfter(5000)]
     public async Task TestUpdateAppointmentResultNormal(string complaints, string conclusion, bool isFinished, CancellationToken cancellationToken) {
-        var descriptor = Helpers.Mocks.GenUserDescriptor(
-            isAdmin: false,
-            userId: Config.DoctorUserUUID,
-            userName: "doctor");
+        var descriptor = Helpers.Mocks.GenUserDescriptor(new() {
+            IsAdmin = false,
+            UserId = Config.DoctorUserUUID,
+            UserName = "doctor",
+        });
 
         await handler.Handle(new UpdateAppointmentResultCommand {
             DoctorDescriptor = descriptor.Object,

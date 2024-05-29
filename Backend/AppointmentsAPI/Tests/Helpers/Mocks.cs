@@ -4,6 +4,12 @@ using MockQueryable.Moq;
 
 namespace AppointmentsAPI.Tests.Helpers;
 
+public record UserDescriptorParams {
+    public bool IsAdmin { get; init; }
+    public required string UserId { get; init; }
+    public required string UserName { get; init; }
+}
+
 public class Mocks {
 
     public Mock<IRepository<Appointment>> MockAppointmentRepo { get; private set; }
@@ -12,11 +18,11 @@ public class Mocks {
     public Appointment Appointment { get; private set; }
     public Doctor Doctor { get; private set; }
 
-    public static Mock<IUserDescriptor> GenUserDescriptor(bool isAdmin, string userId, string userName) {
+    public static Mock<IUserDescriptor> GenUserDescriptor(UserDescriptorParams userDescriptorParams) {
         var descriptor = new Mock<IUserDescriptor>();
-        descriptor.Setup(x => x.IsAdmin()).Returns(isAdmin);
-        descriptor.Setup(x => x.Id).Returns(userId);
-        descriptor.Setup(x => x.Name).Returns(userName);
+        descriptor.Setup(x => x.IsAdmin()).Returns(userDescriptorParams.IsAdmin);
+        descriptor.Setup(x => x.Id).Returns(userDescriptorParams.UserId);
+        descriptor.Setup(x => x.Name).Returns(userDescriptorParams.UserName);
         return descriptor;
     }
 
