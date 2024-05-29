@@ -14,9 +14,9 @@ public class CreateAppointmentResultHandler(IRepository<Appointment> appointment
         await appointmentEntity.ValidateAppointmentEditAccessAsync(request, doctorRepo, cancellationToken);
 
         appointmentEntity.AppointmentResult = new AppointmentResult {
-            Complaints = request.Complaints ?? "",
-            Conclusion = request.Conclusion ?? "",
-            Recommendations = request.Recommendations ?? "",
+            Complaints = request.Complaints ?? string.Empty,
+            Conclusion = request.Conclusion ?? string.Empty,
+            Recommendations = request.Recommendations ?? string.Empty,
             
             IsFinished = false,
         };
