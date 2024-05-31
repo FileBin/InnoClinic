@@ -34,7 +34,7 @@ public class TestObjects {
         Appointment = new() {
             Id = Guid.Parse(Config.AppointmentUUID),
             DoctorId = Doctor.Id,
-            PatientId = Guid.NewGuid(),
+            PatientId = Patient.Id,
             ServiceId = Guid.NewGuid(),
             BeginTime = TimeOnly.FromDateTime(DateTime.Now),
             Date = DateOnly.FromDateTime(DateTime.Now),
