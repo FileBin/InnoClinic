@@ -9,21 +9,37 @@ public class TestObjects {
     public Appointment? Appointment { get; private set; }
     public Doctor Doctor { get; private set; }
     public Patient Patient { get; private set; }
+    public Service Service { get; private set; }
+    public Specialization Specialization { get; private set; }
 
     public TestMocks Mocks { get; private set; }
 
     public TestObjects() {
+        Specialization = new() {
+            Name = "Dentology",
+            Id = Guid.Parse(Config.SpecializationUUID),
+        };
+
+        Service = new() {
+            Name = "Dentist",
+            Id = Guid.Parse(Config.ServiceUUID),
+            SpecializationId = Guid.Parse(Config.SpecializationUUID),
+            Specialization = Specialization,
+        };
+
+        Specialization.Services = [Service];
+
         Doctor = new() {
-            Id = Guid.NewGuid(),
+            Id = Guid.Parse(Config.DoctorEntityUUID),
             FirstName = "Alexander",
             LastName = "Smith",
             MiddleName = "Andreevich",
-            OfficeId = Guid.NewGuid(),
+            OfficeId = Guid.Parse(Config.OfficeUUID),
             UserId = Guid.Parse(Config.DoctorUserUUID),
         };
 
         Patient = new() {
-            Id = Guid.NewGuid(),
+            Id = Guid.Parse(Config.PatientEntityUUID),
             FirstName = "Michael",
             LastName = "Jordan",
             MiddleName = "Frank",
@@ -35,7 +51,7 @@ public class TestObjects {
             Id = Guid.Parse(Config.AppointmentUUID),
             DoctorId = Doctor.Id,
             PatientId = Patient.Id,
-            ServiceId = Guid.NewGuid(),
+            ServiceId = Guid.Parse(Config.ServiceUUID),
             BeginTime = TimeOnly.FromDateTime(DateTime.Now),
             Date = DateOnly.FromDateTime(DateTime.Now),
             EndTime = TimeOnly.FromDateTime(DateTime.Now + TimeSpan.FromMinutes(20)),
@@ -71,6 +87,10 @@ public class TestObjects {
             AppointmentRepo
                 .Setup(x => x.Delete(It.IsIn(objects.Appointment!)))
                 .Callback(() => objects.Appointment = null);
+
+            AppointmentRepo
+                .Setup(x => x.Create(It.IsAny<Appointment>()))
+                .Callback<Appointment>(a => objects.Appointment = a);
 
 
             DoctorRepo = new();

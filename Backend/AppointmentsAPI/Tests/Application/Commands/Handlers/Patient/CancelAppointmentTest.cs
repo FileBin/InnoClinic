@@ -36,6 +36,7 @@ public class CancelAppointmentTest : TestBase {
         Assert.That(Objects.Appointment, Is.Null);
 
         Objects.Mocks.AppointmentRepo.Verify(x => x.Delete(It.IsAny<Appointment>()), Times.Once());
+        Objects.Mocks.UnitOfWork.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once());
     }
 
     [Test]
@@ -53,7 +54,8 @@ public class CancelAppointmentTest : TestBase {
             UserName = "patient",
         });
 
-        Assert.ThrowsAsync<NotFoundException>(async () => await handler.Handle(new CancelAppointmentCommand {
+        Assert.ThrowsAsync<NotFoundException>(async () => 
+        await handler.Handle(new CancelAppointmentCommand {
             AppointmentId = Guid.Parse(appointmentId),
             PatientDescriptor = descriptor.Object,
         }, cancellationToken));

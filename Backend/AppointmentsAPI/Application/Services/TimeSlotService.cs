@@ -15,6 +15,8 @@ public class TimeSlotService(IRepository<Appointment> appointmentRepo) : ITimeSl
     }
 
     public async Task<bool> VerifyTimeSlot(TimeSlotRequest timeSlot, CancellationToken cancellationToken = default) {
+        if(timeSlot.Date < DateOnly.FromDateTime(DateTime.Now)) return false;
+        
         if (timeSlot.BeginTime >= timeSlot.EndTime) return false;
 
         var timeSlots = await GetBusySlots(timeSlot.Date, cancellationToken);
