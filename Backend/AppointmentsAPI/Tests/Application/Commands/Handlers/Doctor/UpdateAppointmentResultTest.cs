@@ -1,26 +1,24 @@
 using AppointmentsAPI.Application.Commands.Handlers.Doctor;
 using AppointmentsAPI.Application.Contracts.Models.Requests.Commands.Doctor;
 using AppointmentsAPI.Tests.Helpers;
-using InnoClinic.Shared.Domain.Abstractions;
 using InnoClinic.Shared.Exceptions.Models;
 
 namespace AppointmentsAPI.Tests.Application.Commands.Handlers.Doctor;
 
 [TestFixture]
-public class UpdateAppointmentResultTest {
-    Helpers.Mocks mocks;
+public class UpdateAppointmentResultTest : TestBase {
     UpdateAppointmentResultHandler handler;
 
     [SetUp]
     public async Task SetUpAsync() {
-        mocks = new();
+        base.SetUp();
 
         CreateAppointmentResultHandler createAppointmentResultHandler = new(
-            mocks.MockAppointmentRepo.Object,
-            mocks.MockDoctorRepo.Object,
-            mocks.MockUnitOfWork.Object);
+            Mocks.AppointmentRepo.Object,
+            Mocks.DoctorRepo.Object,
+            Mocks.UnitOfWork.Object);
 
-        var descriptor = Helpers.Mocks.GenUserDescriptor(new() {
+        var descriptor = TestObjects.GenMockUserDescriptor(new() {
             IsAdmin = false,
             UserId = Config.DoctorUserUUID,
             UserName = "doctor",
@@ -32,9 +30,9 @@ public class UpdateAppointmentResultTest {
         }, default);
 
         handler = new(
-            mocks.MockAppointmentRepo.Object,
-            mocks.MockDoctorRepo.Object,
-            mocks.MockUnitOfWork.Object);
+            Mocks.AppointmentRepo.Object,
+            Mocks.DoctorRepo.Object,
+            Mocks.UnitOfWork.Object);
     }
 
     [Test]
@@ -46,7 +44,7 @@ public class UpdateAppointmentResultTest {
     [Parallelizable(ParallelScope.Self)]
     [CancelAfter(5000)]
     public async Task TestUpdateAppointmentResultNormal(string complaints, string conclusion, bool isFinished, CancellationToken cancellationToken) {
-        var descriptor = Helpers.Mocks.GenUserDescriptor(new() {
+        var descriptor = TestObjects.GenMockUserDescriptor(new() {
             IsAdmin = false,
             UserId = Config.DoctorUserUUID,
             UserName = "doctor",
@@ -61,7 +59,7 @@ public class UpdateAppointmentResultTest {
         }, cancellationToken);
 
         Assert.Multiple(() => {
-            var result = mocks.Appointment.AppointmentResult;
+            var result = Objects.Appointment?.AppointmentResult;
             Assert.That(result, Is.Not.Null);
             Assert.That(result!.Complaints, Is.EqualTo(complaints));
             Assert.That(result!.Conclusion, Is.EqualTo(conclusion));
@@ -76,10 +74,11 @@ public class UpdateAppointmentResultTest {
     [Parallelizable(ParallelScope.Self)]
     [CancelAfter(5000)]
     public void TestUpdateAppointmentResultThrowsNotFound(string userId, string appointmentId, CancellationToken cancellationToken) {
-        var descriptor = new Mock<IUserDescriptor>();
-        descriptor.Setup(x => x.IsAdmin()).Returns(false);
-        descriptor.Setup(x => x.Id).Returns(userId);
-        descriptor.Setup(x => x.Name).Returns("doctor");
+        var descriptor = TestObjects.GenMockUserDescriptor(new() {
+            IsAdmin = false,
+            UserId = userId,
+            UserName = "doctor",
+        });
 
         Assert.ThrowsAsync<NotFoundException>(async () =>
         await handler.Handle(new UpdateAppointmentResultCommand {
