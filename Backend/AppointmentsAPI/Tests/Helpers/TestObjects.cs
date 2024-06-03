@@ -73,16 +73,29 @@ public class TestObjects {
 
         public Mock<IRepository<Appointment>> AppointmentRepo { get; private set; }
         public Mock<IRepository<Patient>> PatientRepo { get; private set; }
+        public Mock<IRepository<Service>> ServiceRepo { get; private set; }
         public Mock<IRepository<Doctor>> DoctorRepo { get; private set; }
         public Mock<IUnitOfWork> UnitOfWork { get; private set; }
 
         public TestMocks(TestObjects objects) {
+
+            ServiceRepo = new();
+
+            ServiceRepo
+                .Setup(x => x.GetByIdAsync(It.IsIn(objects.Service.Id), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(objects.Service);
 
 
             AppointmentRepo = new();
             AppointmentRepo
                 .Setup(x => x.GetByIdAsync(It.IsIn(objects.Appointment!.Id), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(objects.Appointment);
+
+            var queryableAppointmentMock = new[] { objects.Appointment! }.BuildMock();
+
+            AppointmentRepo
+                .Setup(x => x.GetAll())
+                .Returns(queryableAppointmentMock);
 
             AppointmentRepo
                 .Setup(x => x.Delete(It.IsIn(objects.Appointment!)))
