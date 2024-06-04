@@ -48,7 +48,7 @@ public class RescheduleAppointmentTest : TestBase {
     [Test]
     [CancelAfter(3000)]
     [TestCase("02/08/2024", "12:30:00", "12:40:00", "107920b4-16cc-4a10-9886-24aa7511078a")]
-    public Task RescheduleAppointmentNormalTest(string date, string beginTime, string endTime, string userGuid, CancellationToken cancellationToken) {
+    public Task RescheduleAppointmentThrowsNotFoundTest(string date, string beginTime, string endTime, string userGuid, CancellationToken cancellationToken) {
         var descriptor = TestObjects.GenMockUserDescriptor(new() {
             IsAdmin = false,
             UserId = userGuid,
