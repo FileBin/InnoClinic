@@ -39,7 +39,12 @@ public class CreateAppointmentValidatorTest : TestBase {
     [TestCase(1, "12:30:00", "12:40:00", "a3e7f832-d97f-4b87-aec9-5479ad14bad1", Config.ServiceUUID, Config.PatientEntityUUID, false)]
     [TestCase(1, "12:30:00", "12:40:00", Config.DoctorEntityUUID, "5b9017bb-b94c-4cb7-86b4-e66567802c94", Config.PatientEntityUUID, false)]
     [TestCase(1, "12:30:00", "12:40:00", Config.DoctorEntityUUID, Config.ServiceUUID, "28861f63-06a2-4089-a130-aaac2f0b6bbc", false)]
-    public async Task CreateAppointmentNormalTest(int dayOffset, string beginTime, string endTime, string doctorGuid, string serviceGuid, string patientGuid, bool expected, CancellationToken cancellationToken) {
+    public async Task CreateAppointmentNormalTest(
+        int dayOffset, string beginTime,
+        string endTime, string doctorGuid,
+        string serviceGuid, string patientGuid,
+        bool expected, CancellationToken cancellationToken) {
+            
         var date = DateOnly.FromDateTime(DateTime.Now + TimeSpan.FromDays(dayOffset));
 
         var info = CultureInfo.GetCultureInfo("en-US");
