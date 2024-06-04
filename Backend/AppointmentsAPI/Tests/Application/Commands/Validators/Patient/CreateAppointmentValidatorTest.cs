@@ -5,7 +5,7 @@ using AppointmentsAPI.Application.Services;
 using AppointmentsAPI.Tests.Helpers;
 using Microsoft.Extensions.Configuration;
 
-namespace AppointmentsAPI.Tests.Application.Commands.Handlers.Patient;
+namespace AppointmentsAPI.Tests.Application.Commands.Validators.Patient;
 
 [TestFixture]
 public class CreateAppointmentValidatorTest : TestBase {

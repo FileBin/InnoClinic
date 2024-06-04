@@ -3,7 +3,6 @@ using AppointmentsAPI.Application.Commands.Handlers.Receptionist;
 using AppointmentsAPI.Application.Contracts.Models.Requests.Commands.Receptionist;
 using AppointmentsAPI.Domain.Models;
 using AppointmentsAPI.Tests.Helpers;
-using InnoClinic.Shared.Exceptions.Models;
 
 namespace AppointmentsAPI.Tests.Application.Commands.Handlers.Receptionist;
 
