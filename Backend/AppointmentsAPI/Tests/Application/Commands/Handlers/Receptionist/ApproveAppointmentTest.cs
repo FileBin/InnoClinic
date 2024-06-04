@@ -36,7 +36,7 @@ public class ApproveAppointmentTest : TestBase {
     [CancelAfter(3000)]
     [Parallelizable(ParallelScope.Self)]
     public Task ApproveAppointmentThrowsNotFoundTest(string appointmentUUID, CancellationToken cancellationToken) {
-        Assert.ThrowsAsync<NotFoundException>(async () => 
+        Assert.ThrowsAsync<NotFoundException>(async () =>
         await handler.Handle(new ApproveAppointmentCommand {
             AppointmentId = Guid.Parse(appointmentUUID),
         }, cancellationToken));
