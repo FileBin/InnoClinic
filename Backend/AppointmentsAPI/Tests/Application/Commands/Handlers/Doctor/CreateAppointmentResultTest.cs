@@ -1,7 +1,6 @@
 using AppointmentsAPI.Application.Commands.Handlers.Doctor;
 using AppointmentsAPI.Application.Contracts.Models.Requests.Commands.Doctor;
 using AppointmentsAPI.Tests.Helpers;
-using InnoClinic.Shared.Domain.Abstractions;
 using InnoClinic.Shared.Exceptions.Models;
 
 namespace AppointmentsAPI.Tests.Application.Commands.Handlers.Doctor;

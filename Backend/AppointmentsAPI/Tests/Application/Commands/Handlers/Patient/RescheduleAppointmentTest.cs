@@ -1,7 +1,6 @@
 using System.Globalization;
 using AppointmentsAPI.Application.Commands.Handlers.Patient;
 using AppointmentsAPI.Application.Contracts.Models.Requests.Commands.Patient;
-using AppointmentsAPI.Domain.Models;
 using AppointmentsAPI.Tests.Helpers;
 using InnoClinic.Shared.Exceptions.Models;
 

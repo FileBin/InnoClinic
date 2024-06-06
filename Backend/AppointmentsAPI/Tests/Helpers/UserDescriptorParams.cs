@@ -1,5 +1,3 @@
-using InnoClinic.Shared.Misc.Repository;
-
 namespace AppointmentsAPI.Tests.Helpers;
 
 public record UserDescriptorParams {

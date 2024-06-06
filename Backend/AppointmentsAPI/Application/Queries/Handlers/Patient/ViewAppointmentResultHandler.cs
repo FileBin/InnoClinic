@@ -3,8 +3,8 @@ using AppointmentsAPI.Application.Contracts.Models.Responses;
 using AppointmentsAPI.Domain.Models;
 using InnoClinic.Shared.Domain.Abstractions;
 using InnoClinic.Shared.Exceptions.Models;
-using InnoClinic.Shared.Misc.Repository;
 using Mapster;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppointmentsAPI.Application.Queries.Handlers.Patient;
 
@@ -13,7 +13,14 @@ using PatientEntity = Domain.Models.Patient;
 public class ViewAppointmentResultHandler(IRepository<Appointment> appointmentRepo, IRepository<PatientEntity> patientRepo)
     : IRequestHandler<ViewAppointmentResultQuery, AppointmentResultResponse> {
     public async Task<AppointmentResultResponse> Handle(ViewAppointmentResultQuery request, CancellationToken cancellationToken) {
-        var appointmentEntity = await appointmentRepo.GetByIdOrThrow(request.AppointmentId, cancellationToken);
+        var appointmentEntity = await appointmentRepo
+            .GetAll()
+            .Include(x => x.AppointmentResult)
+            .Include(x => x.PatientProfile)
+            .Include(x => x.DoctorProfile)
+            .Include(x => x.Service)
+            .FirstOrDefaultAsync(x=> x.Id == request.AppointmentId, cancellationToken)
+            ?? throw new NotFoundException($"Appointment with id {request.AppointmentId} was not found");
         
         await appointmentEntity.ValidateAppointmentPatientAccessAsync(request, patientRepo, cancellationToken);
 
