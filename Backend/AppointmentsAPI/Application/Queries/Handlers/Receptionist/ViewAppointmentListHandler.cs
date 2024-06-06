@@ -28,7 +28,8 @@ public class ViewAppointmentListHandler(IRepository<Appointment> repository)
         if (doctorFullName is not null) {
             appointmentsQuery = appointmentsQuery
                 .Where(a =>
-                    $"{a.DoctorProfile.FirstName.ToLower()} {a.DoctorProfile.LastName.ToLower()} {a.DoctorProfile.MiddleName.ToLower()}" == doctorFullName);
+                    $"{a.DoctorProfile.FirstName.ToLower()} {a.DoctorProfile.LastName.ToLower()} {a.DoctorProfile.MiddleName.ToLower()}"
+                    .Contains(doctorFullName));
         }
 
         if (officeId.HasValue) {

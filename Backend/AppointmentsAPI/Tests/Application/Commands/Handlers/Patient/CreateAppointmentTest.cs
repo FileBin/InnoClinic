@@ -30,12 +30,10 @@ public class CreateAppointmentTest : TestBase {
             UserName = "patient",
         });
 
-        var info = CultureInfo.GetCultureInfo("en-US");
-
         await handler.Handle(new CreateAppointmentCommand {
-            Date = DateOnly.Parse(date, info),
-            BeginTime = TimeOnly.Parse(beginTime, info),
-            EndTime = TimeOnly.Parse(endTime, info),
+            Date = DateOnly.Parse(date, Config.CultureInfo),
+            BeginTime = TimeOnly.Parse(beginTime, Config.CultureInfo),
+            EndTime = TimeOnly.Parse(endTime, Config.CultureInfo),
             DoctorId = Guid.Parse(Config.DoctorEntityUUID),
             ServiceId = Guid.Parse(Config.ServiceUUID),
             PatientDescriptor = descriptor.Object,

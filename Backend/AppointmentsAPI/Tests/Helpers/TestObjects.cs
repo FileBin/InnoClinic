@@ -55,9 +55,9 @@ public class TestObjects {
             PatientProfile = Patient,
             ServiceId = Guid.Parse(Config.ServiceUUID),
             Service = Service,
-            BeginTime = TimeOnly.FromDateTime(DateTime.Now),
-            Date = DateOnly.FromDateTime(DateTime.Now),
-            EndTime = TimeOnly.FromDateTime(DateTime.Now + TimeSpan.FromMinutes(20)),
+            BeginTime = TimeOnly.Parse("12:00:00", Config.CultureInfo),
+            Date = DateOnly.FromDateTime(DateTime.Today + TimeSpan.FromDays(1)),
+            EndTime = TimeOnly.Parse("12:20:00", Config.CultureInfo),
             IsApproved = true,
         };
 

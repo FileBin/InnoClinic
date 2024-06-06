@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace AppointmentsAPI.Tests.Helpers;
 
 public static class Config {
@@ -10,4 +12,6 @@ public static class Config {
     public const string ServiceUUID = "e6a6c825-a427-4c87-a408-d0bc684e0966";
     public const string SpecializationUUID = "05f3a96e-fd3f-485d-bbb8-67e2e7fc3ad9";
     public const string OfficeUUID = "e83bcebe-69d9-48f5-83dc-29e97ec4f0e6";
+
+    public static readonly CultureInfo CultureInfo = CultureInfo.GetCultureInfo("en-US");
 }
