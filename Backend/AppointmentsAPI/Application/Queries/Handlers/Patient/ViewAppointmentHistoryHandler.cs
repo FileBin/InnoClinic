@@ -1,5 +1,6 @@
 using AppointmentsAPI.Application.Contracts.Models.Requests.Queries.Patient;
 using AppointmentsAPI.Application.Contracts.Models.Responses;
+using AppointmentsAPI.Application.Helpers;
 using AppointmentsAPI.Domain.Models;
 using InnoClinic.Shared.Domain.Abstractions;
 using Mapster;

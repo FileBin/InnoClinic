@@ -6,6 +6,5 @@ namespace AppointmentsAPI.Application.Queries.Validators.Doctor;
 public class ViewAppointmentScheduleValidator: AbstractValidator<ViewAppointmentScheduleQuery> {
     public ViewAppointmentScheduleValidator() {
         RuleFor(x => x.Date).NotEmpty();
-        //TODO add doctor validation
     }
 }

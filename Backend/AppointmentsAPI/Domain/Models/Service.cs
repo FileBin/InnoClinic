@@ -1,5 +1,4 @@
-﻿using AppointmentsAPI.Domain.Models;
-using InnoClinic.Shared.Domain.Abstractions;
+﻿using InnoClinic.Shared.Domain.Abstractions;
 
 namespace AppointmentsAPI.Domain.Models;
 

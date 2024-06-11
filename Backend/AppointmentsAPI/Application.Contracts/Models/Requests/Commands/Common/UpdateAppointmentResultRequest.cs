@@ -1,5 +1,3 @@
-using InnoClinic.Shared.Domain.Abstractions;
-
 namespace AppointmentsAPI.Application.Contracts.Models.Requests.Commands.Common;
 
 public record UpdateAppointmentResultRequest {

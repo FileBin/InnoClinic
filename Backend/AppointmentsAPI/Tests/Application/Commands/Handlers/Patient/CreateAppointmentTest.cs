@@ -1,4 +1,3 @@
-using System.Globalization;
 using AppointmentsAPI.Application.Commands.Handlers.Patient;
 using AppointmentsAPI.Application.Contracts.Models.Requests.Commands.Patient;
 using AppointmentsAPI.Domain.Models;

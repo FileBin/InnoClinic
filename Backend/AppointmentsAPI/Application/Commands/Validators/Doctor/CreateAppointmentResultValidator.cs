@@ -1,7 +1,5 @@
 ﻿using AppointmentsAPI.Application.Contracts.Models.Requests.Commands.Doctor;
-using AppointmentsAPI.Domain.Models;
 using FluentValidation;
-using InnoClinic.Shared.Domain.Abstractions;
 
 namespace AppointmentsAPI.Application.Commands.Validators;
 
