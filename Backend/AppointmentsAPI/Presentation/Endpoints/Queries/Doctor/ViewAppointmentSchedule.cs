@@ -13,7 +13,7 @@ public class ViewAppointmentSchedule(IMediator mediator, ClaimUserDescriptorFact
 
     protected override Delegate EndpointHandler =>
     [Authorize]
-    async ([FromQuery] ViewAppointmentScheduleRequest request,
+    async ([AsParameters] ViewAppointmentScheduleRequest request,
         ClaimsPrincipal user, CancellationToken cancellationToken) => {
 
         var command = request.Adapt<ViewAppointmentScheduleQuery>() with {

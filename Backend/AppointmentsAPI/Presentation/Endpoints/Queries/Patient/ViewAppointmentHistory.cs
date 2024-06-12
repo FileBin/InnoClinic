@@ -11,7 +11,7 @@ public class ViewAppointmentHistory(IMediator mediator, ClaimUserDescriptorFacto
 
     protected override Delegate EndpointHandler => 
     [Authorize]
-    async ([FromRoute] Guid patientId, [FromQuery] PageDesc pageDesc, 
+    async ([AsParameters] PageDesc pageDesc, 
            ClaimsPrincipal user, CancellationToken cancellationToken) => {
 
         var command = pageDesc.Adapt<ViewAppointmentHistoryQuery>() with {

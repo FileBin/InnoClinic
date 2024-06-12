@@ -4,7 +4,7 @@ namespace AppointmentsAPI.Presentation.Endpoints.Queries.Patient;
 
 public class ViewAppointmentResult(IMediator mediator, ClaimUserDescriptorFactory descriptorFactory) : AbstractEndpoint {
 
-    public override string Pattern => "/api/appointment/{appointmentId:guid}/result";
+    public override string Pattern => "/api/appointment/{appointmentId:guid}/result/patient";
 
     public override HttpMethods Method => HttpMethods.Get;
 
