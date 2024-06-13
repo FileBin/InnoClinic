@@ -1,4 +1,3 @@
-using InnoClinic.Shared.Domain.Abstractions;
 using InnoClinic.Shared.Misc.Repository;
 using ServicesAPI.Domain;
 

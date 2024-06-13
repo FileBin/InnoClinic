@@ -1,5 +1,4 @@
 ﻿using ServicesAPI.Application.Contracts.Models.Requests;
-using ServicesAPI.Application.Contracts.Models.Responses;
 using ServicesAPI.Application.Contracts.Services;
 
 namespace ServicesAPI.Presentation.Controllers;

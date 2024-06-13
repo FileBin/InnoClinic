@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OfficesAPI.Application.Contracts.Models.Requests;
-using OfficesAPI.Application.Contracts.Models.Responses;
 using OfficesAPI.Application.Contracts.Services;
 using InnoClinic.Shared.Domain.Models;
 using Microsoft.AspNetCore.Authorization;

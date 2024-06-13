@@ -10,7 +10,10 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.1" />
+        <PackageReference Include="Microsoft.CodeAnalysis.Scripting" Version="4.9.2" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+        <PackageReference Include="MockQueryable.EntityFrameworkCore" Version="7.0.1" />
+        <PackageReference Include="MockQueryable.Moq" Version="7.0.1" />
         <PackageReference Include="NUnit" Version="4.0.1" />
         <PackageReference Include="Moq" Version="4.20.70" />
         <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
@@ -28,7 +31,7 @@
 
     <ItemGroup>
         <PackageReference Include="Filebin.InnoClinic.Shared.Domain.Models" Version="1.0.1" />
-        <PackageReference Include="Filebin.InnoClinic.Shared.Misc" Version="1.0.10" />
+        <PackageReference Include="Filebin.InnoClinic.Shared.Misc" Version="1.0.11" />
         <PackageReference Include="Filebin.InnoClinic.Shared.TestUtils" Version="1.0.0" />
     </ItemGroup>
 </Project>

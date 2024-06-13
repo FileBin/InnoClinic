@@ -9,13 +9,13 @@ public class Service : IEntity {
     public Guid SpecializationId { get; set; }
 
     [ForeignKey(nameof(SpecializationId))]
-    public virtual required Specialization Specialization { get; set; }
+    public virtual Specialization Specialization { get; set; } = null!;
 
     [Column("category_id")]
     public Guid CategoryId { get; set; }
 
     [ForeignKey(nameof(CategoryId))]
-    public virtual required ServiceCategory Category { get; set; }
+    public virtual ServiceCategory Category { get; set; } = null!;
 
     [Column("service_name")]
     public required string Name { get; set; }
