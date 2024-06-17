@@ -8,15 +8,19 @@ using ServicesAPI.Application.Contracts.Models.Responses;
 using ServicesAPI.Application.Contracts.Services;
 using ServicesAPI.Application.Helpers;
 using ServicesAPI.Domain;
+using MassTransit;
+using InnoClinic.Shared.Messaging.Contracts.Models.Service;
+using InnoClinic.Shared.Messaging.Contracts.Models;
 
-namespace ServicesAPI.Application;
+namespace ServicesAPI.Application.Services;
 
 internal class ServicesService(
     IRepository<Service> servicesRepository,
     IRepository<ServiceCategory> categoryRepository,
     IRepository<Specialization> specializationRepository,
     IValidator<Service> serviceValidator,
-    IUnitOfWork unitOfWork) : IServicesService {
+    IUnitOfWork unitOfWork,
+    IPublishEndpoint publishEndpoint) : IServicesService {
 
     public async Task<ServiceResponse> GetByIdAsync(Guid id, IUserDescriptor userDesc, CancellationToken cancellationToken = default) {
         var service = await servicesRepository.GetByIdAsync(id, cancellationToken);
@@ -46,6 +50,8 @@ internal class ServicesService(
 
         servicesRepository.Create(service);
 
+        await publishEndpoint.Publish(service.Adapt<ServiceCreated>(), cancellationToken);
+
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return service.Id;
@@ -59,6 +65,8 @@ internal class ServicesService(
         }
 
         servicesRepository.Delete(service);
+
+        await publishEndpoint.Publish(service.Adapt<ServiceDeleted>(), cancellationToken);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }
@@ -85,6 +93,8 @@ internal class ServicesService(
         } catch (ValidationException) {
             await transaction.RollbackAsync(cancellationToken);
         }
+
+        await publishEndpoint.Publish(service.Adapt<ServiceUpdated>(), cancellationToken);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 

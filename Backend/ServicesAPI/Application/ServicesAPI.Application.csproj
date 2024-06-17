@@ -16,10 +16,12 @@
     <PackageReference Include="FluentValidation" Version="11.9.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.0" />
     <PackageReference Include="Mapster" Version="7.4.0" />
+    <PackageReference Include="MassTransit" Version="8.2.2" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Filebin.InnoClinic.Shared.Domain.Abstractions" Version="1.0.6" />
+    <PackageReference Include="Filebin.InnoClinic.Shared.Messaging.Contracts" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
