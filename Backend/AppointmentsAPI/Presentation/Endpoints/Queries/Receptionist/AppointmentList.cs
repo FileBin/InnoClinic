@@ -11,7 +11,7 @@ public class AppointmentList(IMediator mediator) : AbstractEndpoint {
 
     protected override Delegate EndpointHandler =>
     [Authorize]
-    async ([FromQuery] ViewAppointmentsListQuery request, CancellationToken cancellationToken) => {
+    async ([AsParameters] ViewAppointmentsListQuery request, CancellationToken cancellationToken) => {
 
         var command = request;
 

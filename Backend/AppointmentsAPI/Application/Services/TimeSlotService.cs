@@ -34,8 +34,8 @@ public class TimeSlotService(IRepository<Appointment> appointmentRepo, IConfigur
         var timeSlots = await GetBusySlots(timeSlot.Date, cancellationToken);
 
         foreach (var otherSlot in timeSlots) {
-            if (timeSlot.BeginTime > otherSlot.EndTime) continue;
-            if (otherSlot.BeginTime > timeSlot.EndTime) continue;
+            if(timeSlot.BeginTime - otherSlot.EndTime > TimeSpan.FromMinutes(minMinutes)) continue;
+            if(otherSlot.BeginTime - timeSlot.EndTime > TimeSpan.FromMinutes(minMinutes)) continue;
 
             return false;
         }

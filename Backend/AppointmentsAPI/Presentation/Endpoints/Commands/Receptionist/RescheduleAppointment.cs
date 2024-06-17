@@ -6,7 +6,7 @@ namespace AppointmentsAPI.Presentation.Endpoints.Commands.Receptionist;
 public class RescheduleAppointment(IMediator mediator) : AbstractEndpoint {
     public override string Pattern => "/api/appointment/{appointmentId:guid}";
 
-    public override HttpMethods Method => HttpMethods.Put;
+    public override HttpMethods Method => HttpMethods.Patch | HttpMethods.Put;
 
     protected override Delegate EndpointHandler =>
     [Authorize]

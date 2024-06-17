@@ -6,7 +6,7 @@ namespace AppointmentsAPI.Presentation.Endpoints.Commands.Doctor;
 
 public class UpdateAppointmentResult(IMediator mediator, ClaimUserDescriptorFactory descriptorFactory) : AbstractEndpoint {
 
-    public override string Pattern => "/api/appointment/{appointmentId:guid}/result";
+    public override string Pattern => "/api/appointment/{appointmentId:guid}/result/doctor";
 
     public override HttpMethods Method => HttpMethods.Put | HttpMethods.Patch;
 

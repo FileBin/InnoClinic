@@ -7,6 +7,8 @@ namespace OfficesAPI.Presentation;
 
 public static class ConfigureServices {
     public static IServiceCollection AddPresentation(this IServiceCollection services, IConfiguration config) {
+        services.AddTransient<ClaimUserDescriptorFactory>();
+
         services.AddEndpoints(typeof(ConfigureServices).Assembly);
 
         services.AddAuthorizationBuilder()
