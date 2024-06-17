@@ -1,0 +1,210 @@
+﻿{
+    "IdentityServerData": {
+        "IdentityResources": [
+            {
+                "Name": "roles",
+                "Enabled": true,
+                "DisplayName": "Roles",
+                "UserClaims": [
+                    "role"
+                ]
+            },
+            {
+                "Name": "openid",
+                "Enabled": true,
+                "Required": true,
+                "DisplayName": "Your user identifier",
+                "UserClaims": [
+                    "sub"
+                ]
+            },
+            {
+                "Name": "profile",
+                "Enabled": true,
+                "DisplayName": "User profile",
+                "Description": "Your user profile information (first name, last name, etc.)",
+                "Emphasize": true,
+                "UserClaims": [
+                    "name",
+                    "family_name",
+                    "given_name",
+                    "middle_name",
+                    "nickname",
+                    "preferred_username",
+                    "profile",
+                    "picture",
+                    "website",
+                    "gender",
+                    "birthdate",
+                    "zoneinfo",
+                    "locale",
+                    "updated_at"
+                ]
+            },
+            {
+                "Name": "email",
+                "Enabled": true,
+                "DisplayName": "Your email address",
+                "Emphasize": true,
+                "UserClaims": [
+                    "email",
+                    "email_verified"
+                ]
+            },
+            {
+                "Name": "address",
+                "Enabled": true,
+                "DisplayName": "Your address",
+                "Emphasize": true,
+                "UserClaims": [
+                    "address"
+                ]
+            }
+        ],
+        "ApiScopes": [
+            {
+                "Name": "InnoClinicAdminId_api",
+                "DisplayName": "InnoClinicAdminId_api",
+                "Required": true,
+                "UserClaims": [
+                    "role",
+                    "name"
+                ]
+            },
+            {
+                "Name": "officesAPI",
+                "DisplayName": "OfficesAPI",
+                "Required": true,
+                "UserClaims": [
+                    "role",
+                    "name"
+                ]
+            },
+            {
+                "Name": "servicesAPI",
+                "DisplayName": "ServicesAPI",
+                "Required": true,
+                "UserClaims": [
+                    "role",
+                    "name"
+                ]
+            }
+        ],
+        "ApiResources": [
+            {
+                "Name": "InnoClinicAdminId_api",
+                "Scopes": [
+                    "InnoClinicAdminId_api"
+                ]
+            },
+            {
+                "Name": "officesAPI",
+                "Scopes": [
+                    "officesAPI"
+                ]
+            },
+            {
+                "Name": "servicesAPI",
+                "Scopes": [
+                    "servicesAPI"
+                ]
+            }
+        ],
+        "Clients": [
+            {
+                "ClientId": "InnoClinicAdminId",
+                "ClientName": "InnoClinicAdminId",
+                "ClientUri": "https://admin.innoclinic.local",
+                "AllowedGrantTypes": [
+                    "authorization_code"
+                ],
+                "RequirePkce": true,
+                "ClientSecrets": [
+                    {
+                        "Value": "itsasecret"
+                    }
+                ],
+                "RedirectUris": [
+                    "https://admin.innoclinic.local/signin-oidc"
+                ],
+                "FrontChannelLogoutUri": "https://admin.innoclinic.local/signout-oidc",
+                "PostLogoutRedirectUris": [
+                    "https://admin.innoclinic.local/signout-callback-oidc"
+                ],
+                "AllowedCorsOrigins": [
+                    "https://admin.innoclinic.local"
+                ],
+                "AllowedScopes": [
+                    "openid",
+                    "email",
+                    "profile",
+                    "roles"
+                ]
+            },
+            {
+                "ClientId": "InnoClinicAdminId_api_swaggerui",
+                "ClientName": "InnoClinicAdminId_api_swaggerui",
+                "AllowedGrantTypes": [
+                    "authorization_code"
+                ],
+                "RequireClientSecret": false,
+                "RequirePkce": true,
+                "RedirectUris": [
+                    "https://admin-api.innoclinic.local/swagger/oauth2-redirect.html"
+                ],
+                "AllowedScopes": [
+                    "InnoClinicAdminId_api"
+                ],
+                "AllowedCorsOrigins": [
+                    "https://admin-api.innoclinic.local"
+                ]
+            },
+            {
+                "ClientId": "officesApi_swagger",
+                "ClientName": "officesApi_swagger",
+                "Description": "Swagger UI for OfficesApi",
+                "AllowedGrantTypes": [
+                    "authorization_code"
+                ],
+                "ClientSecrets": [
+                    {
+                        "Value": "itsasecret"
+                    }
+                ],
+                "RequirePkce": true,
+                "RedirectUris": [
+                    "https://offices-api.innoclinic.local/swagger/oauth2-redirect.html"
+                ],
+                "AllowedScopes": [
+                    "officesAPI"
+                ],
+                "AllowedCorsOrigins": [
+                    "https://offices-api.innoclinic.local"
+                ]
+            },
+            {
+                "ClientId": "servicesApi_swagger",
+                "ClientName": "servicesApi_swagger",
+                "Description": "Swagger UI for ServicesApi",
+                "AllowedGrantTypes": [
+                    "authorization_code"
+                ],
+                "ClientSecrets": [
+                    {
+                        "Value": "itsasecret"
+                    }
+                ],
+                "RequirePkce": true,
+                "RedirectUris": [
+                    "https://services-api.innoclinic.local/swagger/oauth2-redirect.html"
+                ],
+                "AllowedScopes": [
+                    "servicesAPI"
+                ],
+                "AllowedCorsOrigins": [
+                    "https://services-api.innoclinic.local"
+                ]
+            }
+        ]
+    }
+}

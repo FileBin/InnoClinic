@@ -12,6 +12,7 @@ database/init.d/*.env
 /shared/nginx/certs
 /shared/*.json
 !/shared/serilog.json
+!/shared/identityserverdata.json
 
 # ignore local changes move all to nuget
 /Backend/**/Shared/**

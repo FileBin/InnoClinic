@@ -39,17 +39,12 @@ services:
       - 'AdminConfiguration__IdentityAdminBaseUrl=https://admin.innoclinic.local'
       - 'AdminConfiguration__IdentityAdminRedirectUri=https://admin.innoclinic.local/signin-oidc'
       - 'AdminConfiguration__IdentityServerBaseUrl=https://sts.innoclinic.local'
-      - AdminConfiguration__RequireHttpsMetadata=false
-      - 'IdentityServerData__Clients__0__ClientUri=https://admin.innoclinic.local'
-      - 'IdentityServerData__Clients__0__RedirectUris__0=https://admin.innoclinic.local/signin-oidc'
-      - 'IdentityServerData__Clients__0__FrontChannelLogoutUri=https://admin.innoclinic.local/signout-oidc'
-      - 'IdentityServerData__Clients__0__PostLogoutRedirectUris__0=https://admin.innoclinic.local/signout-callback-oidc'
-      - 'IdentityServerData__Clients__0__AllowedCorsOrigins__0=https://admin.innoclinic.local'
-      - 'IdentityServerData__Clients__1__RedirectUris__0=https://admin-api.innoclinic.local/swagger/oauth2-redirect.html'
-      - 'IdentityServerData__Clients__1__AllowedCorsOrigins__0=https://admin-api.innoclinic.local'
+      - 'AdminConfiguration__RequireHttpsMetadata=false'
       - 'Serilog__WriteTo__1__Args__connectionString=Server=db;Database=IdentityServerAdmin;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true;Trust Server Certificate=True;'
       - 'AdminConfiguration__Theme=sketchy'
       - 'IdentityServerData__Clients__0__ClientSecrets__0__Value=${IDENTITY_ADMIN_CLIENT_SECRET}'
+      - 'IdentityServerData__Clients__2__ClientSecrets__0__Value=${OFFICES_API_CLIENT_SECRET}'
+      - 'IdentityServerData__Clients__3__ClientSecrets__0__Value=${SERVICES_API_CLIENT_SECRET}'
       - 'AdminConfiguration__ClientSecret=${IDENTITY_ADMIN_CLIENT_SECRET}'
       - DockerConfiguration__UpdateCaCertificate=true
       - ASPNETCORE_ENVIRONMENT=Development
@@ -60,9 +55,12 @@ services:
       - authorizationapi.sts.identity
     volumes:
       - './shared/serilog.json:/app/serilog.json'
+      - './shared/identityserverdata.json:/app/identityserverdata.json'
       - './shared/nginx/certs/cacerts.crt:/usr/local/share/ca-certificates/cacerts.crt'
     networks:
-      innoclinic_net: null
+      innoclinic_net:
+        aliases:
+          - admin.innoclinic.local
     restart: on-failure:5
   
   authorizationapi.admin.api:
@@ -90,7 +88,9 @@ services:
       - './shared/serilog.json:/app/serilog.json'
       - './shared/nginx/certs/cacerts.crt:/usr/local/share/ca-certificates/cacerts.crt'
     networks:
-      innoclinic_net: null
+      innoclinic_net:
+        aliases:
+          - admin-api.innoclinic.local
     restart: on-failure:5
   
   authorizationapi.sts.identity:
@@ -179,7 +179,7 @@ services:
       MSSQL_SA_PASSWORD: '${DB_PASSWORD:-Password_123}'
       ACCEPT_EULA: 'Y'
     volumes:
-      - 'dbdata:/var/opt/mssql'
+      - 'dbdata_test:/var/opt/mssql'
     networks:
       innoclinic_net: null
     restart: 
@@ -218,7 +218,7 @@ services:
           - seq.innoclinic.local
 
 volumes:
-  dbdata:
+  dbdata_test:
     driver: local
   mongodb:
   mongoconfig:
