@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using Microsoft.Extensions.DependencyInjection;
 using ServicesAPI.Application.Contracts.Services;
+using ServicesAPI.Application.Services;
 
 [assembly: InternalsVisibleTo("ServicesAPI.Tests", AllInternalsVisible = true)]
 

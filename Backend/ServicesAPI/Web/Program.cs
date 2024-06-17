@@ -5,6 +5,7 @@ using ServicesAPI.Infrastructure;
 using ServicesAPI.Presentation;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Application.Messaging;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,7 @@ builder.Services
     .AddIdentityServer(builder.Configuration, builder.Environment)
     .AddDomain()
     .AddApplication()
+    .AddMessaging(builder.Configuration)
     .AddInfrastructure(builder.Configuration)
     .AddPresentation(builder.Configuration);
 

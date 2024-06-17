@@ -19,8 +19,14 @@ mkcert -h 2> /dev/null || ( echo "mkcert not found!"; exit 1 )
 
 safecd shared/nginx/certs
 mkcert --install
-ln -s "$HOME/.local/share/mkcert/rootCA.pem" ./cacerts.pem
-ln -s "$HOME/.local/share/mkcert/rootCA.pem" ./cacerts.crt
+
+if ! [ -f ./cacerts.pem ]; then
+    ln -s "$HOME/.local/share/mkcert/rootCA.pem" ./cacerts.pem
+fi
+
+if ! [ -f ./cacerts.crt ]; then
+    ln -s "$HOME/.local/share/mkcert/rootCA.pem" ./cacerts.crt
+fi
 
 mkcert -cert-file innoclinic.local.crt -key-file innoclinic.local.key innoclinic.local *.innoclinic.local
 mkcert -pkcs12 innoclinic.local.pfx innoclinic.local *.innoclinic.local

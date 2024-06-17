@@ -24,7 +24,7 @@ public static class ConfigureServices {
                     var receptionistRoleName = config.GetOrThrow("ReceptionistRoleName");
 
                     return context.User.HasClaim(x => x.Type == "scope" && x.Value == scopeName) &&
-                           context.User.HasClaim(c => c.Type == ClaimTypes.Role && c.Value == receptionistRoleName);
+                        context.User.HasClaim(c => c.Type == ClaimTypes.Role && c.Value == receptionistRoleName);
                 });
             });
 

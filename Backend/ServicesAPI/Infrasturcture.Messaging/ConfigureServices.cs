@@ -1,6 +1,4 @@
-﻿using InnoClinic.Shared.Misc;
-using MassTransit;
-using MassTransit.RabbitMqTransport;
+﻿using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

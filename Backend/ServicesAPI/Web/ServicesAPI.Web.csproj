@@ -4,6 +4,7 @@
     <ProjectReference Include="..\Application\ServicesAPI.Application.csproj" />
     <ProjectReference Include="..\Infrastructure\ServicesAPI.Infrastructure.csproj" />
     <ProjectReference Include="..\Presentation\ServicesAPI.Presentation.csproj" />
+    <ProjectReference Include="..\Infrasturcture.Messaging\ServicesAPI.Infrasturcture.Messaging.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -13,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Filebin.InnoClinic.Shared.Misc" Version="1.0.11" />
+    <PackageReference Include="Filebin.InnoClinic.Shared.Misc" Version="1.0.18" />
   </ItemGroup>
 
 </Project>

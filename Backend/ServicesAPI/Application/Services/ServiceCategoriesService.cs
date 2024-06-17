@@ -8,7 +8,7 @@ using ServicesAPI.Application.Contracts.Models.Responses;
 using ServicesAPI.Application.Contracts.Services;
 using ServicesAPI.Domain;
 
-namespace ServicesAPI.Application;
+namespace ServicesAPI.Application.Services;
 
 internal class ServiceCategoriesService(
     IRepository<ServiceCategory> categoryRepository,
@@ -34,7 +34,6 @@ internal class ServiceCategoriesService(
         var category = createRequest.Adapt<ServiceCategory>();
 
         await categoryValidator.ValidateAndThrowAsync(category, cancellationToken);
-
 
         categoryRepository.Create(category);
 
