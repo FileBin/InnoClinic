@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Filebin.InnoClinic.Shared.Domain.Abstractions" Version="1.0.6" />
+    <PackageReference Include="Filebin.InnoClinic.Shared.Misc" Version="1.0.18" />
+    <PackageReference Include="Filebin.InnoClinic.Shared.Messaging.Contracts" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mapster" Version="7.4.0" />
+    <PackageReference Include="MassTransit" Version="8.2.2" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference
+      Include="..\Application.Contracts\AppointmentsAPI.Application.Contracts.csproj" />
+    <ProjectReference Include="..\Domain\AppointmentsAPI.Domain.csproj" />
+  </ItemGroup>
+  
+</Project>

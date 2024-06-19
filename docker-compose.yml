@@ -14,13 +14,16 @@ services:
       innoclinic_proxy: null
       innoclinic_net:
         aliases:
-          - services-api.innoclinic.local
           - sts.innoclinic.local
           - admin.innoclinic.local
           - admin-api.innoclinic.local
           - offices-api.innoclinic.local
+          - services-api.innoclinic.local
+          - appointments-api.innoclinic.local
           - seq.innoclinic.local
           - rabbitmq.innoclinic.local
+          - pgadmin.innoclinic.local
+
     restart: always
 
   authorizationapi.admin:
@@ -156,11 +159,13 @@ services:
     environment:
       - 'ConnectionStrings__DefaultConnection=Server=db;Database=ServicesAPI;User Id=sa;Password=${DB_PASSWORD:-Password_123};MultipleActiveResultSets=true;Trust Server Certificate=True;'
       - VIRTUAL_HOST=services-api.innoclinic.local
-      - OfficesDb__Password=${OFFICES_DB_PASSWORD}
       - IdentityServer__OAuth__ClientSecret=${SERVICES_API_CLIENT_SECRET}
       - Serilog__WriteTo__0__Args__serverUrl=http://seq:5341
       - Serilog__WriteTo__0__Args__apiKey=${SERVICES_API_LOG_APIKEY}
       - ASPNETCORE_ENVIRONMENT=Staging
+      - RabbitMq__Host=rabbitmq
+      - RabbitMq__Username=${RABBITMQ_USER}
+      - RabbitMq__Password=${RABBITMQ_PASSWORD}
     depends_on:
       - db
       - seq
@@ -171,10 +176,39 @@ services:
         aliases:
           - services-api.innoclinic.local
 
+  appointmentsAPI:
+    image: '${DOCKER_REGISTRY-}innoclinic-appointments-api'
+    build:
+      context: Backend/AppointmentsAPI
+    container_name: innoclinic-appointments-api
+    environment:
+      - VIRTUAL_HOST=appointments-api.innoclinic.local
+      - ASPNETCORE_ENVIRONMENT=Staging
+      - 'AppointmentsDb__Host=postgres'
+      - 'AppointmentsDb__Port=5432'
+      - 'AppointmentsDb__User=appointments_api'
+      - 'AppointmentsDb__Password=${APPOINTMENTS_DB_PASSWORD}'
+      - 'AppointmentsDb__Database=appointments'
+      - IdentityServer__OAuth__ClientSecret=${SERVICES_API_CLIENT_SECRET}
+      - Serilog__WriteTo__0__Args__serverUrl=http://seq:5341
+      - Serilog__WriteTo__0__Args__apiKey=${SERVICES_API_LOG_APIKEY}
+      - RabbitMq__Host=rabbitmq
+      - RabbitMq__Username=${RABBITMQ_USER}
+      - RabbitMq__Password=${RABBITMQ_PASSWORD}
+    depends_on:
+      - db
+      - seq
+    volumes:
+      - './shared/nginx/certs/cacerts.crt:/usr/local/share/ca-certificates/cacerts.crt'
+    networks:
+      innoclinic_net:
+        aliases:
+          - appointments-api.innoclinic.local
+
   db:
     image: 'mcr.microsoft.com/mssql/server:2022-CU12-ubuntu-22.04'
     ports:
-      - '7900:1433'
+      - '1433:1433'
     container_name: innoclinic-duende-identityserver-db
     environment:
       MSSQL_SA_PASSWORD: '${DB_PASSWORD:-Password_123}'
@@ -201,6 +235,42 @@ services:
     networks:
       - innoclinic_net
 
+  postgres:
+    image: postgres:16
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+      - ./shared/postgres/init.d:/docker-entrypoint-initdb.d
+    environment:
+      - VIRTUAL_HOST=appointments-api.innoclinic.local
+      - POSTGRES_PASSWORD=${APPOINTMENTS_DB_PASSWORD}
+      - DB_USER=appointments_api
+      - DB_USER_PASSWORD=${APPOINTMENTS_DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - innoclinic_net
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      - VIRTUAL_HOST=pgadmin.innoclinic.local
+      - PGADMIN_DEFAULT_EMAIL=user@example.com
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+    volumes:
+      - pgadmindata:/var/lib/pgadmin
+    networks:
+      innoclinic_net:
+        aliases:
+          - pgadmin.innoclinic.local
+
   seq:
     image: datalust/seq
     restart: unless-stopped
@@ -217,12 +287,14 @@ services:
       innoclinic_net:
         aliases:
           - seq.innoclinic.local
+
   rabbitmq:
     image: rabbitmq:3.13.3-management-alpine
     hostname: rabbitmq
     restart: always
     volumes:
       - ./shared/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+      - rabbitmq_data:/var/lib/rabbitmq
     environment:
       - VIRTUAL_HOST=rabbitmq.innoclinic.local
       - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
@@ -235,12 +307,17 @@ services:
       innoclinic_net:
         aliases:
           - rabbitmq.innoclinic.local
+
 volumes:
   dbdata_test:
     driver: local
+  postgresdata:
+    driver: local
+  pgadmindata:
   mongodb:
   mongoconfig:
   seq_data:
+  rabbitmq_data:
 
 networks:
   innoclinic_proxy:

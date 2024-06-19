@@ -4,6 +4,7 @@
     <ProjectReference Include="..\Application\AppointmentsAPI.Application.csproj" />
     <ProjectReference Include="..\Infrastructure\AppointmentsAPI.Infrastructure.csproj" />
     <ProjectReference Include="..\Presentation\AppointmentsAPI.Presentation.csproj" />
+    <ProjectReference Include="..\Application.Messaging\AppointmentsAPI.Application.Messaging.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using AppointmentsAPI.Infrastructure;
 using AppointmentsAPI.Application;
 using OfficesAPI.Presentation;
+using AppointmentsAPI.Application.Messaging;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,7 @@ builder.Services
     .AddIdentityServer(builder.Configuration, builder.Environment)
     .AddInfrastructure(builder.Configuration)
     .AddApplication()
+    .AddMessaging(builder.Configuration)
     .AddPresentation(builder.Configuration);
 
 var app = builder.Build();

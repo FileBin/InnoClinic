@@ -14,7 +14,10 @@ internal static class AuthorizationHelper {
         IUserDescriptor user,
         CancellationToken cancellationToken = default) {
             
-        var query = repository.GetAll();
+        var query = repository.GetAll()
+            .Include(x => x.Specialization)
+            .Include(x => x.Category)
+            .AsNoTracking();
 
         if (!user.IsAdmin()) {
             query = query.Where(product => product.IsActive);
