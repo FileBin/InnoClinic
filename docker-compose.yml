@@ -20,6 +20,7 @@ services:
           - admin-api.innoclinic.local
           - offices-api.innoclinic.local
           - seq.innoclinic.local
+          - rabbitmq.innoclinic.local
     restart: always
 
   authorizationapi.admin:
@@ -216,7 +217,24 @@ services:
       innoclinic_net:
         aliases:
           - seq.innoclinic.local
-
+  rabbitmq:
+    image: rabbitmq:3.13.3-management-alpine
+    hostname: rabbitmq
+    restart: always
+    volumes:
+      - ./shared/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+    environment:
+      - VIRTUAL_HOST=rabbitmq.innoclinic.local
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
+      - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbit disk_free_limit 2147483648
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      innoclinic_net:
+        aliases:
+          - rabbitmq.innoclinic.local
 volumes:
   dbdata_test:
     driver: local
