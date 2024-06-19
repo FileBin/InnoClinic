@@ -23,11 +23,7 @@ internal class ServicesService(
     IPublishEndpoint publishEndpoint) : IServicesService {
 
     public async Task<ServiceResponse> GetByIdAsync(Guid id, IUserDescriptor userDesc, CancellationToken cancellationToken = default) {
-        var service = await servicesRepository.GetByIdAsync(id, cancellationToken);
-
-        if (service is null) {
-            throw NotFoundException.NotFoundInDatabase(nameof(service));
-        }
+        var service = await servicesRepository.GetByIdOrThrow(id, cancellationToken);
 
         service.ValidateVisibility(userDesc);
 
@@ -58,11 +54,7 @@ internal class ServicesService(
     }
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default) {
-        var service = await servicesRepository.GetByIdAsync(id, cancellationToken);
-
-        if (service is null) {
-            throw NotFoundException.NotFoundInDatabase(nameof(service));
-        }
+        var service = await servicesRepository.GetByIdOrThrow(id, cancellationToken);
 
         servicesRepository.Delete(service);
 

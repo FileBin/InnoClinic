@@ -2,6 +2,7 @@ using FluentValidation;
 using InnoClinic.Shared.Domain.Abstractions;
 using InnoClinic.Shared.Exceptions.Models;
 using InnoClinic.Shared.Misc;
+using InnoClinic.Shared.Misc.Repository;
 using Mapster;
 using ServicesAPI.Application.Contracts.Models.Requests;
 using ServicesAPI.Application.Contracts.Models.Responses;
@@ -15,11 +16,7 @@ internal class SpecializationsService(
     IValidator<Specialization> specializationValidator,
     IUnitOfWork unitOfWork) : ISpecializationsService {
     public async Task<SpecializationResponse> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) {
-        var specialization = await specializationRepository.GetByIdAsync(id, cancellationToken);
-
-        if (specialization is null) {
-            throw NotFoundException.NotFoundInDatabase(nameof(specialization));
-        }
+        var specialization = await specializationRepository.GetByIdOrThrow(id, cancellationToken);
 
         return specialization.Adapt<SpecializationResponse>();
     }
@@ -43,11 +40,7 @@ internal class SpecializationsService(
     }
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default) {
-        var specialization = await specializationRepository.GetByIdAsync(id, cancellationToken);
-
-        if (specialization is null) {
-            throw NotFoundException.NotFoundInDatabase(nameof(specialization));
-        }
+        var specialization = await specializationRepository.GetByIdOrThrow(id, cancellationToken);
 
         specializationRepository.Delete(specialization);
 
@@ -56,12 +49,9 @@ internal class SpecializationsService(
 
 
     public async Task UpdateAsync(Guid id, SpecializationUpdateRequest updateRequest, CancellationToken cancellationToken = default) {
-        var specialization = await specializationRepository.GetByIdAsync(id, cancellationToken);
+        var specialization = await specializationRepository.GetByIdOrThrow(id, cancellationToken);
 
         var transaction = await unitOfWork.BeginTransactionAsync(cancellationToken);
-        if (specialization is null) {
-            throw NotFoundException.NotFoundInDatabase(nameof(specialization));
-        }
 
         if (updateRequest.IsActive.HasValue) {
             specialization.IsActive = updateRequest.IsActive.Value;
