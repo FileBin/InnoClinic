@@ -9,6 +9,9 @@ bin
 database/init.d/*.env
 **.db
 
+**/*.secrets.json
+
+
 /Backend/ServicesAPI/Web/appsettings.Development.json
 
 /shared/nginx/certs

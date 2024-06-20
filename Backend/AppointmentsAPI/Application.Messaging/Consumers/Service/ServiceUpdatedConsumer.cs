@@ -15,6 +15,7 @@ public class ServiceUpdatedConsumer(ILogger<ServiceUpdatedConsumer> logger, IRep
 
         var service = await serviceRepo.GetByIdOrThrow(context.Message.Id, context.CancellationToken);
         context.Message.Adapt(service);
+        serviceRepo.Update(service);
         await unitOfWork.SaveChangesAsync();
         
         logger.LogInformation("Service updated with Id={Id} Name={Name}", service.Id, service.Name);

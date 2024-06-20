@@ -14,7 +14,7 @@ builder.AddLogger();
 builder.Services
     .AddUtils()
     .AddIdentityServer(builder.Configuration, builder.Environment)
-    .AddInfrastructure(builder.Configuration)
+    .AddInfrastructure()
     .AddApplication()
     .AddMessaging(builder.Configuration)
     .AddPresentation(builder.Configuration);
@@ -29,4 +29,7 @@ if (! app.Environment.IsProduction()) {
 
 app.UsePresentation();
 app.UseIdentityServer();
-app.Run();
+
+app.EnsureDatabaseCreated(migrate: true);
+
+await app.RunAsync();

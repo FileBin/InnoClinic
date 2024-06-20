@@ -1,9 +1,11 @@
 using FluentValidation;
 using InnoClinic.Shared.Domain.Abstractions;
 using InnoClinic.Shared.Exceptions.Models;
+using InnoClinic.Shared.Messaging.Contracts.Models.Specialization;
 using InnoClinic.Shared.Misc;
 using InnoClinic.Shared.Misc.Repository;
 using Mapster;
+using MassTransit;
 using ServicesAPI.Application.Contracts.Models.Requests;
 using ServicesAPI.Application.Contracts.Models.Responses;
 using ServicesAPI.Application.Contracts.Services;
@@ -14,7 +16,8 @@ namespace ServicesAPI.Application;
 internal class SpecializationsService(
     IRepository<Specialization> specializationRepository,
     IValidator<Specialization> specializationValidator,
-    IUnitOfWork unitOfWork) : ISpecializationsService {
+    IUnitOfWork unitOfWork,
+    IPublishEndpoint publishEndpoint) : ISpecializationsService {
     public async Task<SpecializationResponse> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) {
         var specialization = await specializationRepository.GetByIdOrThrow(id, cancellationToken);
 
@@ -34,6 +37,8 @@ internal class SpecializationsService(
 
         specializationRepository.Create(specialization);
 
+        await publishEndpoint.Publish(specialization.Adapt<SpecializationCreated>(), cancellationToken);
+
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return specialization.Id;
@@ -44,6 +49,8 @@ internal class SpecializationsService(
 
         specializationRepository.Delete(specialization);
 
+        await publishEndpoint.Publish(specialization.Adapt<SpecializationDeleted>(), cancellationToken);
+
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }
 
@@ -53,19 +60,15 @@ internal class SpecializationsService(
 
         var transaction = await unitOfWork.BeginTransactionAsync(cancellationToken);
 
-        if (updateRequest.IsActive.HasValue) {
-            specialization.IsActive = updateRequest.IsActive.Value;
-        }
-
-        if (updateRequest.Name is not null) {
-            specialization.Name = updateRequest.Name;
-        }
+        updateRequest.Adapt(specialization);
 
         try {
             await specializationValidator.ValidateAndThrowAsync(specialization, cancellationToken);
         } catch (ValidationException) {
             await transaction.RollbackAsync(cancellationToken);
         }
+
+        await publishEndpoint.Publish(specialization.Adapt<SpecializationUpdated>(), cancellationToken);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
