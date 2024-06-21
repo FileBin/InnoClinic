@@ -20,7 +20,9 @@ internal class AppointmentsDbContext(DbContextOptions options, IConfiguration co
 
         var dataSource = dataSourceBuilder.Build();
 
-        optionsBuilder.UseNpgsql(dataSource);
+        var assembly = typeof(AppointmentsDbContext).Assembly;
+
+        optionsBuilder.UseNpgsql(dataSource, x => x.MigrationsAssembly(assembly.FullName));
     }
 
     public DbSet<Appointment> Appointments => Set<Appointment>();
