@@ -3,7 +3,7 @@
 namespace AppointmentsAPI.Domain.Models;
 
 [Table("services")]
-public class Service : IEntity {
+public class Service : INamedEntity {
     [Column("id")]
     public Guid Id { get; set; }
 

@@ -3,7 +3,7 @@
 namespace AppointmentsAPI.Domain.Models;
 
 [Table("specializations")]
-public class Specialization : IEntity {
+public class Specialization : INamedEntity {
 
     [Column("id")]
     public Guid Id { get; set; }

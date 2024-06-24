@@ -11,6 +11,7 @@ using ServicesAPI.Domain;
 using MassTransit;
 using InnoClinic.Shared.Messaging.Contracts.Models.Service;
 using InnoClinic.Shared.Messaging.Contracts.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ServicesAPI.Application.Services;
 
@@ -23,12 +24,13 @@ internal class ServicesService(
     IPublishEndpoint publishEndpoint) : IServicesService {
 
     public async Task<ServiceResponse> GetByIdAsync(Guid id, IUserDescriptor userDesc, CancellationToken cancellationToken = default) {
-        var service = await servicesRepository.GetByIdAsync(id, cancellationToken);
-
-        if (service is null) {
-            throw NotFoundException.NotFoundInDatabase(nameof(service));
-        }
-
+        var service = await servicesRepository
+            .GetAll()
+            .Include(x => x.Specialization)
+            .Include(x => x.Category)
+            .SingleOrDefaultAsync(x => x.Id == id, cancellationToken) 
+            ?? throw new NotFoundException($"{nameof(Service)} with id {id} was not found");
+            
         service.ValidateVisibility(userDesc);
 
         return service.Adapt<ServiceResponse>();
@@ -58,11 +60,7 @@ internal class ServicesService(
     }
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default) {
-        var service = await servicesRepository.GetByIdAsync(id, cancellationToken);
-
-        if (service is null) {
-            throw NotFoundException.NotFoundInDatabase(nameof(service));
-        }
+        var service = await servicesRepository.GetByIdOrThrow(id, cancellationToken);
 
         servicesRepository.Delete(service);
 

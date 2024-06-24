@@ -1,34 +1,24 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using InnoClinic.Shared.Domain.Abstractions;
 using InnoClinic.Shared.Misc;
-using Npgsql;
 using AppointmentsAPI.Infrastructure.Database;
-using Microsoft.EntityFrameworkCore;
 using AppointmentsAPI.Infrastructure.Repository;
-using AppointmentsAPI.Domain.Models;
+using Microsoft.AspNetCore.Builder;
 
 namespace AppointmentsAPI.Infrastructure;
 
 public static class ConfigureServices {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config) {
-        var dbSection = config.GetSection("AppointmentsDb");
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services) {
 
-        var dataSourceBuilder = new NpgsqlDataSourceBuilder($"Host={dbSection.GetOrThrow("Host")};"
-                                    + $"Port={dbSection.GetOrThrow("Port")};"
-                                    + $"Username={dbSection.GetOrThrow("User")};"
-                                    + $"Password={dbSection.GetOrThrow("Password")};"
-                                    + $"Database={dbSection.GetOrThrow("Database")};");
-
-        var dataSource = dataSourceBuilder.Build();
-
-        services.AddDbContext<AppointmentsDbContext>(options =>
-            options.UseNpgsql(dataSource));
-
+        services.AddDbContext<AppointmentsDbContext>();
         services.AddRepositoriesFromAssembly(typeof(AppointmentsDbContext).Assembly);
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
+    }
+
+    public static void EnsureDatabaseCreated(this WebApplication app, bool migrate = false) { 
+        app.EnsureDatabaseCreated<AppointmentsDbContext>(migrate);
     }
 }

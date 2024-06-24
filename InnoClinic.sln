@@ -61,6 +61,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messaging", "Messaging", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServicesAPI.Infrasturcture.Messaging", "Backend\ServicesAPI\Infrasturcture.Messaging\ServicesAPI.Infrasturcture.Messaging.csproj", "{687BDB70-75EE-458C-8675-9A8C4F7677CE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messaging", "Messaging", "{A64B7D32-7A8D-4A2E-9C3B-A7E647FB4323}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentsAPI.Application.Messaging", "Backend\AppointmentsAPI\Application.Messaging\AppointmentsAPI.Application.Messaging.csproj", "{941E5F27-69CC-4F79-A759-D1E48A8B453C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -151,6 +155,10 @@ Global
 		{687BDB70-75EE-458C-8675-9A8C4F7677CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{687BDB70-75EE-458C-8675-9A8C4F7677CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{687BDB70-75EE-458C-8675-9A8C4F7677CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{941E5F27-69CC-4F79-A759-D1E48A8B453C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{941E5F27-69CC-4F79-A759-D1E48A8B453C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{941E5F27-69CC-4F79-A759-D1E48A8B453C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{941E5F27-69CC-4F79-A759-D1E48A8B453C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -179,5 +187,7 @@ Global
 		{82B98FB6-4111-4F11-A643-5F71AEB8318D} = {87EFC8EC-4C10-453F-A69D-5767A8F5F42A}
 		{D78FB204-317A-422D-99FE-55D86DCFFD92} = {C016DA98-A805-4AA5-AC43-2838B5548C64}
 		{687BDB70-75EE-458C-8675-9A8C4F7677CE} = {D78FB204-317A-422D-99FE-55D86DCFFD92}
+		{A64B7D32-7A8D-4A2E-9C3B-A7E647FB4323} = {290DFB35-CC8E-4CD2-9979-F4810742508E}
+		{941E5F27-69CC-4F79-A759-D1E48A8B453C} = {A64B7D32-7A8D-4A2E-9C3B-A7E647FB4323}
 	EndGlobalSection
 EndGlobal
