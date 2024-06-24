@@ -1,0 +1,40 @@
+.spacer {
+    flex: 1 1 auto;
+}
+
+header {
+    position: fixed;
+    width: 100vw;
+    z-index: 12;
+}
+
+mat-toolbar {
+    height: var(--header-height);
+    display: flex;
+    flex-direction: row;
+
+    gap: min(1em, 1vw);
+
+    padding: 0 min(1em, 2vw);
+}
+
+mat-icon {
+    display: flex;
+    align-items: center;
+}
+
+:host ::ng-deep .search {
+    width: min(500px, 30vw);
+}
+
+@media (max-width: 700px) {
+    app-search {
+        display: none;
+    }
+}
+
+
+a {
+    color: unset;
+    text-decoration: none;
+}

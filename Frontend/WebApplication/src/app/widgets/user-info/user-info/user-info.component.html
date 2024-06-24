@@ -1,0 +1,31 @@
+<div class="container">
+    @if (isLoading) {
+
+    <mat-spinner [diameter]="30" style="margin:0 auto;"></mat-spinner>
+
+    } @else {
+
+    @if(isLoggedIn) {
+    <div>
+        <button mat-button (click)="isExpanded = !isExpanded">
+            <mat-icon>account_circle</mat-icon>
+            <div class="username">
+                <!-- {{ userInfo?.username }} -->
+            </div>
+        </button>
+
+        @if(isExpanded) {
+        <!-- <app-user-menu [userInfo]="userInfo!" /> -->
+        }
+    </div>
+    } @else {
+    <button mat-stroked-button [routerLink]="['/login']">
+        Login
+    </button>
+    <button mat-raised-button [routerLink]="['/register']">
+        Register
+    </button>
+    }
+
+    }
+</div>

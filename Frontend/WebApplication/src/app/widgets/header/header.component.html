@@ -1,0 +1,16 @@
+<header>
+    <mat-toolbar>
+        <button mat-icon-button (click)="toggleSidenav.emit()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <a [routerLink]="['/']">{{appName}}</a>
+        <span class="spacer"></span>
+
+
+        <!-- <app-search></app-search> -->
+
+
+        <span class="spacer"></span>
+        <app-user-info></app-user-info>
+    </mat-toolbar>
+</header>
