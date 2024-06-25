@@ -1,0 +1,58 @@
+@use '@angular/material' as mat;
+@include mat.core();
+
+@import '../../../../theme.scss';
+
+mat-drawer {
+    position: fixed;
+}
+
+mat-drawer-container {
+    height: 100%;
+    background-color: mat.get-theme-color($theme, neutral, 20);
+
+}
+
+.content {
+    margin: auto;
+
+    margin-top: var(--header-height);
+    max-width: 1200px;
+    height: max-content;
+    padding: 1em;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+
+    gap: 1em;
+
+    align-items: stretch;
+
+    width: 300px;
+    padding: 1em;
+
+
+    button {
+        font-weight: normal;
+        display: flex;
+        justify-content: start;
+
+        padding: 2em;
+    }
+}
+
+app-search {
+    margin: auto;
+}
+
+:host ::ng-deep .search {
+    width: fit-content;
+}
