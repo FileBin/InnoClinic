@@ -9,6 +9,9 @@ bin
 database/init.d/*.env
 **.db
 
+.angular
+node_modules
+
 **/*.secrets.json
 
 

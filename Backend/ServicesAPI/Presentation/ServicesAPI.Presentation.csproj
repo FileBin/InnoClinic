@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Filebin.InnoClinic.Shared.Misc" Version="1.0.19" />
+    <PackageReference Include="Filebin.InnoClinic.Shared.Misc" Version="1.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
   

@@ -24,12 +24,7 @@ internal class ServicesService(
     IPublishEndpoint publishEndpoint) : IServicesService {
 
     public async Task<ServiceResponse> GetByIdAsync(Guid id, IUserDescriptor userDesc, CancellationToken cancellationToken = default) {
-        var service = await servicesRepository
-            .GetAll()
-            .Include(x => x.Specialization)
-            .Include(x => x.Category)
-            .SingleOrDefaultAsync(x => x.Id == id, cancellationToken) 
-            ?? throw new NotFoundException($"{nameof(Service)} with id {id} was not found");
+        var service = await servicesRepository.GetByIdOrThrow(id, cancellationToken);
             
         service.ValidateVisibility(userDesc);
 
