@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule } from '@angular/router';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Component({
   selector: 'app-user-info',
@@ -12,8 +13,26 @@ import { RouterModule } from '@angular/router';
   styleUrl: './user-info.component.scss'
 })
 export class UserInfoComponent {
+  private readonly oidcSecurityService = inject(OidcSecurityService);
   isLoading = false;
   isLoggedIn = false;
+
+  userData: any;
+
+  ngOnInit() {
+    this.oidcSecurityService.checkAuth().subscribe(({ isAuthenticated, userData }) => {
+      this.isLoggedIn = isAuthenticated;
+      this.userData = userData;
+    });
+  }
+
+  login() {
+    this.oidcSecurityService.authorize();
+  }
+
+  logout() {
+    this.oidcSecurityService.logoff().subscribe((result) => console.log(result));
+  }
 
   isExpanded = false;
 }

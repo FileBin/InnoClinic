@@ -10,20 +10,17 @@
         <button mat-button (click)="isExpanded = !isExpanded">
             <mat-icon>account_circle</mat-icon>
             <div class="username">
-                <!-- {{ userInfo?.username }} -->
+                {{ userData?.name }}
             </div>
         </button>
 
         @if(isExpanded) {
-        <!-- <app-user-menu [userInfo]="userInfo!" /> -->
+        <!-- <app-user-menu [userInfo]="userData!" /> -->
         }
     </div>
     } @else {
-    <button mat-stroked-button [routerLink]="['/login']">
+    <button mat-stroked-button (click)="login()">
         Login
-    </button>
-    <button mat-raised-button [routerLink]="['/register']">
-        Register
     </button>
     }
 

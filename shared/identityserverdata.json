@@ -142,6 +142,28 @@
                 ]
             },
             {
+                "ClientId": "webAppLocal",
+                "ClientName": "webAppLocal",
+                "Description": "User Web Application",
+                "AllowedGrantTypes": [
+                    "authorization_code"
+                ],
+                "RequireClientSecret": false,
+                "RequirePkce": true,
+                "AllowedScopes": [
+                    "openid",
+                    "profile",
+                    "email",
+                    "servicesAPI"
+                ],
+                "RedirectUris": [
+                    "http://localhost:4200"
+                ],
+                "AllowedCorsOrigins": [
+                    "http://localhost:4200"
+                ]
+            },
+            {
                 "ClientId": "InnoClinicAdminId_api_swaggerui",
                 "ClientName": "InnoClinicAdminId_api_swaggerui",
                 "AllowedGrantTypes": [
