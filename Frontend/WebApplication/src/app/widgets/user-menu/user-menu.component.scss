@@ -1,0 +1,32 @@
+mat-card {
+    z-index: 100;
+    position: absolute;
+    right: 0.5em;
+    margin-top: 0.5em;
+
+    padding: 1em;
+
+    gap: 0.5em;
+}
+
+.account {
+    padding: 0 0.5em;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.item {
+    display: flex;
+    justify-content: start;
+    gap: 0.5em;
+}

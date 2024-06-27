@@ -1,0 +1,16 @@
+<mat-card class="mat-body-1">
+    <section class="row account">
+        <mat-icon class="margin-auto">account_circle</mat-icon>
+        <div class="column">
+            <div>{{ userInfo.email }}</div>
+            <div>{{ userInfo.name }}</div>
+        </div>
+    </section>
+    <mat-divider />    
+    <section class="column">
+        <button mat-button (click)="logout()" class="item">
+            <mat-icon>logout</mat-icon>
+            Logout
+        </button>
+    </section>
+</mat-card>

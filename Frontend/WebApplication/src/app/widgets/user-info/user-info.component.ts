@@ -4,11 +4,12 @@ import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule } from '@angular/router';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
+import {UserMenuComponent} from '../user-menu/user-menu.component'
 
 @Component({
   selector: 'app-user-info',
   standalone: true,
-  imports: [MatIcon, MatButtonModule, MatProgressSpinnerModule, RouterModule],
+  imports: [MatIcon, MatButtonModule, MatProgressSpinnerModule, RouterModule, UserMenuComponent],
   templateUrl: './user-info.component.html',
   styleUrl: './user-info.component.scss'
 })

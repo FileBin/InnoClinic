@@ -14,8 +14,8 @@
             </div>
         </button>
 
-        @if(isExpanded) {
-        <!-- <app-user-menu [userInfo]="userData!" /> -->
+        @if(isExpanded && userData) {
+        <app-user-menu [userInfo]="userData" />
         }
     </div>
     } @else {
