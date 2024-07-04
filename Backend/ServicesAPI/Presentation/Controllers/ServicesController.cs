@@ -5,7 +5,7 @@ using ServicesAPI.Application.Contracts.Services;
 namespace ServicesAPI.Presentation.Controllers;
 
 [ApiController]
-[Authorize]
+[Authorize(Policy = Config.ServicesPolicy)]
 [Route("api/services")]
 [ExcludeFromCodeCoverage]
 public class ServicesController(IServicesService servicesService, ClaimUserDescriptorFactory userDescriptorFactory) : ControllerBase {
@@ -16,7 +16,6 @@ public class ServicesController(IServicesService servicesService, ClaimUserDescr
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>Guid of created Service</returns>
     [HttpPost]
-    [Authorize(Policy = Config.ServicesPolicy)]
     // BUG: I can't use ProducesResponseTypeAttribute because it breaks my exception handler 
     // [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Guid))]
     // [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
@@ -33,6 +32,7 @@ public class ServicesController(IServicesService servicesService, ClaimUserDescr
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>List of ServiceDto</returns>
     [HttpGet]
+    [AllowAnonymous]
     // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ServiceResponse>))]
     public async Task<IActionResult> GetPage([FromQuery] PageDesc pageDesc, CancellationToken cancellationToken) {
         var user = userDescriptorFactory.CreateFrom(User);
@@ -48,6 +48,7 @@ public class ServicesController(IServicesService servicesService, ClaimUserDescr
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>ServiceDto if result is Ok</returns>
     [HttpGet]
+    [AllowAnonymous]
     [Route("{id:guid}", Name = $"{nameof(ServicesController)}.{nameof(GetById)}")]
     // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ServiceResponse))]
     // [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -66,7 +67,6 @@ public class ServicesController(IServicesService servicesService, ClaimUserDescr
     /// <returns>Ok result if success</returns>
     [HttpPut]
     [HttpPatch]
-    [Authorize(Policy = Config.ServicesPolicy)]
     [Route("{id:guid}", Name = $"{nameof(ServicesController)}.{nameof(Update)}")]
     // [ProducesResponseType(StatusCodes.Status200OK)]
     // [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -84,7 +84,6 @@ public class ServicesController(IServicesService servicesService, ClaimUserDescr
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>Ok if Service is deleted</returns>
     [HttpDelete]
-    [Authorize(Policy = Config.ServicesPolicy)]
     [Route("{id:guid}", Name = $"{nameof(ServicesController)}.{nameof(Delete)}")]
     // [ProducesResponseType(StatusCodes.Status200OK)]
     // [ProducesResponseType(StatusCodes.Status404NotFound)]
