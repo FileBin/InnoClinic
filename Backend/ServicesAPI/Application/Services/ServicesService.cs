@@ -34,7 +34,7 @@ internal class ServicesService(
         return service.Adapt<ServiceResponse>();
     }
 
-    public async Task<IEnumerable<ServiceResponse>> GetPageAsync(IPageDesc pageDesc, IUserDescriptor userDesc, CancellationToken cancellationToken = default) {
+    public async Task<IReadOnlyCollection<ServiceResponse>> GetPageAsync(IPageDesc pageDesc, IUserDescriptor userDesc, CancellationToken cancellationToken = default) {
         var services = await servicesRepository.GetAuthorizedPage(pageDesc, userDesc, cancellationToken);
 
         return services.Select(o => o.Adapt<ServiceResponse>()).ToList();

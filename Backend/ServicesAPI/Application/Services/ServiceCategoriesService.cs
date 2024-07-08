@@ -24,7 +24,7 @@ internal class ServiceCategoriesService(
         return category.Adapt<ServiceCategoryResponse>();
     }
 
-    public async Task<IEnumerable<ServiceCategoryResponse>> GetPageAsync(IPageDesc pageDesc, CancellationToken cancellationToken = default) {
+    public async Task<IReadOnlyCollection<ServiceCategoryResponse>> GetPageAsync(IPageDesc pageDesc, CancellationToken cancellationToken = default) {
         var services = await categoryRepository.GetPageAsync(pageDesc, cancellationToken);
 
         return services.Select(o => o.Adapt<ServiceCategoryResponse>()).ToList();

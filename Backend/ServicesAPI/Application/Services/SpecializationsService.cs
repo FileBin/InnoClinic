@@ -24,7 +24,7 @@ internal class SpecializationsService(
         return specialization.Adapt<SpecializationResponse>();
     }
 
-    public async Task<IEnumerable<SpecializationResponse>> GetPageAsync(IPageDesc pageDesc, CancellationToken cancellationToken = default) {
+    public async Task<IReadOnlyCollection<SpecializationResponse>> GetPageAsync(IPageDesc pageDesc, CancellationToken cancellationToken = default) {
         var services = await specializationRepository.GetPageAsync(pageDesc, cancellationToken);
 
         return services.Select(o => o.Adapt<SpecializationResponse>()).ToList();

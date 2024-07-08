@@ -5,7 +5,7 @@ namespace ServicesAPI.Presentation.Controllers;
 
 
 [ApiController]
-[Authorize]
+[Authorize(Policy = Config.ServicesPolicy)]
 [Route("api/specializations")]
 [ExcludeFromCodeCoverage]
 public class SpecializationsController(ISpecializationsService categoriesService) : ControllerBase {
@@ -16,7 +16,6 @@ public class SpecializationsController(ISpecializationsService categoriesService
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>Guid of created Specialization</returns>
     [HttpPost]
-    [Authorize(Policy = Config.ServicesPolicy)]
     // BUG: I can't use ProducesResponseTypeAttribute because it breaks my exception handler 
     // [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Guid))]
     // [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
@@ -33,6 +32,7 @@ public class SpecializationsController(ISpecializationsService categoriesService
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>List of SpecializationDto</returns>
     [HttpGet]
+    [AllowAnonymous]
     // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SpecializationResponse>))]
     public async Task<IActionResult> GetPage([FromQuery] PageDesc pageDesc, CancellationToken cancellationToken) {
         var specializationsResponse = await categoriesService.GetPageAsync(pageDesc, cancellationToken);
@@ -47,6 +47,7 @@ public class SpecializationsController(ISpecializationsService categoriesService
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>SpecializationDto if result is Ok</returns>
     [HttpGet]
+    [AllowAnonymous]
     [Route("{id:guid}", Name = $"{nameof(SpecializationsController)}.{nameof(GetById)}")]
     // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SpecializationResponse))]
     // [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -64,7 +65,6 @@ public class SpecializationsController(ISpecializationsService categoriesService
     /// <returns>Ok result if success</returns>
     [HttpPut]
     [HttpPatch]
-    [Authorize(Policy = Config.ServicesPolicy)]
     [Route("{id:guid}", Name = $"{nameof(SpecializationsController)}.{nameof(Update)}")]
     // [ProducesResponseType(StatusCodes.Status200OK)]
     // [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -82,7 +82,6 @@ public class SpecializationsController(ISpecializationsService categoriesService
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>Ok if Specialization is deleted</returns>
     [HttpDelete]
-    [Authorize(Policy = Config.ServicesPolicy)]
     [Route("{id:guid}", Name = $"{nameof(SpecializationsController)}.{nameof(Delete)}")]
     // [ProducesResponseType(StatusCodes.Status200OK)]
     // [ProducesResponseType(StatusCodes.Status404NotFound)]

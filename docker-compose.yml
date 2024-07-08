@@ -20,6 +20,7 @@ services:
           - admin-api.innoclinic.local
           - offices-api.innoclinic.local
           - seq.innoclinic.local
+          - storage.innoclinic.local
     restart: always
 
   authorizationapi.admin:
@@ -200,6 +201,18 @@ services:
     networks:
       - innoclinic_net
 
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
+    restart: always
+    hostname: azurite.local
+    command: azurite-blob --blobHost 0.0.0.0 --blobPort:10000
+    environment:
+      - 'AZURITE_ACCOUNTS=${BLOB_STORAGE_ACCOUNT}:${BLOB_STORAGE_KEY}'
+    ports:
+      - "10000:10000"
+    volumes:
+      - azurite_data:/data
+
   seq:
     image: datalust/seq
     restart: unless-stopped
@@ -223,6 +236,7 @@ volumes:
   mongodb:
   mongoconfig:
   seq_data:
+  azurite_data:
 
 networks:
   innoclinic_proxy:

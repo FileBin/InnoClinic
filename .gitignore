@@ -9,6 +9,9 @@ bin
 database/init.d/*.env
 **.db
 
+node_modules
+.angular
+
 /shared/nginx/certs
 /shared/*.json
 !/shared/serilog.json
