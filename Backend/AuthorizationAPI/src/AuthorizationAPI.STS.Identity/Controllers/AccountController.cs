@@ -630,6 +630,8 @@ namespace AuthorizationAPI.STS.Identity.Controllers
 
                 await _emailSender.SendEmailAsync(model.Email, _localizer["ConfirmEmailTitle"], _localizer["ConfirmEmailBody", HtmlEncoder.Default.Encode(callbackUrl)]);
 
+                //TODO add rabbitMQ send user created message here
+
                 if (_identityOptions.SignIn.RequireConfirmedAccount)
                 {
                     return View("RegisterConfirmation");

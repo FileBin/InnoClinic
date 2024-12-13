@@ -2,6 +2,7 @@ using FluentValidation;
 using InnoClinic.Shared.Domain.Abstractions;
 using InnoClinic.Shared.Exceptions.Models;
 using InnoClinic.Shared.Misc;
+using InnoClinic.Shared.Misc.Repository;
 using Mapster;
 using ServicesAPI.Application.Contracts.Models.Requests;
 using ServicesAPI.Application.Contracts.Models.Responses;
@@ -15,11 +16,7 @@ internal class ServiceCategoriesService(
     IValidator<ServiceCategory> categoryValidator,
     IUnitOfWork unitOfWork) : IServiceCategoriesService {
     public async Task<ServiceCategoryResponse> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) {
-        var category = await categoryRepository.GetByIdAsync(id, cancellationToken);
-
-        if (category is null) {
-            throw NotFoundException.NotFoundInDatabase(nameof(category));
-        }
+        var category = await categoryRepository.GetByIdOrThrow(id, cancellationToken);
 
         return category.Adapt<ServiceCategoryResponse>();
     }
@@ -43,11 +40,7 @@ internal class ServiceCategoriesService(
     }
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default) {
-        var category = await categoryRepository.GetByIdAsync(id, cancellationToken);
-
-        if (category is null) {
-            throw NotFoundException.NotFoundInDatabase(nameof(category));
-        }
+        var category = await categoryRepository.GetByIdOrThrow(id, cancellationToken);
 
         categoryRepository.Delete(category);
 
@@ -56,13 +49,9 @@ internal class ServiceCategoriesService(
 
 
     public async Task UpdateAsync(Guid id, ServiceCategoryUpdateRequest updateRequest, CancellationToken cancellationToken = default) {
-        var category = await categoryRepository.GetByIdAsync(id, cancellationToken);
+        var category = await categoryRepository.GetByIdOrThrow(id, cancellationToken);
 
         using var transaction = await unitOfWork.BeginTransactionAsync(cancellationToken);
-
-        if (category is null) {
-            throw NotFoundException.NotFoundInDatabase(nameof(category));
-        }
 
         if (updateRequest.TimeSlotSize.HasValue) {
             category.TimeSlotSize = updateRequest.TimeSlotSize.Value;

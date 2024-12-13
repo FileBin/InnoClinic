@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Filebin.InnoClinic.Shared.Misc" Version="1.0.18" />
+    <PackageReference Include="Filebin.InnoClinic.Shared.Misc" Version="1.0.19" />
   </ItemGroup>
 
 </Project>

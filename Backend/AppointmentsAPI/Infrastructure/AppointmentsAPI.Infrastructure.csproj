@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,7 +18,7 @@
   
   
   <ItemGroup>
-    <PackageReference Include="Filebin.InnoClinic.Shared.Misc" Version="1.0.18" />
+    <PackageReference Include="Filebin.InnoClinic.Shared.Misc" Version="1.0.19" />
   </ItemGroup>
 
 

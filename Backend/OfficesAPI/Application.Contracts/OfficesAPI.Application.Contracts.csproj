@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Filebin.InnoClinic.Shared.Domain.Abstractions" Version="1.0.6" />
+    <PackageReference Include="Filebin.InnoClinic.Shared.Domain.Abstractions" Version="1.0.7" />
   </ItemGroup>
 
 

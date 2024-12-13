@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using AppointmentsAPI.Infrastructure;
 using AppointmentsAPI.Application;
 using OfficesAPI.Presentation;
+using AppointmentsAPI.Application.Messaging;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,8 +14,9 @@ builder.AddLogger();
 builder.Services
     .AddUtils()
     .AddIdentityServer(builder.Configuration, builder.Environment)
-    .AddInfrastructure(builder.Configuration)
+    .AddInfrastructure()
     .AddApplication()
+    .AddMessaging(builder.Configuration)
     .AddPresentation(builder.Configuration);
 
 var app = builder.Build();
@@ -27,4 +29,7 @@ if (! app.Environment.IsProduction()) {
 
 app.UsePresentation();
 app.UseIdentityServer();
-app.Run();
+
+app.EnsureDatabaseCreated(migrate: true);
+
+await app.RunAsync();

@@ -9,6 +9,14 @@ bin
 database/init.d/*.env
 **.db
 
+.angular
+node_modules
+
+**/*.secrets.json
+
+
+/Backend/ServicesAPI/Web/appsettings.Development.json
+
 /shared/nginx/certs
 /shared/*.json
 !/shared/serilog.json
